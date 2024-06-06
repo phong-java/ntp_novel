@@ -8,11 +8,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'NTP Novel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" ></script>
-    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/jquery.js') }}" defer></script>
+    <script src="{{ asset('js/main.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -21,12 +22,12 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
+
 <body>
     <div id="app">
-
         <nav class="navbar navbar-expand-lg  bg-light shadow-sm">
             <div class="container col-md-11">
-                <a class="navbar-brand" href="{{ route('home') }}">NTP Novel - Admin</a>
+                <a class="navbar-brand" href="{{ url('/') }}">NTP Novel - Admin</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -35,19 +36,38 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Quản lý thể loại
+                            <a class="nav-link dropdown-toggle" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Danh sách thể loại
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Thêm thể loại</a></li>
                                 <li><a class="dropdown-item" href="#">Danh sách thể loại</a></li>
                                 <!-- <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li> -->
                             </ul>
                         </li>
+
+                        @auth
+                            @if (Auth::user()->usertype == 'admin')
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        Quản lý thể loại
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Thêm thể loại</a></li>
+                                        <li><a class="dropdown-item" href="#">Danh sách thể loại</a></li>
+                                        <!-- <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+                                    </ul>
+                                </li>
+                            @endif
+                        @endauth
                     </ul>
 
                     <form class="d-flex" role="search">
@@ -93,11 +113,11 @@
                     </ul>
                 </div>
             </div>
-        </nav>
-
-        <main class="">
+        </nav>            
+        <main class="py-4">
             @yield('content')
         </main>
     </div>
 </body>
+
 </html>
