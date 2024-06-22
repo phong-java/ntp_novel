@@ -1,0 +1,16 @@
+.overflow-X {
+    overflow-x: scroll;
+}
+
+.hide-scroll-bar {
+    &:-webkit-scrollbar {
+        display: none;
+    }
+
+    & {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+}

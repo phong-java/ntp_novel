@@ -25,9 +25,9 @@
             <a class="navbar-brand" href="{{ url('/') }}">NTP Novel</a>
         @else
             @auth
-                @if (Auth::user()->usertype == 'admin')
+                @if (Auth::user()->sRole == 'admin')
                     <a class="navbar-brand" href="{{ url('/') }}">NTP Novel - Admin</a>
-                @elseif (Auth::user()->usertype == 'author')
+                @elseif (Auth::user()->sRole == 'author')
                     <a class="navbar-brand" href="{{ url('/') }}">NTP Novel - Author</a>
                 @else
                     <a class="navbar-brand" href="{{ url('/') }}">NTP Novel</a>
@@ -43,7 +43,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     @if (Route::has('login'))
                         @auth
-                            @if (Auth::user()->usertype == 'admin')
+                            @if (Auth::user()->sRole == 'admin')
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button"
                                         data-bs-toggle="dropdown" aria-expanded="false">

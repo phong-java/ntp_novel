@@ -4,9 +4,9 @@
             <a class="navbar-brand" href="{{ url('/') }}">NTP Novel</a>
         @else
             @auth
-                @if (Auth::user()->usertype == 'admin')
+                @if (Auth::user()->sRole == 'admin')
                     <a class="navbar-brand" href="{{ url('/') }}">NTP Novel - Admin</a>
-                @elseif (Auth::user()->usertype == 'author')
+                @elseif (Auth::user()->sRole == 'author')
                     <a class="navbar-brand" href="{{ url('/') }}">NTP Novel - Author</a>
                 @else
                     <a class="navbar-brand" href="{{ url('/') }}">NTP Novel</a>
@@ -21,7 +21,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 @auth
-                    @if (Auth::user()->usertype == 'admin')
+                    @if (Auth::user()->sRole == 'admin')
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -73,7 +73,7 @@
                                 {{ __('Logout') }}
                             </a>
 
-                            <a class="dropdown-item" href="{{ route('home') }}">Trang cá nhân</a>
+                            <a class="dropdown-item" href="{{ route('User.show',[Auth::user()->id]) }}">Trang cá nhân</a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
