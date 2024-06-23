@@ -2,6 +2,60 @@
     overflow-x: scroll;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.ntp_novel {
+    max-width: 200px;
+    overflow: hidden;
+
+    .ntp_novel_title {
+        padding: 0 5px;
+    }
+}
+
+.ntp_custom_ver_scrollbar,
+body {
+    /* width */
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+    
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+        border-radius: 10px;
+    }
+    
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: #888; 
+        border-radius: 10px;
+    }
+    
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: #555; 
+    }
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+
+    .main {
+        .ntp_nav {
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+        }
+    }
+  }
+
 .hide-scroll-bar {
     &:-webkit-scrollbar {
         display: none;
@@ -12,5 +66,25 @@
         /* IE and Edge */
         scrollbar-width: none;
         /* Firefox */
+    }
+}
+
+
+.ntp_logo {
+    height: 30px;
+    width: 30px;
+}
+.ntp_user_loged {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    .ntp_av_nav {
+        height: 40px;
+        width: 40px;
+        
+        img {
+            max-height: 100%;
+            max-width: 100%;
+        }
     }
 }
