@@ -1,3 +1,7 @@
+.ntp_hidden {
+    display: none;
+}
+
 .overflow-X {
     overflow-x: scroll;
 }
@@ -64,7 +68,7 @@ body {
         .ntp_nav {
             position: sticky;
             top: 0;
-            z-index: 9999;
+            z-index: 99;
         }
     }
 }

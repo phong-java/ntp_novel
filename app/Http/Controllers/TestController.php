@@ -7,8 +7,12 @@ use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
-    public function themtheloai( Request $request) {
-        $arr = array('a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5);
-        echo json_encode($arr);;
+    public function themtheloai(Request $request) {
+        $data = $request ->all();
+        return response()->json([
+            'message' => 'Categoray phogn successfully',
+            'phong' => $data['tentheloai'],
+            'phoang' => $data['_token']
+        ]);
     }
 }

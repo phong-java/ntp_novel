@@ -13,7 +13,7 @@
             @else
                 @auth
                     @if (Auth::user()->sRole == 'admin')
-                    <div class="card-body">
+                    <div class="card-body overflow-auto ntp_custom_ver_scrollbar" style="height: 1000px;">
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -46,7 +46,7 @@
                                         <td>{{ $cat->dCreateDay }}</td>
                                         <td>{{ $cat->dUpdateDay }}</td>
                                         <td>
-                                            <a href="{{route('Categories.edit',[$cat -> id])}}" class="btn btn-primary"> Sửa</a>
+                                            <a href="#" class="btn btn-primary ntp_cat_edit" data-bs-toggle="modal" data-link="{{route('Categories.show',[$cat -> id])}}" data-bs-target="#staticBackdrop"> Sửa</a>    
                                         </td>
                                     </tr>
                                 @endforeach
