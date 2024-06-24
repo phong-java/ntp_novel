@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-header">Tuyện mới cập nhật</div>
+    <div class="card-header fw-bold">Tuyện mới cập nhật</div>
     <div class="card-body">
         <div class="overflow-auto ntp_custom_ver_scrollbar" style="height: 500px;">
             <?php

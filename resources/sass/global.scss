@@ -122,10 +122,37 @@ body {
     }
 }
 
+.ntp_review_wrap {
+    .ntp_review_item_child {
+        margin-left: 100px;
+    }
+
+    .ntp_review_item {
+        .ntp_av_review  {
+            width: 50px;
+            height: 50px;
+        }
+    }
+}
+
 @media (min-width: 576px) {
     .ntp_recommend {
         .ntp_item {
             max-height: 300px;
+        }
+    }
+}
+
+@media (max-width: 667px) {
+    .ntp_recommend {
+        .ntp_item {
+            max-height: 300px;
+        }
+    }
+
+    .ntp_review_wrap {
+        .ntp_review_item_child {
+            margin-left: 20px;
         }
     }
 }

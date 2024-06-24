@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Chapter;
 
-class NovelController extends Controller
+class ChapterController extends Controller
 {
-    public $isSingle = true;
-
+    public $is_chapter_page = true;
     /**
      * Display a listing of the resource.
      *
@@ -48,9 +48,9 @@ class NovelController extends Controller
      */
     public function show($id)
     {
-        
-        return view('single.single_page',[
-            'isSingle' => $this->isSingle
+        // $Chapter = Chapter::find($id);
+        return view('chapter.chapter_page',[
+            'is_chapter_page' => $this->is_chapter_page
         ]);
     }
 

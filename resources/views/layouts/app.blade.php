@@ -17,10 +17,17 @@
     <link href="{{ asset('css/slick_theme.css') }}" rel="stylesheet">
     <link href="{{ asset('css/slick.css') }}" rel="stylesheet">
 
-    @if(isset($isSingle) && $isSingle)
-    <link rel="stylesheet" href="{{ asset('css/single.css') }}">
+    @if (isset($isSingle) && $isSingle)
+        <link href="{{ asset('css/single.css') }}" rel="stylesheet">
     @endif
 
+    @if (isset($is_user_page) && $is_user_page)
+        <link href="{{ asset('css/user.css') }}" rel="stylesheet">
+    @endif
+
+    @if (isset($is_chapter_page) && $is_chapter_page)
+        <link href="{{ asset('css/chapter.css') }}" rel="stylesheet">
+    @endif
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/jquery.min.js') }}" defer></script>
@@ -40,8 +47,8 @@
     <div id="app">
         <main class="main">
             @include('layouts.nav')
+            @include('search.search')
             @yield('content')
-            
         </main>
         @include('layouts.footer')
     </div>

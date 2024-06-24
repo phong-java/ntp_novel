@@ -1,7 +1,7 @@
 @charset 'UTF-8';
+
 /* Slider */
-.slick-loading .slick-list
-{
+.slick-loading .slick-list {
     background: #fff url('./img/gif/ajax-loading-gif-1.gif') center center no-repeat;
 }
 
@@ -17,8 +17,7 @@
 // }
 /* Arrows */
 .slick-prev,
-.slick-next
-{
+.slick-next {
 
 
     position: absolute;
@@ -42,22 +41,20 @@
     visibility: hidden;
     opacity: 0;
 }
+
 .slick-prev:hover,
 .slick-prev:focus,
 .slick-next:hover,
-.slick-next:focus
-{
+.slick-next:focus {
     border-color: #999;
 }
 
 
-.slick-prev
-{
+.slick-prev {
     left: -20px;
 }
 
-.slick-next
-{
+.slick-next {
     right: -20px;
 }
 
@@ -67,6 +64,7 @@
             opacity: 1;
             visibility: visible;
         }
+
         .slick-prev {
             left: -32px;
         }
@@ -80,18 +78,20 @@
         display: flex;
         gap: 10px;
         overflow: hidden;
-        .ntp_novel  {
-            min-width: calc(16.66% - 10px) ;
+
+        .ntp_novel {
+            min-width: calc(16.66% - 10px);
         }
     }
 }
 
-.ntp_recommend   {
+.ntp_recommend {
     &:hover {
         .slick-arrow {
             opacity: 1;
             visibility: visible;
         }
+
         .slick-prev {
             left: -15px;
         }
@@ -105,21 +105,20 @@
         display: flex;
         gap: 10px;
         overflow: hidden;
-        .ntp_item  {
-            min-width: calc(100% - 200px) ;
+
+        .ntp_item {
+            min-width: calc(100% - 200px);
         }
     }
 }
 
 
 /* Dots */
-.slick-dotted.slick-slider
-{
+.slick-dotted.slick-slider {
     margin-bottom: 30px;
 }
 
-.slick-dots
-{
+.slick-dots {
     position: absolute;
     bottom: -25px;
 
@@ -133,8 +132,8 @@
 
     text-align: center;
 }
-.slick-dots li
-{
+
+.slick-dots li {
     position: relative;
 
     display: inline-block;
@@ -146,8 +145,8 @@
 
     cursor: pointer;
 }
-.slick-dots li button
-{
+
+.slick-dots li button {
     font-size: 0;
     line-height: 0;
 
@@ -164,18 +163,18 @@
     outline: none;
     background: transparent;
 }
+
 .slick-dots li button:hover,
-.slick-dots li button:focus
-{
+.slick-dots li button:focus {
     outline: none;
 }
+
 .slick-dots li button:hover:before,
-.slick-dots li button:focus:before
-{
+.slick-dots li button:focus:before {
     opacity: 1;
 }
-.slick-dots li button:before
-{
+
+.slick-dots li button:before {
     font-family: 'slick';
     font-size: 30px;
     line-height: 20px;
@@ -196,8 +195,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-.slick-dots li.slick-active button:before
-{
+
+.slick-dots li.slick-active button:before {
     opacity: .75;
     color: black;
 }
@@ -205,5 +204,18 @@
 .ntp_slick_l_p0 {
     .slick-list {
         padding-left: 0 !important;
+    }
+}
+
+@media (max-width: 992px) {
+    .ntp_novel_single {
+        .ntp_novel_single {
+            flex-direction: column;
+
+            .ntp_novel_single_img,
+            .ntp_novel_single_infor {
+                width: 100% !important;
+            }
+        }
     }
 }

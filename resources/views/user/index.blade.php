@@ -14,7 +14,7 @@
                 @auth
                     @if (Auth::user()->id == $user->id)
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header fw-bold">
                             
                             <div class="btn-group">
                                 <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
@@ -100,6 +100,8 @@
                             @include('layouts.404_traiphep')
                         </div>
                     @endif
+
+
                 @endauth
             @endguest
             </div>

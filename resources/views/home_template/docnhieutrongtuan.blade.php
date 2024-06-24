@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-header">Truyện được đọc nhiều trong tuần</div>
+    <div class="card-header fw-bold">Truyện được đọc nhiều trong tuần</div>
     <div class="card-body">
         <div class="ntp_slick">
             <?php

@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-header">Truyện được đánh dấu nhiều</div>
+    <div class="card-header fw-bold">Truyện được đánh dấu nhiều</div>
     <div class="card-body">
         <div class="ntp_slick">
             <?php

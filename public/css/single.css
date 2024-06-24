@@ -156,3 +156,13 @@
 .ntp_slick_l_p0 .slick-list {
   padding-left: 0 !important;
 }
+
+@media (max-width: 992px) {
+  .ntp_novel_single .ntp_novel_single {
+    flex-direction: column;
+  }
+  .ntp_novel_single .ntp_novel_single .ntp_novel_single_img,
+  .ntp_novel_single .ntp_novel_single .ntp_novel_single_infor {
+    width: 100% !important;
+  }
+}

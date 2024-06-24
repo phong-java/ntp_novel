@@ -4,11 +4,11 @@
         <div class="col-xl-4">
             <!-- Profile picture card-->
             <div class="card mb-4 mb-xl-0">
-                <div class="card-header">Profile Picture</div>
-                <div class="card-body text-center">
+                <div class="card-header fw-bold">Profile Picture</div>
+                <div class="card-body ntp_av_wrap text-center">
                     <!-- Profile picture image-->
-                    <img class="img-account-profile rounded-circle mb-2"
-                        src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                    <img class="ntp_av rounded-circle mb-2"
+                        src="{{ asset('uploads/user_av/phong_av.jpg') }}" alt="">
                     <!-- Profile picture help block-->
                     <div class="small font-italic text-muted mb-4">Ảnh không được lớn hơn 5mb</div>
                     <!-- Profile picture upload button-->
@@ -19,7 +19,7 @@
         <div class="col-xl-8">
             <!-- Account details card-->
             <div class="card mb-4">
-                <div class="card-header">Thông tin chi tiết</div>
+                <div class="card-header fw-bold">Thông tin chi tiết</div>
                 <div class="card-body">
                     <form   method="POST" action="{{ route('User.update', [$user->id]) }}">
                         @csrf

@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-header">Truyện được đánh giá cao</div>
+    <div class="card-header fw-bold">Truyện được đánh giá cao</div>
     <div class="card-body">
         <div class="ntp_recommend ntp_slick_l_p0">
             <?php
@@ -7,7 +7,7 @@
             for ($i=0; $i < 4; $i++) { 
                 ?>
 
-            <div class="ntp_item d-flex gap-4">
+            <div class="ntp_item d-flex gap-2">
                 <div class="w-50 mb-4 mb-md-0">
                     {{-- Ảnh bìa --}}
                     <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
