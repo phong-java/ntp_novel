@@ -3,29 +3,33 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-12 mb-4">
+
+            <div class="col-md-12 mb-5">
+                @include('home_template.danhgiacao')
+            </div>
+            <div class="col-md-12 mb-5">
                 <div class=" row">
                     <div class="col-md-6 mb-4 mb-md-0">
                         {{-- Lịch sử đọc --}}
-                        @include('home_template.lichsudoc')
+                        @include('user.user_read_history')
                     </div>
                     <div class="col-md-6">
                         {{-- Đánh dấu --}}
-                        @include('home_template.danhdau')
+                        @include('user.user_bookmark')
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-12 mb-4">
+            <div class="col-md-12 mb-5">
                 @include('home_template.docnhieu')
             </div>
 
-            <div class="col-md-12 mb-4">
+            <div class="col-md-12 mb-5">
                 {{-- truyện được đánh dấu nhiều --}}
                 @include('home_template.danhdaunhieu')
             </div>
 
-            <div class="col-md-12 mb-4">
+            <div class="col-md-12 mb-5">
                 <div class=" row">
                     <div class="col-md-8 mb-4 mb-md-0">
                         {{-- truyện mới cập nhật --}}
@@ -38,7 +42,7 @@
                 </div>
             </div>
 
-            <div class="col-md-12 mb-4">
+            <div class="col-md-12 mb-5">
                 @include('home_template.docnhieutrongtuan')
 
             </div>

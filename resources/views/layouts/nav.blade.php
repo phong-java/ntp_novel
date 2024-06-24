@@ -1,15 +1,15 @@
 <nav class="ntp_nav navbar navbar-expand-lg  bg-body shadow-sm mb-4">
     <div class="container col-md-11">
         @guest
-            <a class="navbar-brand" href="{{ url('/') }}"><img class="ntp_logo" src="{{ asset('uploads\logo\Logo2 (1).png') }}" alt="">NTP Novel</a>
+            <a class="navbar-brand" href="{{ url('/') }}"><img class="ntp_logo me-2" src="{{ asset('uploads\logo\Logo.pn') }}" alt="">NTP Novel</a>
         @else
             @auth
                 @if (Auth::user()->sRole == 'admin')
-                    <a class="navbar-brand" href="{{ url('/') }}"><img class="ntp_logo" src="{{ asset('uploads\logo\Logo2 (1).png') }}" alt="">NTP Novel - Admin</a>
+                    <a class="navbar-brand" href="{{ url('/') }}"><img class="ntp_logo me-2" src="{{ asset('uploads\logo\Logo.jpg') }}" alt="">NTP Novel - Admin</a>
                 @elseif (Auth::user()->sRole == 'author')
-                    <a class="navbar-brand" href="{{ url('/') }}"><img class="ntp_logo" src="{{ asset('uploads\logo\Logo2 (1).png') }}" alt="">NTP Novel - Author</a>
+                    <a class="navbar-brand" href="{{ url('/') }}"><img class="ntp_logo me-2" src="{{ asset('uploads\logo\Logo.jpg') }}" alt="">NTP Novel - Author</a>
                 @else
-                    <a class="navbar-brand" href="{{ url('/') }}"><img class="ntp_logo" src="{{ asset('uploads\logo\Logo2 (1).png') }}" alt="">NTP Novel</a>
+                    <a class="navbar-brand" href="{{ url('/') }}"><img class="ntp_logo me-2" src="{{ asset('uploads\logo\Logo.jpg') }}" alt="">NTP Novel</a>
                 @endif
             @endauth
         @endguest

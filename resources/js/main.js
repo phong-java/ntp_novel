@@ -11,14 +11,14 @@ $(document).ready(function(){
         infinite: false,
         speed: 300,
         slidesToShow: 6,
-        slidesToScroll: 1,
+        slidesToScroll: 6,
         infinite: true,
         responsive: [
           {
             breakpoint: 1024,
             settings: {
               slidesToShow: 4,
-              slidesToScroll: 1,
+              slidesToScroll: 4,
               infinite: true,
               dots: true
             }
@@ -27,14 +27,14 @@ $(document).ready(function(){
             breakpoint: 600,
             settings: {
               slidesToShow: 3,
-              slidesToScroll: 1
+              slidesToScroll: 3
             }
           },
           {
             breakpoint: 480,
             settings: {
               slidesToShow: 2,
-              slidesToScroll: 1
+              slidesToScroll: 2
             }
           }
           // You can unslick at a given breakpoint now by adding:
@@ -43,4 +43,29 @@ $(document).ready(function(){
         ]
       });
 
+      $('.ntp_recommend').slick({
+        centerMode: true,
+        centerPadding: '200px',
+        slidesToShow: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        responsive: [
+          {
+            breakpoint: 768,
+            settings: {
+              centerMode: true,
+              centerPadding: '50px',
+              slidesToShow: 1
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              centerMode: true,
+              centerPadding: '0px',
+              slidesToShow: 1
+            }
+          }
+        ]
+      });
   });

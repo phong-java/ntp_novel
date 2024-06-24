@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\NovelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +26,5 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::resource('/Categories', CategoriesController::class);
 Route::resource('/User', UserController::class);
+Route::resource('/Novel', NovelController::class);
 

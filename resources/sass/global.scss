@@ -2,6 +2,18 @@
     overflow-x: scroll;
 }
 
+.overflow-Xv {
+    overflow-x: visible;
+}
+
+.overflow-Xh {
+    overflow-x: hidden;
+}
+
+.overflow-Y {
+    overflow-y: auto;
+}
+
 a {
     text-decoration: none;
     color: inherit;
@@ -18,26 +30,27 @@ a {
 
 .ntp_custom_ver_scrollbar,
 body {
+
     /* width */
     &::-webkit-scrollbar {
         width: 5px;
     }
-    
+
     /* Track */
     &::-webkit-scrollbar-track {
-        background: #f1f1f1; 
+        background: #efefef;
         border-radius: 10px;
     }
-    
+
     /* Handle */
     &::-webkit-scrollbar-thumb {
-        background: #888; 
+        background: #888;
         border-radius: 10px;
     }
-    
+
     /* Handle on hover */
     &::-webkit-scrollbar-thumb:hover {
-        background: #555; 
+        background: #555;
     }
 }
 
@@ -54,7 +67,7 @@ body {
             z-index: 9999;
         }
     }
-  }
+}
 
 .hide-scroll-bar {
     &:-webkit-scrollbar {
@@ -74,17 +87,59 @@ body {
     height: 30px;
     width: 30px;
 }
+
 .ntp_user_loged {
     display: flex;
     gap: 10px;
     align-items: center;
+
     .ntp_av_nav {
         height: 40px;
         width: 40px;
-        
+
         img {
             max-height: 100%;
             max-width: 100%;
         }
     }
 }
+
+
+.ntp_recommend {
+    .ntp_item {
+        max-width: 900px;
+        padding: 0 10px 0 0;
+        overflow: hidden;
+        .bg-image {}
+
+        .ntl_tomtat {
+            max-height: 150px;
+        }
+    }
+
+    .slick-slide {
+        padding-left: 0 !important;
+    }
+}
+
+@media (min-width: 576px) {
+    .ntp_recommend {
+        .ntp_item {
+            max-height: 300px;
+        }
+    }
+}
+
+@media (min-width: 768px) {}
+
+@media (min-width: 992px) {
+    .ntp_recommend {
+        .ntp_item {
+            max-height: 600px;
+        }
+    }
+}
+
+@media (min-width: 1200px) {}
+
+@media (min-width: 1400px) {}
