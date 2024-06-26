@@ -1,20 +1,18 @@
-@extends('layouts.app')
-
-
-
-@section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header fw-bold">{{ __('Login') }}</div>
+                <div class="card-header fw-bold d-flex justify-content-between align-items-center">Đăng nhập
+                    <button type="button" class="btn btn-secondary p-0 fs-2 d-flex rounded-circle bg-transparent border-0" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
+                </div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form id="ntp_login_form" action="{{ route('login') }}">
                         @csrf
-
+                        <div class="alert alert-success ntp_hidden" role="alert"></div>
+                        <div class="alert alert-danger ntp_hidden" role="alert"></div>
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-end">Tài khoản (Email)</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -28,7 +26,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-end">Mật khẩu</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
@@ -47,21 +45,27 @@
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                                     <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
+                                        Ghi nhớ đăng nhập
                                     </label>
                                 </div>
                             </div>
                         </div>
 
+                        <div class="row mb-3">
+                            <div class="col-md-6 offset-md-4">
+                            <a class="btn btn-link p-0" href="#" data-bs-target="#carouselExampleControls" data-bs-slide="prev"> Bạn chưa có tài khoản ? </a>
+                            </div>
+                        </div>
+
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
+                                <button type="button" class="btn ntp_submit_login btn-primary">
+                                    Đăng nhập
                                 </button>
 
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
+                                        Quên mật khẩu
                                     </a>
                                 @endif
                             </div>
@@ -72,4 +76,3 @@
         </div>
     </div>
 </div>
-@endsection

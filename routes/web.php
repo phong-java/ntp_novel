@@ -34,9 +34,11 @@ Route::post('/chi-tiet-the-loai/{id}',[CategoriesController::class,'show'])->nam
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 // Route::resource('/Categories', CategoriesController::class);
-Route::resource('/User', UserController::class);
+// Route::resource('/User', UserController::class);
 Route::resource('/Novel', NovelController::class);
 Route::resource('/Chapter', ChapterController::class);
 
 Route::get('/User/{id}/admin', [UserController::class, 'admin'])->name('User.admin');
+Route::post('/User-update/{id}', [UserController::class, 'update'])->name('User.update');
+Route::get('/User/{id}/show', [UserController::class, 'show'])->name('User.show');
 

@@ -53,6 +53,16 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/[A-Z]/', 'regex:/[a-z]/', 'regex:/[0-9]/', 'regex:/[_!@#$%^&*()<>?]/'],
+        ],[
+            'name.required' => 'Tên người dùng không được để trống',
+            'tentheloai.string' => 'Tên người dùng phải là các ký tự',
+            'tentheloai.max' => 'Tên người dùng không được nhiều hơn 255 ký tự',
+            'email.unique' => 'Email đã tồn tại',
+            'email.required' => 'Email không được để trống',
+            'email.string' => 'Email phải là các ký tự',
+            'email.max' => 'Email không được nhiều hơn 255 ký tự',
+            'email.email' => 'Email không đúng định dạng',
+            'password.confirmed' => 'Mật khẩu xác nhận không chính xác' 
         ]);
     }
 

@@ -40,7 +40,9 @@ trait RegistersUsers
         }
 
         return $request->wantsJson()
-                    ? new JsonResponse([], 201)
+                    ? new JsonResponse([ 
+                        'message' => 'Bạn đã đăng ký thành công, hãy đăng nhập ngay.Trang sẽ tự tải lại trong 2s',
+                        'status' =>1], 201)
                     : redirect($this->redirectPath());
     }
 

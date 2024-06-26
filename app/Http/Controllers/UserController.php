@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Categories;
+use Illuminate\Validation\Rule;
+use App\Http\Controllers\Storage;
+use Illuminate\Support\Facades\File;
+
 class UserController extends Controller
 {
-    public $is_user_page =true;
+    public $is_user_page = true;
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::orderby('id','ASC')->get();
+        $users = User::orderby('id', 'ASC')->get();
         return view('user.index')->with(compact('users'));
     }
 
@@ -51,7 +54,7 @@ class UserController extends Controller
     {
 
         $user = User::find($id);
-        return view('user.index',[
+        return view('user.index', [
             'user' => $user,
             'is_user_page' => $this->is_user_page
         ]);
@@ -65,7 +68,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        
+        // 
     }
 
     /**
@@ -77,16 +80,81 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $data = $request-> all();
+
+        $data = $request->validate(
+            [
+                'tennguoidung' => ['required', 'string', 'max:255', Rule::unique('users', 'name')->ignore($id),],
+                'diachi' => ['string', 'max:255'],
+                'anhdaidien' => ['image', 'max:4096'],
+                'ngaysinh' => ['date'],
+                'gioitinh' => ['in:nam,nữ'],
+            ],
+            [
+                'tennguoidung.required' => 'Tên người dùng không được để trống',
+                'tennguoidung.string' => 'Tên người dùng phải là các ký tự',
+                'tennguoidung.max' => 'Tên người dùng không được nhiều hơn 255 ký tự',
+                'tennguoidung.unique' => 'Tên người dùng đã được sử dụng',
+
+
+                'diachi.string' => 'Địa chỉ phải là các ký tự',
+                'diachi.max' => 'Địa chỉ không được nhiều hơn 255 ký tự',
+
+                'anhdaidien.image' => 'File bạn vừa upload không phải là hình ảnh',
+                'anhdaidien.max' => 'File ảnh bạn upload phải < 4mb',
+
+                'ngaysinh.date' => 'Ngày sinh không hợp lệ',
+
+                'gioitinh.in' => 'Giới tính chỉ chấp nhân nam hoặc nữ',
+            ]
+        );
+
+        $send = [
+            'avatar_change_status' => 2
+        ];
+
+        $file = $request->file("anhdaidien");
+
         // dd($data);
         $user = User::find($id);
-        $user->name = $request['tennguoidung'];
-        $user->sAdress = $request['diachi'];
-        $user->dBirthday = $request['ngaysinh'];
-        $user->sGender = $request['gioitinh'];
+        $user->name = $data['tennguoidung'];
+        $user->sAdress = $data['diachi'];
+        $user->dBirthday = $data['ngaysinh'];
+        $user->sGender = $data['gioitinh'];
+
+        
+        if($file) {
+            $destination = "uploads/user_av";
+            // $av =public_path($destination.$user->sAvatar);
+
+            $filename = 'time_'.time().'_file_'.$file->getClientOriginalName();
+            if ($file->move($destination, $filename)) {
+                $send = [
+                    'avatar_change' => 'Cập nhật Avatar thành công',
+                    'avatar_change_status' => 1,
+                    'av_link' => url($destination.'/'.$filename)
+                ];
+
+                $user->sAvatar = $filename;
+
+
+
+            } else {
+                $send = [
+                    'avatar_change' => 'Cập nhật Avatar thất bại',
+                    'avatar_change_status' => 0
+                ];
+            }
+
+            
+        }
+
         $user->save();
 
-        return redirect()->back()->with('status','Cập nhật thông tin cá nhân thành công');
+        return response()->json([
+            'message' => 'Cập nhật thông tin cá nhân thành công',
+            'status' => 1, 
+            'av_update'=>$send,
+        ]);
     }
 
     /**
@@ -103,11 +171,9 @@ class UserController extends Controller
     public function admin($id)
     {
         $user = User::find($id);
-        $cats = Categories::orderby('id','ASC')->get();
-        return view('admincp.admin_page.adminpage',[
+        return view('admincp.admin_page.adminpage', [
             'isadmin' => true,
             'user' => $user,
-            'cats' => $cats
         ]);
     }
 }

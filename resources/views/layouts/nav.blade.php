@@ -15,24 +15,16 @@
                 <li class="navbar-nav ms-auto">
                     <!-- Authentication Links -->
                     @guest
-                        @if (Route::has('login'))
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">Đăng nhập</a>
+                        <a class="nav-link d-flex gap-2 align-items-center" href="#" data-bs-toggle="modal" data-bs-target="#ntp_login_register_modal"><i class="fa-regular fa-user"></i>Đăng nhập / Đăng ký</a>
                     </li>
-                    @endif
-
-                    @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">Đăng ký</a>
-                        </li>
-                    @endif
                 @else
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="ntp_user_loged nav-link dropdown-toggle" href="#" role="button"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
 
                             <div class="ntp_av_nav overflow-hidden rounded-circle">
-                                <img class="ntp_av_nav" src="{{ asset('uploads/user_av/phong_av.jpg') }}" alt="">
+                                <img class="ntp_av_nav ntp_av" src="{{ asset('uploads/user_av/'.Auth::user()->sAvatar) }}" alt="">
                             </div>
                             {{ Auth::user()->name }}
                         </a>
