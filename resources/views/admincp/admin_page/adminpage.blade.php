@@ -16,12 +16,12 @@
                             <div class="card">
                                 <div class="card-header fw-bold">
 
-                                    <div class="btn-group">
+                                    <div class="btn-group" id="pills-tab" role="tablist">
                                         <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
                                             aria-expanded="false">
                                             Quản lý thể loại truyện
                                         </button>
-                                        <ul class="dropdown-menu" id="pills-tab" role="tablist">
+                                        <ul class="dropdown-menu">
                                             <li>
                                                 <button class="dropdown-item" id="them_theoloai-tab" data-bs-toggle="pill"
                                                     data-bs-target="#them_theoloai" type="button" role="tab"
@@ -35,6 +35,23 @@
                                                     loại</button>
                                             </li>
                                         </ul>
+
+                                        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            Quản lý tác giả
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <button class="dropdown-item" id="xet_duyet_tacgia-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#xet_duyet_tacgia" type="button" role="tab"
+                                                    aria-controls="xet_duyet_tacgia" aria-selected="false" data-link="{{route('Author.danhsach_xetduyet')}}">Xét duyệt tác giả</button>
+                                            </li>
+                                            <li>
+                                                <button class="dropdown-item" id="danh_sach_tacgia-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#danh_sach_tacgia" type="button" role="tab"
+                                                    aria-controls="danh_sach_tacgia">Danh sách tác giả đang hoạt động</button>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
 
@@ -46,18 +63,24 @@
                                         </div>
                                         <div class="tab-pane fade active show" id="danh_sach_theloai" role="tabpanel"
                                             aria-labelledby="danh_sach_theloai-tab">
-                                            {{-- dùng ajax load --}}
-                                            {{-- @include('admincp.Categories.index') --}}
+                                        </div>
+                                        <div class="tab-pane fade" id="xet_duyet_tacgia" role="tabpanel"
+                                            aria-labelledby="xet_duyet_tacgia-tab">
+                                            @include('admincp.admin_page.admin_xetduyet_tacgia')
+                                        </div>
+                                        <div class="tab-pane fade" id="danh_sach_tacgia" role="tabpanel"
+                                            aria-labelledby="danh_sach_tacgia-tab">
+                                            {{-- @include('admincp.admin_page.admin_danhsach_tacgia') --}}
                                         </div>
                                     </div>
                                     <!-- Modal -->
-                                    <div class="modal fade ntp_edit_cat_ppoup" id="staticBackdrop" data-bs-backdrop="static"
-                                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                    <div class="modal fade ntp_edit_cat_ppoup" id="ntp_edit_cat_ppoup" data-bs-backdrop="static"
+                                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="ntp_edit_cat_ppoupLabel"
                                         aria-hidden="true">
                                         <div class="modal-dialog modal-lg modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                                    <h5 class="modal-title" id="ntp_edit_cat_ppoupLabel">Modal title</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
@@ -71,6 +94,28 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="modal fade ntp_author_detail" id="ntp_author_detail" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="ntp_author_detailLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="ntp_author_detailLabel">Đơn xin xét duyệt quyền tác giả của <span id="ntp_name"></span></h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+        
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Hủy</button>
+                                                <button type="button" class="btn btn-primary ntp_author_detail_update">Cập nhật</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 </div>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Bill;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Storage;
 use Illuminate\Support\Facades\File;
@@ -54,9 +55,11 @@ class UserController extends Controller
     {
 
         $user = User::find($id);
+        $bills = Bill::where('idUser', $id)->get();
         return view('user.index', [
             'user' => $user,
-            'is_user_page' => $this->is_user_page
+            'is_user_page' => $this->is_user_page,
+            'bills' => $bills
         ]);
     }
 
@@ -85,7 +88,6 @@ class UserController extends Controller
             [
                 'tennguoidung' => ['required', 'string', 'max:255', Rule::unique('users', 'name')->ignore($id),],
                 'diachi' => ['string', 'max:255'],
-                'anhdaidien' => ['image', 'max:4096'],
                 'ngaysinh' => ['date'],
                 'gioitinh' => ['in:nam,nữ'],
             ],
@@ -99,20 +101,11 @@ class UserController extends Controller
                 'diachi.string' => 'Địa chỉ phải là các ký tự',
                 'diachi.max' => 'Địa chỉ không được nhiều hơn 255 ký tự',
 
-                'anhdaidien.image' => 'File bạn vừa upload không phải là hình ảnh',
-                'anhdaidien.max' => 'File ảnh bạn upload phải < 4mb',
-
                 'ngaysinh.date' => 'Ngày sinh không hợp lệ',
 
                 'gioitinh.in' => 'Giới tính chỉ chấp nhân nam hoặc nữ',
             ]
         );
-
-        $send = [
-            'avatar_change_status' => 2
-        ];
-
-        $file = $request->file("anhdaidien");
 
         // dd($data);
         $user = User::find($id);
@@ -121,11 +114,38 @@ class UserController extends Controller
         $user->dBirthday = $data['ngaysinh'];
         $user->sGender = $data['gioitinh'];
 
-        
+        $user->save();
+
+        return response()->json([
+            'message' => 'Cập nhật thông tin cá nhân thành công',
+            'status' => 1
+        ]);
+    }
+
+    public function update_anhdaidien(Request $request, $id)
+    {
+
+        $data = $request->validate(
+            [
+                'anhdaidien' => ['image', 'max:4096'],
+                'ngaysinh' => ['date'],
+                'gioitinh' => ['in:nam,nữ'],
+            ],
+            [
+                'anhdaidien.image' => 'File bạn vừa upload không phải là hình ảnh',
+                'anhdaidien.max' => 'File ảnh bạn upload phải < 4mb',
+            ]
+        );
+
+        $send = [
+            'avatar_change_status' => ''
+        ];
+
+        $file = $request->file("anhdaidien");
+        $user = User::find($id);
+
         if($file) {
             $destination = "uploads/user_av";
-            // $av =public_path($destination.$user->sAvatar);
-
             $filename = 'time_'.time().'_file_'.$file->getClientOriginalName();
             if ($file->move($destination, $filename)) {
                 $send = [
@@ -133,25 +153,18 @@ class UserController extends Controller
                     'avatar_change_status' => 1,
                     'av_link' => url($destination.'/'.$filename)
                 ];
-
                 $user->sAvatar = $filename;
-
-
-
             } else {
                 $send = [
                     'avatar_change' => 'Cập nhật Avatar thất bại',
                     'avatar_change_status' => 0
                 ];
             }
-
-            
         }
 
         $user->save();
 
         return response()->json([
-            'message' => 'Cập nhật thông tin cá nhân thành công',
             'status' => 1, 
             'av_update'=>$send,
         ]);

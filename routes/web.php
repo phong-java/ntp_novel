@@ -7,6 +7,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\NovelController;
 use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\BillController;
+use App\Http\Controllers\AuthorController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,8 +39,19 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 // Route::resource('/User', UserController::class);
 Route::resource('/Novel', NovelController::class);
 Route::resource('/Chapter', ChapterController::class);
+// Route::resource('/Author', AuthorController::class);
+
+Route::post('/them-thong-tin-tac-gia',[AuthorController::class,'store'])->name('Author.store');
+Route::get('/xem-thong-tin-tac-gia/{id}',[AuthorController::class,'show'])->name('Author.show');
+Route::post('/cap-nhat-thong-tin-tac-gia/{id}',[AuthorController::class,'update'])->name('Author.update');
+Route::post('/xet-duyet-tac-gia/{id}',[AuthorController::class,'xetduyet'])->name('Author.xetduyet');
+Route::post('/chi-tiet-tac-gia/{id}',[AuthorController::class,'edit'])->name('Author.edit');
+Route::post('/danh-sach-xet-duyet-tac-gia',[AuthorController::class,'danhsach_xetduyet'])->name('Author.danhsach_xetduyet');
 
 Route::get('/User/{id}/admin', [UserController::class, 'admin'])->name('User.admin');
 Route::post('/User-update/{id}', [UserController::class, 'update'])->name('User.update');
 Route::get('/User/{id}/show', [UserController::class, 'show'])->name('User.show');
+Route::post('/update-anhdaidien/{id}', [UserController::class, 'update_anhdaidien'])->name('User.update_anhdaidien');
 
+Route::post('/Nap-tien/{id}', [BillController::class, 'Naptien'])->name('Bill.Naptien');
+Route::get('/Nap-tien-thanh-cong/{id}', [BillController::class, 'Naptienthanhcong'])->name('Bill.Naptienthanhcong');

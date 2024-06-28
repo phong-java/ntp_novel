@@ -41,7 +41,7 @@
                                     <li>
                                         <button class="dropdown-item" id="user_bill-tab" data-bs-toggle="pill"
                                             data-bs-target="#user_bill" type="button" role="tab" aria-controls="user_bill"
-                                            aria-selected="false">Nạp tiền</button>
+                                            aria-selected="false">Ví tiền và hóa đơn</button>
                                     </li>
                                     <li>
                                         <button class="dropdown-item" id="user_bookmark-tab" data-bs-toggle="pill"
@@ -62,11 +62,6 @@
                         </div>
     
                         <div class="card-body">
-                            @if (session('status'))
-                                <div class="alert alert-success" role="alert">
-                                    {{ session('status') }}
-                                </div>
-                            @endif
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="user_infor" role="tabpanel"
                                     aria-labelledby="user_infor-tab">

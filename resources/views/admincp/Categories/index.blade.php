@@ -18,9 +18,8 @@
                             <thead>
                                 <tr>
                                     <th scope="col">STT</th>
-                                    <th scope="col">Mã thể loại</th>
+                                    {{-- <th scope="col">Mã thể loại</th> --}}
                                     <th scope="col">Tên thể loại</th>
-                                    <th scope="col">Mô tả</th>
                                     <th scope="col">Trạng thái</th>
                                     <th scope="col">Ngày khởi tạo</th>
                                     <th scope="col">Cập nhật lần cuối</th>
@@ -33,9 +32,8 @@
                                 @foreach ($cats as $key => $cat)
                                     <tr>
                                         <th scope="row">{{ $key + 1 }}</th>
-                                        <td>{{ $cat->id }}</td>
+                                        {{-- <td>{{ $cat->id }}</td> --}}
                                         <td>{{ $cat->sCategories }}</td>
-                                        <td class="w-25">{{ $cat->sDes }}</td>
                                         <td>
                                             @if ($cat->iStatus == 1)
                                                 <span class="text text-success">kích hoạt</span>
@@ -46,7 +44,7 @@
                                         <td>{{ $cat->dCreateDay }}</td>
                                         <td>{{ $cat->dUpdateDay }}</td>
                                         <td>
-                                            <a href="#" class="btn btn-primary ntp_cat_edit" data-bs-toggle="modal" data-link="{{route('Categories.show',[$cat -> id])}}" data-bs-target="#staticBackdrop"> Sửa</a>    
+                                            <a href="#" class="btn btn-primary ntp_cat_edit" data-bs-toggle="modal" data-link="{{route('Categories.show',[$cat -> id])}}" data-bs-target="#ntp_edit_cat_ppoup"> Chi tiết</a>    
                                         </td>
                                     </tr>
                                 @endforeach

@@ -41,9 +41,8 @@
                             <a class="dropdown-item" href="{{ route('User.admin',[Auth::user()->id])}}">Trang quản trị</a>
                             @endif
 
-                            @if (Auth::user()->sRole == 'author' || Auth::user()->sRole == 'admin')
-                            <a class="dropdown-item" href="{{ route('User.admin',[Auth::user()->id])}}">Trang quản lý truyện</a>
-                            @endif
+                            <a class="dropdown-item" href="{{ route('Author.show',[Auth::user()->id])}}">Trang tác giả</a>
+                            
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>

@@ -11,9 +11,14 @@
                         src="{{ asset('uploads/user_av/'.Auth::user()->sAvatar) }}" alt="">
                     <!-- Profile picture help block-->
                     <div class="my-3">
-                        <div class="alert alert-success ntp_hidden" role="alert"></div>
-                        <div class="alert alert-danger ntp_hidden" role="alert"></div>
-                        <label for="av_upoad" class="btn m-0 btn-primary form-label">Thay đổi ảnh đại diện</label>
+                        <form method="POST" id="ntp_form_update_av_user">
+                            @csrf
+                            <div class="alert alert-success ntp_hidden update_anhdaidien" role="alert"></div>
+                            <div class="alert alert-danger ntp_hidden update_anhdaidien" role="alert"></div>
+                            <label for="ntp_input_update_anhdaidien" class="btn m-0 btn-primary form-label">Thay đổi ảnh đại diện</label>
+                            <input class="form-control d-none" data-link="{{route('User.update_anhdaidien',[$user->id])}}" type="file" id="ntp_input_update_anhdaidien"  name="anhdaidien" accept="image/*">
+                        </form>
+
                       </div>
                 </div>
             </div>
@@ -27,7 +32,7 @@
                         @csrf
                         <div class="alert alert-success ntp_hidden" role="alert"></div>
                         <div class="alert alert-danger ntp_hidden" role="alert"></div>
-                        <input class="form-control d-none" type="file"  name="anhdaidien" accept="image/*" id="av_upoad">
+                       
                         <div class="mb-3">
                             <label class="small mb-1" for="inputUsername">Tên (Cách mà chúng tôi hiển thị bạn trên website)</label>
                             <input class="form-control" id="inputUsername" maxlength="255" name="tennguoidung" type="text" placeholder="Tên bạn là" value="{{ old('tennguoidung') ? old('tennguoidung') : $user->name }}">
