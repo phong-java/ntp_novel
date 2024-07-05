@@ -11,12 +11,6 @@ $(document).ready(function () {
     }
   });
 
-  //   var ntp_ckeditor = $('.ntp_ckeditor');
-  //   if($(ntp_ckeditor).length) {
-  // $(ntp_ckeditor).ckeditor();
-  //   }
-
-
   $('.ntp_slick').slick({
     dots: true,
     infinite: false,
@@ -481,7 +475,7 @@ $(document).ready(function () {
         if (data.status == 1) {
           $(_form).find('.alert-danger').fadeOut(200);
           $(_form).find('.alert-success').fadeIn(200).html(data.message);
-
+          $('body').trigger('ntp-alert-out');
         } else if (data.status == 0) {
           $(_form).find('.alert-success').fadeOut(200);
 
@@ -492,6 +486,7 @@ $(document).ready(function () {
           }
           $(_form).find('.alert-danger').fadeIn(200).html(errorMessages);
         }
+        
       },
       error: function (error) {
 
@@ -521,7 +516,7 @@ $(document).ready(function () {
   }).trigger('ntp_admin_load_xetduyet_author_list');
 
 
-  $('.ntp_btn_create_novel').click(function (e) {
+  $('.ntp_btn_create_novel,.ntp_btn_update_infor_novel').click(function (e) {
     var _this = $(this);
     var _form = $(_this).parents('#ntp_form_create_novel');
     var url = $(_form).attr('action');
@@ -540,6 +535,8 @@ $(document).ready(function () {
         if (data.status == 1) {
           $(_form).find('.alert-danger').fadeOut(200);
           $(_form).find('.alert-success').fadeIn(200).html(data.message);
+          $('body').trigger('ntp_author_load_novel_list');
+          $('body').trigger('ntp-alert-out');
 
         } else if (data.status == 0) {
           $(_form).find('.alert-success').fadeOut(200);
@@ -577,7 +574,7 @@ $(document).ready(function () {
         method: "POST",
         url: url,
         success: function (data) {
-          var danhsach_truyen = $('#danhsach_truyen');
+          var danhsach_truyen = $('#ntp_novel_list_wrap');
           $(danhsach_truyen).html(data);
         },
         error: function (error) {
@@ -594,6 +591,5 @@ $(document).ready(function () {
       $('.alert-danger ').fadeOut(200);
     }, 4000);
   });
-
 
 });

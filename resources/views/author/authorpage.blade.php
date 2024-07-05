@@ -39,12 +39,6 @@
                                                         tin tác giả</button>
                                                 </li>
                                                 <li>
-                                                    <button class="dropdown-item" id="thongke_baocao-tab" data-bs-toggle="pill"
-                                                        data-bs-target="#thongke_baocao" type="button" role="tab"
-                                                        aria-controls="thongke_baocao" aria-selected="false">Thống kê báo
-                                                        cáo</button>
-                                                </li>
-                                                <li>
                                                     <a href="#" class="dropdown-item" id="rut_tien-tab" data-bs-toggle="pill"
                                                         data-bs-target="#rut_tien" type="button" role="tab"
                                                         aria-controls="rut_tien" aria-selected="false">Rút
@@ -58,16 +52,16 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <button class="dropdown-item" id="them_truyen-tab" data-bs-toggle="pill"
-                                                        data-bs-target="#them_truyen" type="button" role="tab"
-                                                        aria-controls="them_truyen" aria-selected="true">Thêm truyện</button>
-                                                </li>
-                                                <li>
                                                     <button class="dropdown-item" id="danhsach_truyen-tab" data-bs-toggle="pill"
                                                         data-bs-target="#danhsach_truyen" type="button" role="tab"
                                                         aria-controls="danhsach_truyen" aria-selected="false"
-                                                        data-link="{{ route('Novel.Danh_sachtruyen_tacgia') }}">Danh sách
-                                                        truyện</button>
+                                                        data-link="{{ route('Novel.Danh_sachtruyen_tacgia') }}">Tuyện của tôi</button>
+                                                </li>
+                                                <li>
+                                                    <button class="dropdown-item" id="thongke_baocao-tab" data-bs-toggle="pill"
+                                                        data-bs-target="#thongke_baocao" type="button" role="tab"
+                                                        aria-controls="thongke_baocao" aria-selected="false">Thống kê báo
+                                                        cáo</button>
                                                 </li>
                                             </ul>
                                         </div>
@@ -94,13 +88,10 @@
                                                 aria-labelledby="rut_tien-tab">
                                                 {{-- @include('user.rut_tien') --}}
                                             </div>
-                                            <div class="tab-pane fade" id="them_truyen" role="tabpanel"
-                                                aria-labelledby="them_truyen-tab">
-                                                @include('author.novel.novel_infor')
-                                            </div>
                                             <div class="tab-pane fade" id="danhsach_truyen" role="tabpanel"
                                                 aria-labelledby="danhsach_truyen-tab">
-                                                asd
+                                                @include('author.novel.novel_infor')
+                                                <div id="ntp_novel_list_wrap"></div>
                                             </div>
                                         </div>
 

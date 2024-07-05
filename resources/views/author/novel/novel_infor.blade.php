@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 $cats = Categories::orderBy('id', 'DESC')->where('iStatus',1)->get();
 
 ?>
-<div class="container-xl p-0">
+<div class="container mb-4">
     <div class="row">
         <div class="col-xl-4">
             <!-- Profile picture card-->
@@ -30,7 +30,7 @@ $cats = Categories::orderBy('id', 'DESC')->where('iStatus',1)->get();
             <div class="card mb-4">
                 <div class="card-header fw-bold">Thông tin chi tiết truyện</div>
                 <div class="card-body">
-                    <form method="POST" id="ntp_form_create_novel" action="{{ route('Novel.store', [$user->id]) }}">
+                    <form method="POST" id="ntp_form_create_novel" action="{{ route('Novel.store', [Auth::user()->id]) }}">
                         @csrf
                         <input class="form-control d-none" type="file" id="ntp_input_anhbiatruyen"  name="anhbia" accept="image/*">
                         <div class="alert alert-success ntp_hidden" role="alert"></div>

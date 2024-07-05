@@ -42,7 +42,6 @@ Route::resource('/Chapter', ChapterController::class);
 // Route::resource('/Author', AuthorController::class);
 
 Route::post('/Danh-sachtruyen-tacgia',[NovelController::class,'Danh_sachtruyen_tacgia'])->name('Novel.Danh_sachtruyen_tacgia');
-
 Route::get('/Quan-ly-truyen/{id}',[NovelController::class,'quan_ly_truyen'])->name('Novel.quan_ly_truyen');
 
 Route::post('/them-thong-tin-tac-gia',[AuthorController::class,'store'])->name('Author.store');

@@ -99,7 +99,7 @@ class NovelController extends Controller
     
                     
                     $novel->sNovel = $data['tentruyen'];
-                    $novel->sDes = $data['motatruyen'];
+                    $novel->sDes = htmlspecialchars($data['motatruyen']);
                     $novel->sProgress = $data['tiendo'];
                     $novel->idUser = $id;
     
@@ -175,9 +175,116 @@ class NovelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $idnovel)
     {
-        //
+        if (Auth::check()) {
+            
+            $data = $request->validate(
+                [
+                    'anhbia' => ['nullable', 'image', 'max:4096'],
+                    'tentruyen' => ['required', 'string', 'max:255'],
+                    'motatruyen' => ['required'],
+                    'tiendo' => ['required', 'in:1,2,3'],
+                    'theloai' => ['required']
+                ],
+                [
+                    'tentruyen.required' => 'Tên truyện không được để trống',
+                    'tentruyen.string' => 'Tên truyện phải là các ký tự',
+                    'tentruyen.max' => 'Tên truyện không được nhiều hơn 255 ký tự',
+    
+                    'anhbia.image' => 'Ảnh bìa truyện không đúng định dạng',
+                    'anhbia.max' => 'Ảnh bìa truyện phải nhở hơn 4mb',
+    
+                    'motatruyen.required' => 'Mô tả truyện không được để trống',
+    
+                    'tiendo.required' => 'Tiến độ không được để trống',
+
+                    'theloai.required' => 'Thể loại không được để trống'
+                ]
+            );
+
+            $iduser = Auth::user()->id;
+            $user = User::find($iduser);
+            
+            $novel = Novel::find($idnovel);
+
+            $cats = Categories::orderby('id', 'ASC')->get();
+            $catIds = $cats->pluck('id')->toArray();
+
+            $theloai = $data['theloai'];
+            $invalidTheloai = array_diff($theloai, $catIds);
+            
+            if (!empty($invalidTheloai)) {
+                return response()->json([
+                    'errors' => ['theloai' => 'Có thể loại không hợp lệ'],
+                    'status' => 0
+                ]);
+            }
+    
+            if($user) {
+                if($user['sRole'] != 'user') {
+                    
+                    if ($novel->idUser !==  $iduser) {
+                        return response()->json([
+                            'errors' => ['Nguoidung_quyen' => 'Bạn không có quyền cập nhật truyện này'],
+                            'status' => 0
+                        ]);
+                    }
+
+                    $file = $request->file("anhbia");
+            
+                    if($file) {
+                        $destination = "uploads/images";
+                        $filename = 'time_'.time().'_file_'.$file->getClientOriginalName();
+                        if ($file->move($destination, $filename)) {
+                            $novel->sCover = $filename;
+                        }
+                    }
+    
+                    
+                    $novel->sNovel = $data['tentruyen'];
+                    $novel->sDes = htmlspecialchars($data['motatruyen']);
+                    $novel->sProgress = $data['tiendo'];
+    
+                    $novel->save();
+
+                    
+                    Classify::where('idNovel', $idnovel)->delete();
+
+                    foreach ($data['theloai'] as $id_cat) {
+                        $clasifi = new Classify();
+                        $clasifi->idNovel = $idnovel;
+                        $clasifi->idCategories = $id_cat;
+
+                        $clasifi->save();
+                    }
+
+                    return response()->json([
+                        'message' => 'Cập nhật truyện thành công',
+                        'status' => 1
+                    ]);
+
+                } else {
+                    return response()->json([
+                        'errors' => ['Nguoidung_quyen' => 'Bạn không có quyền cập nhật truyện này'],
+                        'status' => 1
+                    ]);
+                }
+    
+            } else {
+                return response()->json([
+                    'errors' => ['Nguoidung' => 'Không tìm thấy người dùng'],
+                    'status' => 0
+                ]);
+            }
+
+            dd($data['theloai']);
+        } else {
+            return response()->json([
+                'errors' => ['Nguoidung' => 'Không tìm thấy người dùng'],
+                'status' => 0
+            ]);
+        }
     }
 
     /**

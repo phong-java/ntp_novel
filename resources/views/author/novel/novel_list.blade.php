@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" id="ntp_novel_list_wrap">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
@@ -54,7 +54,7 @@
                                         </td>
                                         <td>{{ $novel->dCreateDay }}</td>
                                         <td>
-                                            <a class="btn btn-primary" href="{{route('Novel.quan_ly_truyen',[$novel->id])}}"> Chi tiết</a>
+                                            <a class="btn btn-primary" href="{{route('Novel.quan_ly_truyen',[$novel->id])}}">Quản lý truyện</a>
                                         </td>
                                     </tr>
                                 @endforeach

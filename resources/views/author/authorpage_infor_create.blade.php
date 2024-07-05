@@ -72,7 +72,7 @@
         <input class="form-control mb-3" type="file" name="camket"
             id="upload_camket">
         <a class="text-decoration-underline"
-            href="{{ asset('uploads/camket/ban-cam-ket-chiu-trach-nhiem.pdf"') }}"
+            href="{{ asset('uploads/camket/mau/ban-cam-ket-chiu-trach-nhiem.pdf"') }}"
             download> Tải bản cam kết mẫu </a>
     </div>
 
