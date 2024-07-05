@@ -11,6 +11,10 @@ $(document).ready(function () {
     }
   });
 
+  //   var ntp_ckeditor = $('.ntp_ckeditor');
+  //   if($(ntp_ckeditor).length) {
+  // $(ntp_ckeditor).ckeditor();
+  //   }
 
 
   $('.ntp_slick').slick({
@@ -327,60 +331,70 @@ $(document).ready(function () {
   });
 
   //thay avartar
-  $('body').on('change','#ntp_input_update_anhdaidien',function(){
+  $('body').on('change', '#ntp_input_update_anhdaidien', function () {
     var fileInput = $(this)[0];
     var file = fileInput.files[0];
 
     if (file) {
-        var reader = new FileReader();
+      var reader = new FileReader();
 
-        reader.onload = function(e) {
-            $('.ntp_av_wrap .ntp_av ').attr('src', e.target.result);
-        }
+      reader.onload = function (e) {
+        $('.ntp_av_wrap .ntp_av ').attr('src', e.target.result);
+      }
 
-        reader.readAsDataURL(file);
-        var _this = $(this);
-        var _form = $(_this).parents('#ntp_form_update_av_user');
-        var dataform = $(_this).parents('#ntp_form_update_av_user')[0];
-        var _data = new FormData(dataform);
-    
-        var url = $(_this).attr('data-link');
-    
-        $.ajax({
-          method: "POST",
-          url: url,
-          data: _data,
-          contentType: false,
-          processData: false,
-          dataType: "json",
-          success: function (data) {
-            console.log(data);
-            if (data.av_update.avatar_change_status == 1) {
-              $('.ntp_av_wrap').find('.alert-danger').fadeOut(200);
-              $('.ntp_av_wrap').find('.alert-success').fadeIn(200).html(data.av_update.avatar_change);
-              var _av = $('.ntp_av');
-              $(_av).each(function () {
-                $(this).attr('src', data.av_update.av_link);
-              });
-            } else if (data.av_update.avatar_change_status == 0) {
-              $('.ntp_av_wrap').find('.alert-success').fadeOut(200);
-              $('.ntp_av_wrap').find('.alert-danger').fadeIn(200).html(data.av_update.avatar_change);
-            }
-    
-            $('body').trigger('ntp-alert-out');
-          },
-          error: function (error) {
-    
+      reader.readAsDataURL(file);
+      var _this = $(this);
+      var _form = $(_this).parents('#ntp_form_update_av_user');
+      var dataform = $(_this).parents('#ntp_form_update_av_user')[0];
+      var _data = new FormData(dataform);
+
+      var url = $(_this).attr('data-link');
+
+      $.ajax({
+        method: "POST",
+        url: url,
+        data: _data,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (data) {
+          console.log(data);
+          if (data.av_update.avatar_change_status == 1) {
+            $('.ntp_av_wrap').find('.alert-danger').fadeOut(200);
+            $('.ntp_av_wrap').find('.alert-success').fadeIn(200).html(data.av_update.avatar_change);
+            var _av = $('.ntp_av');
+            $(_av).each(function () {
+              $(this).attr('src', data.av_update.av_link);
+            });
+          } else if (data.av_update.avatar_change_status == 0) {
+            $('.ntp_av_wrap').find('.alert-success').fadeOut(200);
+            $('.ntp_av_wrap').find('.alert-danger').fadeIn(200).html(data.av_update.avatar_change);
           }
-        });
 
-    } else {
-        $('#preview_image').hide();
-        $('#preview_image').attr('src', '#');
+          $('body').trigger('ntp-alert-out');
+        },
+        error: function (error) {
+
+        }
+      });
+
     }
   });
 
+  $('body').on('change', '#ntp_input_anhbiatruyen', function () {
+    var fileInput = $(this)[0];
+    var file = fileInput.files[0];
 
+    if (file) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        $('.ntp_anh_bia_wrap .ntp_anh_bia ').attr('src', e.target.result);
+      }
+
+      reader.readAsDataURL(file);
+    }
+  });
   // xin cấp quyền tác giả 
   $(".ntp_btn_create_author").on("click", function (event) {
     var _this = $(this);
@@ -417,7 +431,7 @@ $(document).ready(function () {
         }
 
         if (data.file) {
-          $(_form).find('#ntp_camket_da_upload').attr('src',data.file);
+          $(_form).find('#ntp_camket_da_upload').attr('src', data.file);
         }
 
         $('body').trigger('ntp-alert-out');
@@ -485,29 +499,94 @@ $(document).ready(function () {
     });
   });
 
-    // Load lại danh sách xét duyệt tác giả trong admin
-    $('body').on('ntp_admin_load_xetduyet_author_list', function () {
-      var btn = $('#xet_duyet_tacgia-tab');
-  
-      if ($(btn).length) {
-        var url = $(btn).attr('data-link');
-  
-        $.ajax({
-          method: "POST",
-          url: url,
-          success: function (data) {
-            var xet_duyet_tacgia = $('#xet_duyet_tacgia');
-            $(xet_duyet_tacgia).html(data);
-          },
-          error: function (error) {
-  
+  // Load lại danh sách xét duyệt tác giả trong admin
+  $('body').on('ntp_admin_load_xetduyet_author_list', function () {
+    var btn = $('#xet_duyet_tacgia-tab');
+
+    if ($(btn).length) {
+      var url = $(btn).attr('data-link');
+
+      $.ajax({
+        method: "POST",
+        url: url,
+        success: function (data) {
+          var xet_duyet_tacgia = $('#xet_duyet_tacgia');
+          $(xet_duyet_tacgia).html(data);
+        },
+        error: function (error) {
+
+        }
+      });
+    }
+  }).trigger('ntp_admin_load_xetduyet_author_list');
+
+
+  $('.ntp_btn_create_novel').click(function (e) {
+    var _this = $(this);
+    var _form = $(_this).parents('#ntp_form_create_novel');
+    var url = $(_form).attr('action');
+    var motatruyen = CKEDITOR.instances.motatruyen.getData();
+    var dataform = $(_this).parents('#ntp_form_create_novel')[0];
+    var _data = new FormData(dataform);
+    _data.set('motatruyen', motatruyen);
+
+    $.ajax({
+      method: "POST",
+      url: url,
+      data: _data,
+      contentType: false,
+      processData: false,
+      success: function (data) {
+        if (data.status == 1) {
+          $(_form).find('.alert-danger').fadeOut(200);
+          $(_form).find('.alert-success').fadeIn(200).html(data.message);
+
+        } else if (data.status == 0) {
+          $(_form).find('.alert-success').fadeOut(200);
+
+          var errors = data.errors;
+          var errorMessages = '';
+          for (var key in errors) {
+            errorMessages += errors[key] + '</br>';
           }
-        });
+          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages);
+        }
+      },
+      error: function (error) {
+
       }
-    }).trigger('ntp_admin_load_xetduyet_author_list');
+    });
+    e.preventDefault();
+  });
 
 
 
+  $('#danhsach_truyen-tab').on('click', function () {
+    $('body').trigger('ntp_author_load_novel_list');
+  })
+
+
+  // Load lại danh sách truyện trong tác giả
+  $('body').on('ntp_author_load_novel_list', function () {
+    var btn = $('#danhsach_truyen-tab');
+
+    if ($(btn).length) {
+      var url = $(btn).attr('data-link');
+
+      $.ajax({
+        method: "POST",
+        url: url,
+        success: function (data) {
+          var danhsach_truyen = $('#danhsach_truyen');
+          $(danhsach_truyen).html(data);
+        },
+        error: function (error) {
+
+        }
+      });
+    }
+
+  }).trigger('ntp_author_load_novel_list');
 
   $('body').on('ntp-alert-out', function () {
     setTimeout(function () {
@@ -515,10 +594,6 @@ $(document).ready(function () {
       $('.alert-danger ').fadeOut(200);
     }, 4000);
   });
-
-
-
-
 
 
 });

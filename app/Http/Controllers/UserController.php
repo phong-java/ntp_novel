@@ -87,9 +87,9 @@ class UserController extends Controller
         $data = $request->validate(
             [
                 'tennguoidung' => ['required', 'string', 'max:255', Rule::unique('users', 'name')->ignore($id),],
-                'diachi' => ['string', 'max:255'],
-                'ngaysinh' => ['date'],
-                'gioitinh' => ['in:nam,nữ'],
+                'diachi' => ['max:255'],
+                'ngaysinh' => ['nullable', 'date'],
+                'gioitinh' => ['in:nam,nữ', 'nullable'],
             ],
             [
                 'tennguoidung.required' => 'Tên người dùng không được để trống',
@@ -97,8 +97,6 @@ class UserController extends Controller
                 'tennguoidung.max' => 'Tên người dùng không được nhiều hơn 255 ký tự',
                 'tennguoidung.unique' => 'Tên người dùng đã được sử dụng',
 
-
-                'diachi.string' => 'Địa chỉ phải là các ký tự',
                 'diachi.max' => 'Địa chỉ không được nhiều hơn 255 ký tự',
 
                 'ngaysinh.date' => 'Ngày sinh không hợp lệ',
@@ -125,11 +123,9 @@ class UserController extends Controller
     public function update_anhdaidien(Request $request, $id)
     {
 
-        $data = $request->validate(
+        $request->validate(
             [
                 'anhdaidien' => ['image', 'max:4096'],
-                'ngaysinh' => ['date'],
-                'gioitinh' => ['in:nam,nữ'],
             ],
             [
                 'anhdaidien.image' => 'File bạn vừa upload không phải là hình ảnh',

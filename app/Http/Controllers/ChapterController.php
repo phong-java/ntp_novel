@@ -37,7 +37,7 @@ class ChapterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

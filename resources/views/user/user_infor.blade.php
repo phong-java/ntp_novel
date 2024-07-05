@@ -48,9 +48,9 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputLocation">Giới tính</label>
-                                <select class="form-select" name="gioitinh" aria-label="Default select example">
+                                <select class="form-select" name="gioitinh">
                                     @if($user->sGender=='')
-                                        <option disabled  selected>Giới tính của bạn là ? (không bắt buộc)</option>
+                                        <option value=""  selected>Giới tính của bạn là ? (không bắt buộc)</option>
                                     @endif
                                     <option <?php echo $user->sGender=='nam'?'selected':''?> value="nam">Nam</option>
                                     <option <?php echo $user->sGender=='nữ'?'selected':''?> value="nữ">Nữ</option>

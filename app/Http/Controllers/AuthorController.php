@@ -109,10 +109,12 @@ class AuthorController extends Controller
     {
         $user = User::find($id);
         $author = Author::where('idUser',$user->id)->first();
+        $is_author_page = true;
         return view('author.authorpage',[
             'user' => $user,
             'author' => $author,
-            'author_found' => $author ? 1:0
+            'author_found' => $author ? 1:0,
+            'is_author_page' => $is_author_page
         ]);
     }
 
@@ -213,7 +215,13 @@ class AuthorController extends Controller
 
     public function xetduyet(Request $request,$id) {
         $author = Author::find($id);
-        $author->iStatus = $request['vuly'];   
+        $author->iStatus = $request['vuly'];
+        if ($request['vuly'] == 1) {
+            $user = User::find($author->idUser);
+            $user->sRole = 'author';
+            $user->save();
+        }  
+       
         $author->save();
         return response()->json([
             'message' => ' cập nhật thông tin xin cấp quyền thành công',

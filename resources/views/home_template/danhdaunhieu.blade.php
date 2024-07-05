@@ -9,7 +9,7 @@
             <div class="card ntp_novel text-center ">
                 <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
                     <a href="{{route('Novel.show',[1])}}">
-                        <img class="w-100" src="{{ asset('uploads/images/001235093.jpg') }}" class="img-fluid"
+                        <img class="w-100" src="{{ asset('uploads/images/bookcover256.jpg') }}" class="img-fluid"
                             alt="bookcover256">
                     </a>
                 </div>

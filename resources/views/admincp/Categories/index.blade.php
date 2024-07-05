@@ -3,9 +3,6 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header fw-bold">Danh sách thể loại truyện</div>
-
-
-
                 @guest
                 <div class="card-body">
                     @include('layouts.404_traiphep')

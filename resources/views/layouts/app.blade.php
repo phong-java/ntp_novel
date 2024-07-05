@@ -28,16 +28,24 @@
     @if (isset($is_chapter_page) && $is_chapter_page)
         <link href="{{ asset('css/chapter.css') }}" rel="stylesheet">
     @endif
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/jquery.min.js') }}" defer></script>
-    <script src="{{ asset('js/main.min.js') }}" defer></script>
-    <script src="{{ asset('js/slick.min.js') }}" defer></script>
-    <script src="https://kit.fontawesome.com/ea5e6a5537.js" crossorigin="anonymous"></script>
+
+     @if (isset($is_author_page) && $is_author_page)
+        <link href="{{ asset('css/author.css') }}" rel="stylesheet">
+    @endif
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/jquery.min.js') }}" defer></script>
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/slick.min.js') }}" defer></script>
+
+    <script src="{{ asset('js/main.min.js') }}" defer></script>
+    <script src="https://kit.fontawesome.com/ea5e6a5537.js" crossorigin="anonymous"></script>
+
 
 
 

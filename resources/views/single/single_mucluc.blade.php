@@ -8,7 +8,7 @@
             <div class="d-flex ntp_mucluc p-2 gap-2 w-100">
                 <div class="flex-grow-1 w-70">
                     <a href="{{ route('Chapter.show', [1]) }}" class="title text-decoration-none text-reset fw-bold"> Chương
-                        <?php echo $i; ?>: chương không có tiêu đề. 
+                        <?php echo $i; ?>: tiêu đề chương. 
                     </a>
                 </div>
                 <span class="ntp_time_update w-30">
@@ -19,7 +19,7 @@
                     $hours = floor(($minutes - $days * 24 * 60) / 60);
                     $remainingMinutes = $minutes % 60;
                     
-                    echo "$days ngày, $hours giờ, $remainingMinutes phút  trước";
+                    echo "X ngày, X giờ, X phút  trước";
                     
                     ?>
                 </span>

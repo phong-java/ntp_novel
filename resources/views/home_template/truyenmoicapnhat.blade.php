@@ -10,12 +10,11 @@
                     <img class="w-100" src="{{ asset('uploads/images/bookcover256.jpg') }}" alt="bookcover256">
                 </div>
                 <div class="flex-grow-1 ms-3">
-                    <a href="{{route('Novel.show',[1])}}" class="title text-decoration-none text-reset fw-bold">Đồng Thời Xuyên
-                        Qua:
-                        Người Bình Thường Chỉ Có Mình Ta?
-                    </a><br><span class="fw-lighter">Tác giả: Phạm Tuấn Phong</span>
+                    <a href="{{route('Novel.show',[1])}}" class="title text-decoration-none text-reset fw-bold">Tên truyện</a>
+                    <br>
+                    <span class="fw-lighter">Tác giả: Bút danh tác giả</span>
                 </div>
-                <span class="ms-3">0 phút trước</span>
+                <span class="ms-3">X phút trước</span>
             </div>
             <?php
                 }
