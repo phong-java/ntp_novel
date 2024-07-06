@@ -18,93 +18,157 @@ foreach ($theloai as $loai) {
 @extends('layouts.app')
 
 @section('content')
+    @guest
     <div class="container">
-        <div class="row mb-5">
-            <div class="col-xl-4">
-                <!-- Profile picture card-->
-                <div class="card  mb-xl-0">
-                    <div class="card-header fw-bold">Ảnh bìa truyện</div>
-                    <div class="card-body ntp_anh_bia_wrap text-center">
-                        <!-- Profile picture image-->
-                        <img class="ntp_anh_bia mb-2 w-100" src="{{ asset('uploads/images/' . $novel->sCover) }}" alt="">
-                        <!-- Profile picture help block-->
-                        <div class="my-3">
-                            <div class="alert alert-success ntp_hidden update_anhdaidien" role="alert"></div>
-                            <div class="alert alert-danger ntp_hidden update_anhdaidien" role="alert"></div>
-                            <label for="ntp_input_anhbiatruyen" class="btn m-0 btn-primary form-label">Chọn ảnh bìa</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-8">
-                <!-- Account details card-->
-                <div class="card ">
-                    <div class="card-header fw-bold">Thông tin chi tiết truyện</div>
-                    <div class="card-body">
-                        <form method="POST" id="ntp_form_create_novel" action="{{ route('Novel.update', [$novel->id]) }}">
-                            @csrf
-                            @method('patch')
-                            <input class="form-control d-none" type="file" id="ntp_input_anhbiatruyen" name="anhbia"
-                                accept="image/*">
-                            <div class="alert alert-success ntp_hidden" role="alert"></div>
-                            <div class="alert alert-danger ntp_hidden" role="alert"></div>
-
-                            <div class="mb-3">
-                                <label class="small mb-1" for="inputnovelname">Tên truyện</label>
-                                <input class="form-control" id="inputnovelname" maxlength="255" value="{{ $novel->sNovel }}"
-                                    name="tentruyen" type="text" placeholder="Tên truyện là">
-                            </div>
-                            <div class="mb-3">
-                                <label class="small mb-1">Mô tả</label>
-                                <textarea name="motatruyen" id="motatruyen" class="ntp_ckeditor ckeditor w-100" {{-- cols="30" rows="10" --}}>{{ htmlspecialchars_decode($novel->sDes) }}</textarea>
-                            </div>
-                            <div class="gx-3 mb-3 input-group">
-                                <button type="button" class="btn btn-outline-secondary dropdown-toggle"
-                                    data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false"> Thể
-                                    loại</button>
-                                <div class="dropdown-menu">
-                                    <div class="d-flex gap-3 flex-wrap p-2 ntp_select_the_loai overflow-auto ntp_custom_ver_scrollbar"
-                                        role="group" aria-label="Basic checkbox toggle button group">
-
-                                        @foreach ($cats as $key => $cat)
-                                            <input class="form-check-input btn-check"
-                                                {{ in_array($cat->id, $matchingIds) ? 'checked' : '' }} type="checkbox"
-                                                autocomplete="off" value="{{ $cat->id }}" name="theloai[]"
-                                                id="{{ Str::slug($cat->sCategories) . '_' . $cat->id }}" name="selected_assets">
-                                            <label class="btn btn-outline-primary"
-                                                for="{{ Str::slug($cat->sCategories) . '_' . $cat->id }}">{{ $cat->sCategories }}</label>
-                                        @endforeach
+        @include('layouts.404_traiphep')
+    </div> 
+    @else
+        @auth
+            @if (Auth::user()->sRole !== 'user' && Auth::user()->id == $novel->idUser)
+                <div class="container">
+                    <div class="row mb-5">
+                        <div class="col-xl-4">
+                            <!-- Profile picture card-->
+                            <div class="card  mb-xl-0">
+                                <div class="card-header fw-bold">Ảnh bìa truyện</div>
+                                <div class="card-body ntp_anh_bia_wrap text-center">
+                                    <!-- Profile picture image-->
+                                    <img class="ntp_anh_bia mb-2 w-100" src="{{ asset('uploads/images/' . $novel->sCover) }}"
+                                        alt="">
+                                    <!-- Profile picture help block-->
+                                    <div class="my-3">
+                                        <div class="alert alert-success ntp_hidden update_anhdaidien" role="alert"></div>
+                                        <div class="alert alert-danger ntp_hidden update_anhdaidien" role="alert"></div>
+                                        <label for="ntp_input_anhbiatruyen" class="btn m-0 btn-primary form-label">Chọn ảnh
+                                            bìa</label>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-xl-8">
+                            <!-- Account details card-->
+                            <div class="card ">
+                                <div class="card-header fw-bold">Thông tin chi tiết truyện</div>
+                                <div class="card-body">
+                                    <form method="POST" id="ntp_form_create_novel"
+                                        action="{{ route('Novel.update', [$novel->id]) }}">
+                                        @csrf
+                                        @method('patch')
+                                        <input class="form-control d-none" type="file" id="ntp_input_anhbiatruyen" name="anhbia"
+                                            accept="image/*">
+                                        <div class="alert alert-success ntp_hidden" role="alert"></div>
+                                        <div class="alert alert-danger ntp_hidden" role="alert"></div>
 
-                            <div class="gx-3 mb-3">
-                                <label class="small mb-1">Tiến độ</label>
-                                <select class="form-select" name="tiendo" id="inputnovelprogress"
-                                    aria-label="Default select example">
-                                    <option <?php echo $novel->sProgress == '1' ? 'selected' : ''; ?> value="1">Còn tiếp</option>
-                                    <option <?php echo $novel->sProgress == '2' ? 'selected' : ''; ?> value="2">Tạm ngừng</option>
-                                    <option <?php echo $novel->sProgress == '3' ? 'selected' : ''; ?> value="3">Hoàn thành</option>
-                                </select>
+                                        <div class="mb-3">
+                                            <label class="small mb-1" for="inputnovelname">Tên truyện</label>
+                                            <input class="form-control" id="inputnovelname" maxlength="255"
+                                                value="{{ $novel->sNovel }}" name="tentruyen" type="text"
+                                                placeholder="Tên truyện là">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="small mb-1">Mô tả</label>
+                                            <textarea name="motatruyen" id="motatruyen" class="ntp_ckeditor ckeditor w-100" {{-- cols="30" rows="10" --}}>{{ htmlspecialchars_decode($novel->sDes) }}</textarea>
+                                        </div>
+                                        <div class="gx-3 mb-3 input-group">
+                                            <button type="button" class="btn btn-outline-secondary dropdown-toggle"
+                                                data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false"> Thể
+                                                loại</button>
+                                            <div class="dropdown-menu">
+                                                <div class="d-flex gap-3 flex-wrap p-2 ntp_select_the_loai overflow-auto ntp_custom_ver_scrollbar"
+                                                    role="group" aria-label="Basic checkbox toggle button group">
+
+                                                    @foreach ($cats as $key => $cat)
+                                                        <input class="form-check-input btn-check"
+                                                            {{ in_array($cat->id, $matchingIds) ? 'checked' : '' }} type="checkbox"
+                                                            autocomplete="off" value="{{ $cat->id }}" name="theloai[]"
+                                                            id="{{ Str::slug($cat->sCategories) . '_' . $cat->id }}"
+                                                            name="selected_assets">
+                                                        <label class="btn btn-outline-primary"
+                                                            for="{{ Str::slug($cat->sCategories) . '_' . $cat->id }}">{{ $cat->sCategories }}</label>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="gx-3 mb-3">
+                                            <label class="small mb-1">Tiến độ</label>
+                                            <select class="form-select" name="tiendo" id="inputnovelprogress"
+                                                aria-label="Default select example">
+                                                <option <?php echo $novel->sProgress == '1' ? 'selected' : ''; ?> value="1">Còn tiếp</option>
+                                                <option <?php echo $novel->sProgress == '2' ? 'selected' : ''; ?> value="2">Tạm ngừng</option>
+                                                <option <?php echo $novel->sProgress == '3' ? 'selected' : ''; ?> value="3">Hoàn thành</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Save changes button-->
+                                        <button class="btn btn-primary ntp_btn_update_infor_novel" type="button">Cập nhật</button>
+                                    </form>
+                                </div>
                             </div>
-
-                            <!-- Save changes button-->
-                            <button class="btn btn-primary ntp_btn_update_infor_novel" type="button">Cập nhật</button>
-                        </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 mb-5">
-                <div class="card">
-                    <div class="card-header">Thêm chương mới</div>
-                    <div class="card-body">form</div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 mb-5">
+                            <div class="card">
+                                <div class="card-header">Thêm chương mới</div>
+                                <div class="card-body">
+                                    <form method="POST" id="ntp_form_create_chapter" action="{{ route('Chapter.store') }}">
+                                        <div class="alert alert-success ntp_hidden" role="alert"></div>
+                                        <div class="alert alert-danger ntp_hidden" role="alert"></div>
+                                        <input type="hidden" value="{{ $novel->id }}" name="idNovel">
+                                        <div class="mb-3">
+                                            <label class="small mb-1" for="inputchaptername">Tên chương</label>
+                                            <input class="form-control" id="inputchaptername" maxlength="255" name="tenchuong"
+                                                type="text" placeholder="Tên chương là">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="small mb-1">Nội dung chương</label>
+                                            <textarea name="noidungchuong" id="noidungchuong" class="ntp_ckeditor ckeditor w-100"></textarea>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label class="small mb-1">Đăng tải không ?</label>
+                                                <select class="form-select" name="tinhtrang" aria-label="Default select example">
+                                                    <option value="1" selected>Đăng tải</option>
+                                                    <option value="0">Không đăng tải</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label class="small mb-1">Có tính phí không</label>
+                                                <select class="form-select" name="tinhphi" aria-label="Default select example">
+                                                    <option value="0" selected>Không tính phí</option>
+                                                    <option value="1">Tính phí</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Save changes button-->
+                                        <button class="btn btn-primary ntp_btn_create_chapter" type="button">Thêm mới</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
+
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 mb-5">
+                            @include('single.single_mucluc')
+                        </div>
+                    </div>
+                </div>
+            @else
+            <div class="container">
+                @include('layouts.404_traiphep')
+            </div> 
+            @endif
+        @endauth
+    @endguest
 @endsection

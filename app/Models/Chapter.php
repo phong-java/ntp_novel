@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Chapter extends Model
 {
     use HasFactory;
-    protected $fillable= ['sChapter','iChapterNumber','sContent','iPublishingStatus','iStatus','idNovel'];
+    protected $fillable= ['sChapter','iChapterNumber','sContent','iPublishingStatus','iStatus','idNovel','icharges'];
     // public $timestamps = false;
     const CREATED_AT = 'dCreateDay';
     const UPDATED_AT = 'dUpdateDay';

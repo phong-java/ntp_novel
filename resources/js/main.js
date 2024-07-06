@@ -556,6 +556,46 @@ $(document).ready(function () {
     e.preventDefault();
   });
 
+  $('.ntp_btn_create_chapter').click(function (e) {
+    var _this = $(this);
+    var _form = $(_this).parents('#ntp_form_create_chapter');
+    var url = $(_form).attr('action');
+    var noidungchuong = CKEDITOR.instances.noidungchuong.getData();
+    var dataform = $(_this).parents('#ntp_form_create_chapter')[0];
+    var _data = new FormData(dataform);
+    _data.set('noidungchuong', noidungchuong);
+
+    $.ajax({
+      method: "POST",
+      url: url,
+      data: _data,
+      contentType: false,
+      processData: false,
+      success: function (data) {
+        if (data.status == 1) {
+          $(_form).find('.alert-danger').fadeOut(200);
+          $(_form).find('.alert-success').fadeIn(200).html(data.message);
+          $('body').trigger('ntp_author_load_novel_list');
+          $('body').trigger('ntp-alert-out');
+
+        } else if (data.status == 0) {
+          $(_form).find('.alert-success').fadeOut(200);
+
+          var errors = data.errors;
+          var errorMessages = '';
+          for (var key in errors) {
+            errorMessages += errors[key] + '</br>';
+          }
+          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages);
+        }
+      },
+      error: function (error) {
+
+      }
+    });
+    e.preventDefault();
+  });
+
 
 
   $('#danhsach_truyen-tab').on('click', function () {

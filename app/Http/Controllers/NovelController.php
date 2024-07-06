@@ -318,11 +318,11 @@ class NovelController extends Controller
     public function quan_ly_truyen($id)
     {
         $novel = Novel::find($id);
-        $chapter = Chapter::orderBy('id', 'DESC')->where('idNovel',$id)->get();
+        $chapters = Chapter::orderBy('id', 'DESC')->where('idNovel',$id)->get();
         $theloai = Classify::orderby('id', 'ASC')->where('idNovel',$id)->get();
         return view('author.novel.novel_index',[
            'novel' =>$novel,
-           'chapter' => $chapter,
+           'chapters' => $chapters,
            'theloai' => $theloai
         ]);
     }
