@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Author extends Model
 {
     use HasFactory;
-    protected $fillable= ['sNickName','sDes','iStatus','sCommit','idUser','sBankAccountNumber','sBank'];
+    protected $fillable= ['sNickName','sDes','iStatus','sCommit','idUser','sBankAccountNumber','sBank','sImg_identity'];
     // public $timestamps = false;
     const CREATED_AT = 'dCreateDay';
     const UPDATED_AT = 'dUpdateDay';

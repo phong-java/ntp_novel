@@ -18,7 +18,7 @@
                                     <div class="card-header fw-bold">Bạn chưa là tác giả bạn cần đăng ký tác giả trước</div>
 
                                     <div class="card-body">
-                                        @include('author.authorpage_infor_create')
+                                        @include('author.authorpage_infor')
                                     </div>
 
                                 </div>
@@ -35,21 +35,23 @@
                                                 <li>
                                                     <button class="active dropdown-item" id="author_infor-tab" data-bs-toggle="pill"
                                                         data-bs-target="#author_infor" type="button" role="tab"
-                                                        aria-controls="author_infor" aria-selected="true">Thông
-                                                        tin tác giả</button>
+                                                        aria-controls="author_infor" aria-selected="true"><?php echo (($author_found == 1 && $author->iStatus == 1) ? 'Thông tin tác giả' : 'Xin cấp quyền tác giả')?></button>
                                                 </li>
+                                                @if($author_found == 1 && $author->iStatus == 1)
                                                 <li>
                                                     <a href="#" class="dropdown-item" id="rut_tien-tab" data-bs-toggle="pill"
                                                         data-bs-target="#rut_tien" type="button" role="tab"
                                                         aria-controls="rut_tien" aria-selected="false">Rút
                                                         tiền</a>
                                                 </li>
+                                                @endif
                                             </ul>
-
+                                            @if($author_found == 1 && $author->iStatus == 1)
                                             <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
                                                 aria-expanded="false">
                                                 Quản lý truyện
                                             </button>
+                                           
                                             <ul class="dropdown-menu">
                                                 <li>
                                                     <button class="dropdown-item" id="danhsach_truyen-tab" data-bs-toggle="pill"
@@ -64,6 +66,7 @@
                                                         cáo</button>
                                                 </li>
                                             </ul>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -80,6 +83,7 @@
 
                                                 </div>
                                             </div>
+                                            @if($author_found == 1 && $author->iStatus == 1)
                                             <div class="tab-pane fade" id="thongke_baocao" role="tabpanel"
                                                 aria-labelledby="thongke_baocao-tab">
                                                 {{-- @include('user.thongke_baocao') --}}
@@ -93,6 +97,7 @@
                                                 @include('author.novel.novel_infor')
                                                 <div id="ntp_novel_list_wrap"></div>
                                             </div>
+                                            @endif
                                         </div>
 
                                     </div>

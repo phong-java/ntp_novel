@@ -51,7 +51,8 @@ class NovelController extends Controller
                     'tentruyen' => ['required', 'string', 'max:255'],
                     'motatruyen' => ['required'],
                     'tiendo' => ['required', 'in:1,2,3'],
-                    'theloai' => ['required']
+                    'theloai' => ['required'],
+                    'banquyen' => ['required','file', 'mimes:pdf', 'max:10240']
                 ],
                 [
                     'tentruyen.required' => 'Tên truyện không được để trống',
@@ -66,7 +67,12 @@ class NovelController extends Controller
     
                     'tiendo.required' => 'Tiến độ không được để trống',
 
-                    'theloai.required' => 'Thể loại không được để trống'
+                    'theloai.required' => 'Thể loại không được để trống',
+
+                    'banquyen.file' => 'Tệp minh chứng bản quyền phải là tệp hợp lệ',
+                    'banquyen.mimes' => 'Tệp minh chứng bản quyền phải là tệp PDF',
+                    'banquyen.max' => 'Tệp minh chứng bản quyền không được vượt quá 10MB',
+                    'banquyen.required' => 'Tệp minh chứng bản quyền không được để trống',
                 ]
             );
     
@@ -88,12 +94,21 @@ class NovelController extends Controller
             if($user) {
                 if($user['sRole'] != 'user') {
                     $file = $request->file("anhbia");
+                    $file_banquyen = $request->file("banquyen");
             
                     if($file) {
                         $destination = "uploads/images";
                         $filename = 'time_'.time().'_file_'.$file->getClientOriginalName();
                         if ($file->move($destination, $filename)) {
                             $novel->sCover = $filename;
+                        }
+                    }
+            
+                    if($file_banquyen) {
+                        $destination_banquyen = "uploads/banquyen";
+                        $filename_banquyen = 'time_'.time().'_file_'.$file_banquyen->getClientOriginalName();
+                        if ($file_banquyen->move($destination_banquyen, $filename_banquyen)) {
+                            $novel->sLicense = $filename_banquyen;
                         }
                     }
     
@@ -185,7 +200,8 @@ class NovelController extends Controller
                     'tentruyen' => ['required', 'string', 'max:255'],
                     'motatruyen' => ['required'],
                     'tiendo' => ['required', 'in:1,2,3'],
-                    'theloai' => ['required']
+                    'theloai' => ['required'],
+                    'banquyen' => ['file', 'mimes:pdf', 'max:10240']
                 ],
                 [
                     'tentruyen.required' => 'Tên truyện không được để trống',
@@ -199,7 +215,12 @@ class NovelController extends Controller
     
                     'tiendo.required' => 'Tiến độ không được để trống',
 
-                    'theloai.required' => 'Thể loại không được để trống'
+                    'theloai.required' => 'Thể loại không được để trống',
+
+                    'banquyen.file' => 'Tệp minh chứng bản quyền phải là tệp hợp lệ',
+                    'banquyen.mimes' => 'Tệp minh chứng bản quyền phải là tệp PDF',
+                    'banquyen.max' => 'Tệp minh chứng bản quyền không được vượt quá 10MB',
+                    'banquyen.required' => 'Tệp minh chứng bản quyền không được để trống',
                 ]
             );
 
@@ -232,6 +253,8 @@ class NovelController extends Controller
                     }
 
                     $file = $request->file("anhbia");
+                    $file_banquyen = $request->file("banquyen");
+
             
                     if($file) {
                         $destination = "uploads/images";
@@ -240,11 +263,20 @@ class NovelController extends Controller
                             $novel->sCover = $filename;
                         }
                     }
+            
+                    if($file_banquyen) {
+                        $destination_banquyen = "uploads/banquyen";
+                        $filename_banquyen = 'time_'.time().'_file_'.$file_banquyen->getClientOriginalName();
+                        if ($file_banquyen->move($destination_banquyen, $filename_banquyen)) {
+                            $novel->sLicense = $filename_banquyen;
+                        }
+                    }
     
                     
                     $novel->sNovel = $data['tentruyen'];
                     $novel->sDes = htmlspecialchars($data['motatruyen']);
                     $novel->sProgress = $data['tiendo'];
+                    $novel->iLicense_Status = 0;
     
                     $novel->save();
 
@@ -325,5 +357,37 @@ class NovelController extends Controller
            'chapters' => $chapters,
            'theloai' => $theloai
         ]);
+    }
+
+    public function chi_tiet_truyen($id)
+    {
+        $novel = Novel::find($id);
+        $chapters = Chapter::orderBy('id', 'DESC')->where('idNovel',$id)->get();
+        $theloai = Classify::orderby('id', 'ASC')->where('idNovel',$id)->get();
+        $cats = Categories::orderby('id', 'ASC')->get();
+        return view('admincp.admin_page.novel_index',[
+           'novel' =>$novel,
+           'chapters' => $chapters,
+           'theloai' => $theloai,
+           'cats' => $cats
+        ]);
+    }
+
+    public function xetduyet(Request $request, $idnovel)
+    {
+        $novel = Novel::find($idnovel);
+        $novel->iLicense_Status = $request['xuly'];
+        
+        $novel->save();
+
+        return response()->json([
+            'message' => 'Xử lý xác thực bản quyền thành công',
+            'status' =>1
+        ]);
+    }
+        
+    public function danhsach_xetduyet()
+    {
+        return view('admincp.admin_page.admin_xetduyet_tacpham');
     }
 }

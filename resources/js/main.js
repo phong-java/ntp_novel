@@ -476,6 +476,9 @@ $(document).ready(function () {
           $(_form).find('.alert-danger').fadeOut(200);
           $(_form).find('.alert-success').fadeIn(200).html(data.message);
           $('body').trigger('ntp-alert-out');
+          setTimeout(function(){
+            $(pa).find('.btn-close').trigger('click');
+          },1000);
         } else if (data.status == 0) {
           $(_form).find('.alert-success').fadeOut(200);
 
@@ -515,6 +518,82 @@ $(document).ready(function () {
     }
   }).trigger('ntp_admin_load_xetduyet_author_list');
 
+  $('body').on('click','.ntp_chitiettruyen',function() {
+    var _this = $(this)
+    var url = $(_this).attr('data-link');
+    $.ajax({
+      method: "POST",
+      url: url,
+      success: function (data) {
+        var ntp_edit_novel_poup  = $('#ntp_edit_novel_poup ');
+        $(ntp_edit_novel_poup ).find('.modal-body').html(data);
+      },
+      error: function (error) {
+
+      }
+    });
+  });
+
+    $('body').on('click','.ntp_admin_btn_update_novel',function() {
+      var _this = $(this)
+      var pa = $(_this).parents('#ntp_edit_novel_poup');
+      var _form = $(pa).find('#ntp_form_novel_License');
+      var url = $(_form).attr('action');
+      var dataform = $(pa).find('.modal-body form')[0];
+      var _data = new FormData(dataform);
+  
+      $.ajax({
+        method: "POST",
+        url: url,
+        data: _data,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+          $('body').trigger('ntp_admin_load_xetduyet_novel_list');
+          if (data.status == 1) {
+            $(_form).find('.alert-danger').fadeOut(200);
+            $(_form).find('.alert-success').fadeIn(200).html(data.message);
+            $('body').trigger('ntp-alert-out');
+            setTimeout(function(){
+              $(pa).find('.btn-close').trigger('click');
+            },1000);
+          } else if (data.status == 0) {
+            $(_form).find('.alert-success').fadeOut(200);
+  
+            var errors = data.errors;
+            var errorMessages = '';
+            for (var key in errors) {
+              errorMessages += errors[key] + '</br>';
+            }
+            $(_form).find('.alert-danger').fadeIn(200).html(errorMessages);
+          }
+          
+        },
+        error: function (error) {
+  
+        } 
+      });
+  });
+
+  $('body').on('ntp_admin_load_xetduyet_novel_list', function () {
+    var btn = $('#xet_duyet_tacpham-tab');
+
+    if ($(btn).length) {
+      var url = $(btn).attr('data-link');
+
+      $.ajax({
+        method: "POST",
+        url: url,
+        success: function (data) {
+          var xet_duyet_tacpham = $('#xet_duyet_tacpham');
+          $(xet_duyet_tacpham).html(data);
+        },
+        error: function (error) {
+
+        }
+      });
+    }
+  }).trigger('ntp_admin_load_xetduyet_novel_list');
 
   $('.ntp_btn_create_novel,.ntp_btn_update_infor_novel').click(function (e) {
     var _this = $(this);

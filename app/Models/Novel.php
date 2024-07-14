@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Novel extends Model
 {
     use HasFactory;
-    protected $fillable= ['sCover','sNovel','sDes','sProgress','iStatus','idUser'];
+    protected $fillable= ['sCover','sNovel','sDes','sProgress','iStatus','idUser','iLicense_Status','sLicense'];
     // public $timestamps = false;
     const CREATED_AT = 'dCreateDay';
     const UPDATED_AT = 'dUpdateDay';

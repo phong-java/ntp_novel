@@ -27,6 +27,7 @@ use Carbon\Carbon;
                         $remainingMinutes = $minutes % 60;
 
                         $time = Carbon::parse($chapter->dCreateDay);
+                        $time = $time->locale('Vi');
 
                         // Tính khoảng thời gian so với thời điểm hiện tại
                         $diff = $time->diffForHumans();

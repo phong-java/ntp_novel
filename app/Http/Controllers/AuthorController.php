@@ -42,9 +42,10 @@ class AuthorController extends Controller
             [
                 'butdanh' => ['required', 'string', 'max:100', Rule::unique('tblauthor', 'sNickName'),],
                 'mota' => ['required', 'string', 'max:3000'],
-                'nganhang' => ['required','in:VCB,VTB,TCB,BIDV,TPB,AGB'],
+                'nganhang' => ['required'],
                 'maso_nganhhang'=>['required','string','max:20',],
-                'camket' =>['required'],
+                'camket' => ['file', 'mimes:pdf', 'max:10240'],
+                'cccd' => ['required','file', 'mimes:pdf', 'max:10240'],
                 'id_user' => ['required',Rule::unique('tblauthor', 'idUser')]
             ],
             [
@@ -56,16 +57,23 @@ class AuthorController extends Controller
                 'mota.max' => 'Mô tả không được dài quá 3000 ký tự',
 
                 'nganhang.required' => 'Ngân hàng không được để trống',
-                'nganhang.in' => 'Ngân hàng bạn chọn không có trong danh sách',
 
                 'maso_nganhhang.required' => 'Mã số ngân hàng khong được bỏ trống',
 
-                'camket.required' => 'Cam kết không được để trống',
+                'camket.file' => 'Tệp cam kết phải là tệp hợp lệ',
+                'camket.mimes' => 'Tệp cam kết phải là tệp PDF',
+                'camket.max' => 'Tệp cam kết không được vượt quá 10MB',
+
+                'cccd.file' => 'Tệp ảnh CCCD phải là tệp hợp lệ',
+                'cccd.mimes' => 'Tệp ảnh CCCD phải là tệp PDF',
+                'cccd.required' => 'Tệp ảnh CCCD không được để trống',
+                'cccd.max' => 'Tệp ảnh CCCD không được vượt quá 10MB',
 
                 'id_user.required' => 'Mã người dùng không có hãy chắc rằng bạn đã đăng nhập nếu không hãy reload lại trang',
             ]
         );
         $file = $request->file("camket");
+        $file_cccd = $request->file("cccd");
 
         $author = new Author();
         $user = User::find($data['id_user']);
@@ -83,6 +91,15 @@ class AuthorController extends Controller
         }
 
         $destination = "uploads/camket";
+        $destination_cccd = "uploads/cccd";
+
+        if($file_cccd) {
+            $filename_cccd = 'time_'.time().'_file_'.$file_cccd->getClientOriginalName();
+            if ($file_cccd->move($destination_cccd, $filename_cccd)) {
+                $author->sImg_identity = $filename_cccd;
+            }
+        }
+
         if($file) {
             $filename = 'time_'.time().'_file_'.$file->getClientOriginalName();
             if ($file->move($destination, $filename)) {
@@ -95,7 +112,8 @@ class AuthorController extends Controller
         return response()->json([
             'message' => 'xin cấp quyền thành công hãy đợi quản trị viên xét duyệt ( quá trình mất 2 -3 ngày)',
             'status' =>1,
-            'file' => url($destination.'/'.$author->sCommit)
+            'file' => url($destination.'/'.$author->sCommit),
+            'file' => url($destination_cccd.'/'.$author->sImg_identity)
         ]);
     }
 
@@ -145,10 +163,11 @@ class AuthorController extends Controller
             [
                 'butdanh' => ['required', 'string', 'max:100', Rule::unique('tblauthor', 'sNickName')->ignore($id,'id'),],
                 'mota' => ['required', 'string', 'max:3000'],
-                'nganhang' => ['required','in:VCB,VTB,TCB,BIDV,TPB,AGB'],
+                'nganhang' => ['required'],
                 'maso_nganhhang'=>['required','string','max:20'],
                 'id_user' => ['required',Rule::unique('tblauthor', 'idUser')->ignore($id,'id')],
-                'camket' => ['file', 'mimes:pdf', 'max:10240']
+                'camket' => ['file', 'mimes:pdf', 'max:10240'],
+                'cccd' => ['file', 'mimes:pdf', 'max:10240']
             ],
             [
                 'butdanh.required' => 'Bút danh không được để trống',
@@ -159,7 +178,6 @@ class AuthorController extends Controller
                 'mota.max' => 'Mô tả không được dài quá 3000 ký tự',
 
                 'nganhang.required' => 'Ngân hàng không được để trống',
-                'nganhang.in' => 'Ngân hàng bạn chọn không có trong danh sách',
 
                 'maso_nganhhang.required' => 'Mã số ngân hàng khong được bỏ trống',
 
@@ -167,11 +185,17 @@ class AuthorController extends Controller
 
                 'camket.file' => 'Tệp cam kết phải là tệp hợp lệ',
                 'camket.mimes' => 'Tệp cam kết phải là tệp PDF',
-                'camket.max' => 'Tệp cam kết không được vượt quá 10MB'
+                'camket.max' => 'Tệp cam kết không được vượt quá 10MB',
+
+                'cccd.file' => 'Tệp ảnh CCCD phải là tệp hợp lệ',
+                'cccd.mimes' => 'Tệp ảnh CCCD phải là tệp PDF',
+                'cccd.max' => 'Tệp ảnh CCCD không được vượt quá 10MB'
             ]
         );
 
         $file = $request->file("camket");
+        $file_cccd = $request->file("cccd");
+
         $user = User::find($data['id_user']);
 
         $author->sNickName = $data['butdanh'];
@@ -179,11 +203,18 @@ class AuthorController extends Controller
         $author->idUser = $data['id_user'];
         $author->sBankAccountNumber = $data['maso_nganhhang'];
         $author->sBank = $data['nganhang'];
+
+        if($author->iStatus != 1) {
+            $author->iStatus = 0;
+        }
+        
+
         if ($user->sRole == 'admin') {
             $author->iStatus = 1;   
         }
         
         $destination = "uploads/camket";
+        $destination_cccd = "uploads/cccd";
 
         if($file) {
             $filename = 'time_'.time().'_file_'.$file->getClientOriginalName();
@@ -192,12 +223,19 @@ class AuthorController extends Controller
             }
         }
 
+        if($file_cccd) {
+            $filename_cccd = 'time_'.time().'_file_'.$file_cccd->getClientOriginalName();
+            if ($file_cccd->move($destination_cccd, $filename_cccd)) {
+                $author->sImg_identity = $filename_cccd;
+            }
+        }
         $author->save();
 
         return response()->json([
             'message' => ' cập nhật thông tin xin cấp quyền thành công hãy tiếp tục đợi đợi quản trị viên xét duyệt ( quá trình mất 2 -3 ngày)',
             'status' =>1,
             'file' => url($destination.'/'.$author->sCommit),
+            'file_cccd' => url($destination_cccd.'/'.$author->sImg_identity),
             'author_found' => $author ? 1:0
         ]);
     }
@@ -215,8 +253,8 @@ class AuthorController extends Controller
 
     public function xetduyet(Request $request,$id) {
         $author = Author::find($id);
-        $author->iStatus = $request['vuly'];
-        if ($request['vuly'] == 1) {
+        $author->iStatus = $request['xuly'];
+        if ($request['xuly'] == 1) {
             $user = User::find($author->idUser);
             $user->sRole = 'author';
             $user->save();
@@ -224,7 +262,7 @@ class AuthorController extends Controller
        
         $author->save();
         return response()->json([
-            'message' => ' cập nhật thông tin xin cấp quyền thành công',
+            'message' => 'Xử lý thông tin xin cấp quyền thành công',
             'status' =>1
         ]);
     }

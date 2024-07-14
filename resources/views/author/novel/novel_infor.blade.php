@@ -66,6 +66,11 @@ $cats = Categories::orderBy('id', 'DESC')->where('iStatus',1)->get();
                                 <option value="3">Hoàn thành</option>
                             </select>
                         </div>
+                    
+                        <div class="gx-3 mb-3">
+                            <label for="upload_banquyen" class="form-label">Minh chứng quyền tác giả hoặc quyền sở hữu với tác phẩm</label>
+                            <input class="form-control mb-3" type="file" name="banquyen" id="upload_banquyen">
+                        </div>
 
                         <!-- Save changes button-->
                         <button class="btn btn-primary ntp_btn_create_novel" type="button">tạo mới</button>

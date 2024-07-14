@@ -43,6 +43,9 @@ Route::resource('/Chapter', ChapterController::class);
 
 Route::post('/Danh-sachtruyen-tacgia',[NovelController::class,'Danh_sachtruyen_tacgia'])->name('Novel.Danh_sachtruyen_tacgia');
 Route::get('/Quan-ly-truyen/{id}',[NovelController::class,'quan_ly_truyen'])->name('Novel.quan_ly_truyen');
+Route::post('/Danh_sach_xet-duyet-ban-quyen-truyen',[NovelController::class,'danhsach_xetduyet'])->name('Novel.danhsach_xetduyet');
+Route::post('/Xet-duyet-ban-quyen-truyen/{id}',[NovelController::class,'xetduyet'])->name('Novel.xetduyet');
+Route::post('/Chi-tiet-truyen-truyen/{id}',[NovelController::class,'chi_tiet_truyen'])->name('Novel.chi_tiet_truyen');
 
 Route::post('/them-thong-tin-tac-gia',[AuthorController::class,'store'])->name('Author.store');
 Route::get('/xem-thong-tin-tac-gia/{id}',[AuthorController::class,'show'])->name('Author.show');

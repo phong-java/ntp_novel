@@ -33,7 +33,7 @@ foreach ($theloai as $loai) {
                                 <div class="card-header fw-bold">Ảnh bìa truyện</div>
                                 <div class="card-body ntp_anh_bia_wrap text-center">
                                     <!-- Profile picture image-->
-                                    <img class="ntp_anh_bia mb-2 w-100" src="{{ asset('uploads/images/' . $novel->sCover) }}"
+                                    <img class="ntp_anh_bia ntp_detail_novel mb-2 w-100" src="{{ asset('uploads/images/' . $novel->sCover) }}"
                                         alt="">
                                     <!-- Profile picture help block-->
                                     <div class="my-3">
@@ -50,6 +50,9 @@ foreach ($theloai as $loai) {
                             <div class="card ">
                                 <div class="card-header fw-bold">Thông tin chi tiết truyện</div>
                                 <div class="card-body">
+                                    @if ( $novel->iLicense_Status == 3)
+                                    <div class="alert alert-danger" role="alert">Việc xin kiểm duyệt truyện của bạn đã bị từ trối hãy kiểm tra lại kĩ thông tin bạn cung cấp, và các thông tin mô tả, xác thực bản quyền. Nếu có lỗi làm ơn hãy viết báo cáo. NTP Xin cám ơn.</div>
+                                    @endif
                                     <form method="POST" id="ntp_form_create_novel"
                                         action="{{ route('Novel.update', [$novel->id]) }}">
                                         @csrf
@@ -99,6 +102,17 @@ foreach ($theloai as $loai) {
                                                 <option <?php echo $novel->sProgress == '3' ? 'selected' : ''; ?> value="3">Hoàn thành</option>
                                             </select>
                                         </div>
+
+                                        <div class="gx-3 mb-3">
+                                            <label class="form-label">Minh chứng quyền tác giả / quyền sở hữu với tác phẩm đã cung cấp</label>
+                                            <iframe id="ntp_banquyen_da_upload" src="{{asset('uploads/banquyen/' . $novel->sLicense)}}" class="w-100 vh-100"></iframe>
+                                        </div>
+                                        @if($novel->iLicense_Status != 1)
+                                            <div class="gx-3 mb-3">
+                                                <label for="upload_banquyen" class="form-label">Minh chứng quyền tác giả hoặc quyền sở hữu với tác phẩm</label>
+                                                <input class="form-control mb-3" type="file" name="banquyen" id="upload_banquyen">
+                                            </div>
+                                        @endif
 
                                         <!-- Save changes button-->
                                         <button class="btn btn-primary ntp_btn_update_infor_novel" type="button">Cập nhật</button>

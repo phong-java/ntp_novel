@@ -28,15 +28,23 @@
             class="w-100 vh-100"></iframe>
     </div>
 
+    <div class="row gx-3 mb-3">
+        <label for="ntp_cccd_da_upload" class="form-label">CCCD đã up load</label>
+        <iframe id="ntp_cccd_da_upload" src="{{ asset('uploads/cccd/' . $author->sImg_identity) }}"
+            class="w-100 vh-100"></iframe>
+    </div>
+
     <div class="gx-3 mb-3">
         {{-- <input class="btn-check" type="radio" name="vuly" id="xuly1" value="1">
         <label class="btn btn-outline-primary" for="xuly1">Đồng ý cấp quyền</label>
 
         <input class="btn-check" type="radio" name="vuly" id="xuly2" value="3">
         <label class="btn btn-outline-primary" for="xuly2">Từ chối cấp quyền</label> --}}
-        <select name="vuly">
-            <option value="1">Đồng ý cấp quyền</option>
-            <option value="3">Từ chối cấp quyền</option>
-        </select>
+
+        <input class="btn-check" type="radio" name="xuly" id="xuly1" value="1">
+        <label class="btn btn-outline-primary" for="xuly1">Đồng ý cấp quyền</label>
+
+        <input class="btn-check" type="radio" name="xuly" id="xuly2" value="3">
+        <label class="btn btn-outline-primary" for="xuly2">Từ chối cấp quyền</label>
     </div>
 </form>
