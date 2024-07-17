@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Novel;
 use App\Models\Categories;
 use App\Models\Chapter;
+use App\Models\Author;
 use App\Models\Classify;
 use Illuminate\Support\Facades\Auth;
 
@@ -166,9 +167,17 @@ class NovelController extends Controller
      */
     public function show($id)
     {
-        
+        $novel = Novel::find($id);
+        $chapters = Chapter::orderBy('iChapterNumber', 'ASC')->where('idNovel',$id)->get();
+        $theloai = Classify::orderby('id', 'ASC')->where('idNovel',$id)->get();
+        $author = Author::where('idUser',$novel->idUser)->first();
         return view('single.single_page',[
-            'isSingle' => $this->isSingle
+            'isSingle' => $this->isSingle,
+            'chapters' => $chapters,
+            'novel' => $novel,
+            'count' => $chapters->count(),
+            'theloai' => $theloai,
+            'author' => $author
         ]);
     }
 
@@ -350,7 +359,7 @@ class NovelController extends Controller
     public function quan_ly_truyen($id)
     {
         $novel = Novel::find($id);
-        $chapters = Chapter::orderBy('id', 'DESC')->where('idNovel',$id)->get();
+        $chapters = Chapter::orderBy('iChapterNumber', 'ASC')->where('idNovel',$id)->get();
         $theloai = Classify::orderby('id', 'ASC')->where('idNovel',$id)->get();
         return view('author.novel.novel_index',[
            'novel' =>$novel,
@@ -376,18 +385,43 @@ class NovelController extends Controller
     public function xetduyet(Request $request, $idnovel)
     {
         $novel = Novel::find($idnovel);
-        $novel->iLicense_Status = $request['xuly'];
-        
-        $novel->save();
+       
+        if (isset($request['xuly_novel'])) {
+            $novel->iLicense_Status = $request['xuly_novel'];
+        }
 
-        return response()->json([
-            'message' => 'Xử lý xác thực bản quyền thành công',
-            'status' =>1
-        ]);
+        if (isset($request['trangthai_novel'])) {
+            $novel->iStatus = $request['trangthai_novel'];
+        }
+
+        if (isset($request['trangthai_novel']) || isset($request['xuly_novel'])) {
+            $novel->save();
+
+            return response()->json([
+                'message' => 'Cập nhật thành công',
+                'status' =>1
+            ]);
+
+        } else {
+            return response()->json([
+                'message' => 'Bạn chưa thay đổi gì cả',
+                'status' =>1
+            ]);
+        }
     }
         
     public function danhsach_xetduyet()
     {
         return view('admincp.admin_page.admin_xetduyet_tacpham');
+    }
+
+    public function page_kiem_duyet_chuong($id)
+    {
+        $novel = Novel::find($id);
+        $chapters = Chapter::orderBy('iChapterNumber', 'ASC')->where('idNovel',$id)->get();
+        return view('admincp.admin_page.admin_xetduyet_chuong',[
+            'novel' =>$novel,
+            'chapters' => $chapters
+        ]);
     }
 }

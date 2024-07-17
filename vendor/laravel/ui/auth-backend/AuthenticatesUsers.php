@@ -119,7 +119,7 @@ trait AuthenticatesUsers
         }
 
         return response()->json([
-            'message' => 'Chào mừng quay chở lại. Trang sẽ tự tải lại trong 2s',
+            'message' => 'Chào mừng quay chở lại',
             'status' =>1
         ]);
 

@@ -3,8 +3,10 @@
 use App\Models\User;
 use App\Models\Author;
 use App\Models\Novel;
+use App\Models\Chapter;
 
-    $novels = Novel::orderBy('id', 'DESC')->where('iLicense_Status',0)->get();
+$novels = Novel::orderBy('id', 'DESC')->get();
+$title = 'Danh sách truyện';
 
 ?>
 
@@ -12,7 +14,7 @@ use App\Models\Novel;
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header fw-bold">Danh sách truyện cần xét duyệt bản quyền là</div>
+                <div class="card-header fw-bold">{{$title}}</div>
                 @guest
                 <div class="card-body">
                     @include('layouts.404_traiphep')
@@ -25,11 +27,12 @@ use App\Models\Novel;
                             <thead>
                                 <tr>
                                     <th scope="col">STT</th>
-                                    {{-- <th scope="col">Mã thể loại</th> --}}
-                                    <th scope="col">Ảnh bìa</th>
                                     <th scope="col">Tên truyện</th>
                                     <th scope="col">Tác giả</th>
                                     <th scope="col">Ngày khởi tạo</th>
+                                    <th scope="col">Số chương chưa qua kiểm duyệt</th>
+                                    <th scope="col">Trạng thái</th>
+                                    <th scope="col">Trạng thái xét duyệt</th>
                                     <th scope="col">Thao tác</th>
                                 </tr>
                             </thead>
@@ -39,8 +42,6 @@ use App\Models\Novel;
                                 @foreach ($novels as $key => $novel)
                                     <tr>
                                         <th scope="row">{{ $key + 1 }}</th>
-                                        {{-- <td>{{ $cat->id }}</td> --}}
-                                        <td> <img class="ntp_anh_bia mb-2 w-100" src="{{ asset('uploads/images/'.$novel->sCover) }}" alt=""></td>
                                         <td class="name">{{ $novel->sNovel }}</td>
                                         <td>
                                             <?php
@@ -50,7 +51,42 @@ use App\Models\Novel;
                                         </td>
                                         <td>{{ $novel->dCreateDay }}</td>
                                         <td>
-                                            <a class="btn btn-primary ntp_chitiettruyen" data-bs-toggle="modal"  data-bs-target="#ntp_edit_novel_poup" href="javascript:void(0);" data-link="{{route('Novel.chi_tiet_truyen',[$novel->id])}}">Quản lý truyện</a>
+                                            <?php
+                                                $un_Publish_chapter_count =  Chapter::where('idNovel',$novel->id)->where('iPublishingStatus',0)->get()->count();
+                                                $chapter_count =  Chapter::where('idNovel',$novel->id)->get()->count();
+                                                echo '<span class="text text-danger">'.$un_Publish_chapter_count.'</span> / '.$chapter_count;
+                                            ?>
+                                        </td>
+                                        <td>
+                                            @if($novel->iStatus == 1)
+                                                <span class="text text-success">Đăng tải</span>
+                                            @else
+                                                <span class="text text-danger">Gỡ bỏ</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($novel->iLicense_Status == 0)
+                                                <span class="text text-warning">Chưa xét duyệt</span>
+                                            @elseif ($novel->iLicense_Status == 1)
+                                                <span class="text text-success">Xét duyệt thành công</span>
+                                            @elseif ($novel->iLicense_Status == 3)
+                                                <span class="text text-danger">Xét duyệt thất bại</span>
+                                            @endif
+                                        </td>
+                                        
+                                        <td>
+                                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> Tác vụ quản lý truyện </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item ntp_chitiettruyen" data-bs-toggle="modal"  data-bs-target="#ntp_edit_novel_poup" href="javascript:void(0);" data-link="{{route('Novel.chi_tiet_truyen',[$novel->id])}}">Quản lý truyện</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="{{route('Novel.page_kiem_duyet_chuong',[$novel->id])}}" >Kiểm duyệt chương</a>
+                                                </li>
+                                            </ul>
+                                           
+
+                                            
                                         </td>
                                     </tr>
                                 @endforeach

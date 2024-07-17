@@ -5,6 +5,9 @@ $(document).ready(function () {
     alert('phongllll');
   });
 
+  var btn_close_success = '<span class="ntp_alert_close bg-success"><button type="button" class="btn-close"></button></span>';
+  var btn_close_danger = '<span class="ntp_alert_close bg-danger"><button type="button" class="btn-close"></button></span>';
+
   $.ajaxSetup({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -92,7 +95,7 @@ $(document).ready(function () {
       success: function (data) {
         if (data.status == 1) {
           $(_form).find('.alert-danger').fadeOut(200);
-          $(_form).find('.alert-success').fadeIn(200).html(data.message);
+          $(_form).find('.alert-success').fadeIn(200).html(data.message+btn_close_success);
 
         } else if (data.status == 0) {
           $(_form).find('.alert-success').fadeOut(200);
@@ -102,8 +105,10 @@ $(document).ready(function () {
           for (var key in errors) {
             errorMessages += errors[key] + '</br>';
           }
-          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages);
+          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages+btn_close_danger);
         }
+
+        $('body').trigger('ntp-alert-out');
       },
       error: function (error) {
 
@@ -150,7 +155,7 @@ $(document).ready(function () {
         $('body').trigger('ntp_admin_load_cat_list');
         if (data.status == 1) {
           $(_form).find('.alert-danger').fadeOut(200);
-          $(_form).find('.alert-success').fadeIn(200).html(data.message);
+          $(_form).find('.alert-success').fadeIn(200).html(data.message+btn_close_success);
 
         } else if (data.status == 0) {
           $(_form).find('.alert-success').fadeOut(200);
@@ -160,8 +165,10 @@ $(document).ready(function () {
           for (var key in errors) {
             errorMessages += errors[key] + '</br>';
           }
-          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages);
+          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages+btn_close_danger);
         }
+
+        $('body').trigger('ntp-alert-out');
       },
       error: function (error) {
 
@@ -213,13 +220,13 @@ $(document).ready(function () {
       processData: false,
       dataType: "json",
       success: function (data) {
-        console.log(data);
+
         if (data.status == 1) {
           $(_form).find('.alert-danger').fadeOut(200);
-          $(_form).find('.alert-success').fadeIn(200).html(data.message);
+          $(_form).find('.alert-success').fadeIn(200).html(data.message+btn_close_success);
           setTimeout(function () {
             location.reload();
-          }, 2000);
+          }, 400);
 
         } else if (data.status == 0) {
           $(_form).find('.alert-success').fadeOut(200);
@@ -229,8 +236,10 @@ $(document).ready(function () {
           for (var key in errors) {
             errorMessages += errors[key] + '</br>';
           }
-          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages);
+          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages+btn_close_danger);
         }
+
+        $('body').trigger('ntp-alert-out');
       },
       error: function (error) {
 
@@ -259,7 +268,7 @@ $(document).ready(function () {
         console.log(data);
         if (data.status == 1) {
           $(_form).find('.alert-danger').fadeOut(200);
-          $(_form).find('.alert-success').fadeIn(200).html(data.message);
+          $(_form).find('.alert-success').fadeIn(200).html(data.message+btn_close_success);
           setTimeout(function () {
             location.reload();
           }, 2000);
@@ -271,8 +280,10 @@ $(document).ready(function () {
           for (var key in errors) {
             errorMessages += errors[key] + '</br>';
           }
-          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages);
+          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages+btn_close_danger);
         }
+
+        $('body').trigger('ntp-alert-out');
       },
       error: function (error) {
 
@@ -300,7 +311,7 @@ $(document).ready(function () {
         console.log(data);
         if (data.status == 1) {
           $(_form).find('.alert-danger').fadeOut(200);
-          $(_form).find('.alert-success').fadeIn(200).html(data.message);
+          $(_form).find('.alert-success').fadeIn(200).html(data.message+btn_close_success);
           // setTimeout(function() {
           //   location.reload();
           // }, 2000);
@@ -312,7 +323,7 @@ $(document).ready(function () {
           for (var key in errors) {
             errorMessages += errors[key] + '</br>';
           }
-          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages);
+          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages+btn_close_danger);
         }
 
         $('body').trigger('ntp-alert-out');
@@ -352,17 +363,16 @@ $(document).ready(function () {
         processData: false,
         dataType: "json",
         success: function (data) {
-          console.log(data);
           if (data.av_update.avatar_change_status == 1) {
             $('.ntp_av_wrap').find('.alert-danger').fadeOut(200);
-            $('.ntp_av_wrap').find('.alert-success').fadeIn(200).html(data.av_update.avatar_change);
+            $('.ntp_av_wrap').find('.alert-success').fadeIn(200).html(data.av_update.avatar_change+btn_close_success);
             var _av = $('.ntp_av');
             $(_av).each(function () {
               $(this).attr('src', data.av_update.av_link);
             });
           } else if (data.av_update.avatar_change_status == 0) {
             $('.ntp_av_wrap').find('.alert-success').fadeOut(200);
-            $('.ntp_av_wrap').find('.alert-danger').fadeIn(200).html(data.av_update.avatar_change);
+            $('.ntp_av_wrap').find('.alert-danger').fadeIn(200).html(data.av_update.avatar_change+btn_close_danger);
           }
 
           $('body').trigger('ntp-alert-out');
@@ -409,7 +419,7 @@ $(document).ready(function () {
         console.log(data);
         if (data.status == 1) {
           $(_form).find('.alert-danger').fadeOut(200);
-          $(_form).find('.alert-success').fadeIn(200).html(data.message);
+          $(_form).find('.alert-success').fadeIn(200).html(data.message+btn_close_success);
           // setTimeout(function() {
           //   location.reload();
           // }, 2000);
@@ -421,7 +431,7 @@ $(document).ready(function () {
           for (var key in errors) {
             errorMessages += errors[key] + '</br>';
           }
-          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages);
+          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages+btn_close_danger);
         }
 
         if (data.file) {
@@ -429,9 +439,6 @@ $(document).ready(function () {
         }
 
         $('body').trigger('ntp-alert-out');
-        $('html, body').animate({
-          scrollTop: $(_form).offset().top - 200
-        }, 100);
       },
       error: function (error) {
 
@@ -472,10 +479,11 @@ $(document).ready(function () {
       processData: false,
       success: function (data) {
         $('body').trigger('ntp_admin_load_xetduyet_author_list');
+        $('body').trigger('ntp_admin_load_author_list');
         if (data.status == 1) {
           $(_form).find('.alert-danger').fadeOut(200);
-          $(_form).find('.alert-success').fadeIn(200).html(data.message);
-          $('body').trigger('ntp-alert-out');
+          $(_form).find('.alert-success').fadeIn(200).html(data.message+btn_close_success);
+          
           setTimeout(function(){
             $(pa).find('.btn-close').trigger('click');
           },1000);
@@ -487,8 +495,48 @@ $(document).ready(function () {
           for (var key in errors) {
             errorMessages += errors[key] + '</br>';
           }
-          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages);
+          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages+btn_close_danger);
         }
+
+        $('body').trigger('ntp-alert-out');
+        
+      },
+      error: function (error) {
+
+      }
+    });
+  });
+
+  $('body').on('click', '.ntp_btn_update_chapter', function () {
+    var _this = $(this)
+    var _form = $(_this).parents('form#ntp_form_update_chapter');
+    var url = $(_form).attr('action');
+    var dataform = $(_this).parents('form#ntp_form_update_chapter')[0];
+    var _data = new FormData(dataform);
+
+    $.ajax({
+      method: "POST",
+      url: url,
+      data: _data,
+      contentType: false,
+      processData: false,
+      success: function (data) {
+        if (data.status == 1) {
+          $(_form).find('.alert-danger').fadeOut(200);
+          $(_form).find('.alert-success').fadeIn(200).html(data.message+btn_close_success);
+          
+        } else if (data.status == 0) {
+          $(_form).find('.alert-success').fadeOut(200);
+
+          var errors = data.errors;
+          var errorMessages = '';
+          for (var key in errors) {
+            errorMessages += errors[key] + '</br>';
+          }
+          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages+btn_close_danger);
+        }
+
+        $('body').trigger('ntp-alert-out');
         
       },
       error: function (error) {
@@ -534,7 +582,7 @@ $(document).ready(function () {
     });
   });
 
-    $('body').on('click','.ntp_admin_btn_update_novel',function() {
+  $('body').on('click','.ntp_admin_btn_update_novel',function() {
       var _this = $(this)
       var pa = $(_this).parents('#ntp_edit_novel_poup');
       var _form = $(pa).find('#ntp_form_novel_License');
@@ -552,8 +600,8 @@ $(document).ready(function () {
           $('body').trigger('ntp_admin_load_xetduyet_novel_list');
           if (data.status == 1) {
             $(_form).find('.alert-danger').fadeOut(200);
-            $(_form).find('.alert-success').fadeIn(200).html(data.message);
-            $('body').trigger('ntp-alert-out');
+            $(_form).find('.alert-success').fadeIn(200).html(data.message+btn_close_success);
+            
             setTimeout(function(){
               $(pa).find('.btn-close').trigger('click');
             },1000);
@@ -565,14 +613,23 @@ $(document).ready(function () {
             for (var key in errors) {
               errorMessages += errors[key] + '</br>';
             }
-            $(_form).find('.alert-danger').fadeIn(200).html(errorMessages);
+            $(_form).find('.alert-danger').fadeIn(200).html(errorMessages+btn_close_danger);
           }
+
+          $('body').trigger('ntp-alert-out');
           
         },
         error: function (error) {
   
         } 
       });
+
+      $('body').trigger('ntp_admin_load_novel_list');
+
+  });
+
+  $('#xet_duyet_tacpham-tab').click(function(){
+    $('body').trigger('ntp_admin_load_xetduyet_novel_list');
   });
 
   $('body').on('ntp_admin_load_xetduyet_novel_list', function () {
@@ -613,9 +670,9 @@ $(document).ready(function () {
       success: function (data) {
         if (data.status == 1) {
           $(_form).find('.alert-danger').fadeOut(200);
-          $(_form).find('.alert-success').fadeIn(200).html(data.message);
+          $(_form).find('.alert-success').fadeIn(200).html(data.message+btn_close_success);
           $('body').trigger('ntp_author_load_novel_list');
-          $('body').trigger('ntp-alert-out');
+          
 
         } else if (data.status == 0) {
           $(_form).find('.alert-success').fadeOut(200);
@@ -625,8 +682,9 @@ $(document).ready(function () {
           for (var key in errors) {
             errorMessages += errors[key] + '</br>';
           }
-          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages);
+          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages+btn_close_danger);
         }
+        $('body').trigger('ntp-alert-out');
       },
       error: function (error) {
 
@@ -643,6 +701,7 @@ $(document).ready(function () {
     var dataform = $(_this).parents('#ntp_form_create_chapter')[0];
     var _data = new FormData(dataform);
     _data.set('noidungchuong', noidungchuong);
+    console.log(_data);
 
     $.ajax({
       method: "POST",
@@ -653,9 +712,8 @@ $(document).ready(function () {
       success: function (data) {
         if (data.status == 1) {
           $(_form).find('.alert-danger').fadeOut(200);
-          $(_form).find('.alert-success').fadeIn(200).html(data.message);
+          $(_form).find('.alert-success').fadeIn(200).html(data.message+btn_close_success);
           $('body').trigger('ntp_author_load_novel_list');
-          $('body').trigger('ntp-alert-out');
 
         } else if (data.status == 0) {
           $(_form).find('.alert-success').fadeOut(200);
@@ -665,8 +723,10 @@ $(document).ready(function () {
           for (var key in errors) {
             errorMessages += errors[key] + '</br>';
           }
-          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages);
+          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages+btn_close_danger);
         }
+
+        $('body').trigger('ntp-alert-out');
       },
       error: function (error) {
 
@@ -704,11 +764,120 @@ $(document).ready(function () {
 
   }).trigger('ntp_author_load_novel_list');
 
+  $('body').on('click', '.admin_kiemduyet_chuong', function () {
+    var _this = $(this)
+    var url = $(_this).attr('data-link');
+    var _wrap = $('#ntp_chapter_detail_admin');
+    $(_wrap).find('.ntp_load').html('Loading...');
+    $.ajax({
+      method: "GET",
+      url: url,
+      success: function (data) {
+        
+        var chapters = data.chapters;
+          for (var key in chapters) {
+            switch(key) {
+              case 'id':
+                $(_wrap).find('.'+key).val(chapters[key]);
+                break;
+              case 'iPublishingStatus':
+                if(chapters[key] == 1) {
+                  $(_wrap).find('#xuly_chapter').prop('checked', true);
+                } else {
+                  $(_wrap).find('#xuly_chapter').prop('checked', false);
+                }
+                break;
+              case 'iPublishingStatus':
+                if(chapters[key] == 1) {
+                  $(_wrap).find('#xuly_chapter').prop('checked', true);
+                } else {
+                  $(_wrap).find('#xuly_chapter').prop('checked', false);
+                }
+                break;
+              case 'iStatus':
+                if(chapters[key] == 1) {
+                  $(_wrap).find('#trangthai_chapter').prop('checked', true);
+                } else {
+                  $(_wrap).find('#trangthai_chapter').prop('checked', false);
+                }
+                break;
+              case 'icharges':
+                if(chapters[key]== 1) {
+                  (_wrap).find('.'+key).html('Có tính phí');
+                } else {
+                  (_wrap).find('.'+key).html('Không tính phí');
+                }
+                break;
+              default:
+                $(_wrap).find('.'+key).html(chapters[key]);
+             }  
+          }
+      },
+      error: function (error) {
+
+      }
+    });
+  });
+
+  $('body').on('click', '.ntp_chapter_detail_admin_check', function () {
+    var _this = $(this);
+    var pa = $(_this).parents('.ntp_chapter_detail_admin')
+    var _form = $(pa).find('#ntp_form_chapter_check');
+    var url = $(_form).attr('action');
+
+    var xuly = $(_form).find('#xuly_chapter').is(':checked') ? 1 : 0;
+    var trangthai = $(_form).find('#trangthai_chapter').is(':checked')? 1 : 0;
+    var id = $(pa).find('#idChapter').val();
+    var id_novel = $(_this).attr('data-id-novel');
+    var _data = {
+      xuly: xuly,
+      trangthai: trangthai,
+      id: id,
+      id_novel:id_novel,
+      _token:$(_form).find('input[name="_token"]').val()
+    };
+
+    $.ajax({
+      method: "POST",
+      url: url,
+      data: JSON.stringify(_data),
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+      success: function (data) {
+        if (data.status == 1) {
+          $(_form).find('.alert-danger').fadeOut(200);
+          $(_form).find('.alert-success').fadeIn(200).html(data.message+btn_close_success);
+          $('body').trigger('ntp_author_load_novel_list');
+          $('#ntp_mucluc').html(data.table);
+        } else if (data.status == 0) {
+          $(_form).find('.alert-success').fadeOut(200);
+
+          var errors = data.errors;
+          var errorMessages = '';
+          for (var key in errors) {
+            errorMessages += errors[key] + '</br>';
+          }
+          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages+btn_close_danger);
+        }
+
+        $('body').trigger('ntp-alert-out');
+      },
+      error: function (error) {
+
+      }
+    });
+  });
+
+  $('body').on('click','.ntp_alert_close .btn-close', function () {
+    $('.alert-success').fadeOut(200);
+    $('.alert-danger ').fadeOut(200);
+  });
+
   $('body').on('ntp-alert-out', function () {
     setTimeout(function () {
       $('.alert-success').fadeOut(200);
       $('.alert-danger ').fadeOut(200);
-    }, 4000);
+    }, 6000);
   });
 
 });

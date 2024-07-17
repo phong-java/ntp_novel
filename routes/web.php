@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoriesController;
@@ -41,11 +41,18 @@ Route::resource('/Novel', NovelController::class);
 Route::resource('/Chapter', ChapterController::class);
 // Route::resource('/Author', AuthorController::class);
 
+Route::get('/Chi-tiet-chuong-tacgia/{id}',[ChapterController::class,'page_chitiet_chuong_author'])->name('Chapter.page_chitiet_chuong_author');
+Route::get('/Chi-tiet-chuong-kiemduyet/{id}',[ChapterController::class,'admin_kiemquyet_chuong'])->name('Chapter.admin_kiemquyet_chuong');
+Route::post('/Ketqua-kiem-duyet-chuong-truyen',[ChapterController::class,'kiem_duyet_chuong'])->name('Chapter.kiem_duyet_chuong');
+
 Route::post('/Danh-sachtruyen-tacgia',[NovelController::class,'Danh_sachtruyen_tacgia'])->name('Novel.Danh_sachtruyen_tacgia');
 Route::get('/Quan-ly-truyen/{id}',[NovelController::class,'quan_ly_truyen'])->name('Novel.quan_ly_truyen');
-Route::post('/Danh_sach_xet-duyet-ban-quyen-truyen',[NovelController::class,'danhsach_xetduyet'])->name('Novel.danhsach_xetduyet');
+Route::post('/Danh_sach_truyen',[NovelController::class,'danhsach_xetduyet'])->name('Novel.danhsach_xetduyet');
 Route::post('/Xet-duyet-ban-quyen-truyen/{id}',[NovelController::class,'xetduyet'])->name('Novel.xetduyet');
-Route::post('/Chi-tiet-truyen-truyen/{id}',[NovelController::class,'chi_tiet_truyen'])->name('Novel.chi_tiet_truyen');
+Route::post('/Chi-tiet-truyen/{id}',[NovelController::class,'chi_tiet_truyen'])->name('Novel.chi_tiet_truyen');
+Route::get('/Kiem-duyet-chuong-truyen/{id}',[NovelController::class,'page_kiem_duyet_chuong'])->name('Novel.page_kiem_duyet_chuong');
+
+
 
 Route::post('/them-thong-tin-tac-gia',[AuthorController::class,'store'])->name('Author.store');
 Route::get('/xem-thong-tin-tac-gia/{id}',[AuthorController::class,'show'])->name('Author.show');

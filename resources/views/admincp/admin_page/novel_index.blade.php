@@ -16,8 +16,6 @@ foreach ($theloai as $loai) {
 }
 
 ?>
-<div class="container">
-    <div class="row mb-5">
         <div class="col-xl-12 mb-4">
             <!-- Profile picture card-->
             <div class="card  mb-xl-0">
@@ -32,7 +30,7 @@ foreach ($theloai as $loai) {
         </div>
         <div class="col-xl-12">
             <!-- Account details card-->
-            <div class="card mb-5">
+            <div class="card mb-4">
                 <div class="card-header fw-bold">Thông tin chi tiết truyện</div>
                 <div class="card-body">
                         <div class="mb-3">
@@ -75,16 +73,33 @@ foreach ($theloai as $loai) {
                     
                 </div>
             </div>
-            <form method="POST" id="ntp_form_novel_License" action="{{ route('Novel.xetduyet', [$novel->id]) }}">
+            <form method="POST" id="ntp_form_novel_License" class="p-3 bg-body sticky-bottom" action="{{ route('Novel.xetduyet', [$novel->id]) }}">
                 @csrf
                 <div class="alert alert-success ntp_hidden" role="alert"></div> 
                 <div class="alert alert-danger ntp_hidden" role="alert"></div>
-                <input class="btn-check" type="radio" name="xuly" id="xuly1" value="1">
-                <label class="btn btn-outline-primary" for="xuly1">Xác thực bản quyền thành công</label>
-        
-                <input class="btn-check" type="radio" name="xuly" id="xuly2" value="3">
-                <label class="btn btn-outline-primary" for="xuly2">Xác thực bản quyền thất bại</label>
+
+                @if($novel->iLicense_Status != 1)
+                    <input class="btn-check" type="radio" name="xuly_novel" id="xuly_novel1" value="1">
+                    <label class="btn btn-outline-primary" for="xuly_novel1">Xác thực bản quyền thành công</label>
+
+                    @if($novel->iLicense_Status != 3)
+                        <input class="btn-check" type="radio" name="xuly_novel" id="xuly_novel3" value="3">
+                        <label class="btn btn-outline-primary" for="xuly_novel3">Xác thực bản quyền thất bại</label>
+                    @endif
+                @else
+                    @if($novel->iLicense_Status == 1)
+                        <input class="btn-check" type="radio" name="xuly_novel" id="xuly_novel2" value="3">
+                        <label class="btn btn-outline-primary" for="xuly_novel2">Hủy xác thực bản quyền</label>
+                    @endif
+                @endif
+
+                @if($novel->iStatus == 1)
+                    <input class="btn-check" type="radio" name="trangthai_novel" id="trangthai_novel" value="0">
+                    <label class="btn btn-outline-primary" for="trangthai_novel">Gỡ truyện</label>
+                @else
+                    <input class="btn-check" type="radio" name="trangthai_novel" id="trangthai_novel" value="1">
+                    <label class="btn btn-outline-primary" for="trangthai_novel">Đăng truyện</label>
+                @endif
+
             </form>
         </div>
-    </div>
-</div>

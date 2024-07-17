@@ -3,7 +3,7 @@
 use App\Models\User;
 use App\Models\Author;
 
-$authors = Author::orderBy('id', 'DESC')->where('iStatus',0)->get();
+$authors = Author::orderBy('id', 'DESC')->get();
 
 ?>
 
@@ -27,9 +27,8 @@ $authors = Author::orderBy('id', 'DESC')->where('iStatus',0)->get();
                                             {{-- <th scope="col">Mã người dùng</th> --}}
                                             <th scope="col">Tên người dùng</th>
                                             <th scope="col">Bút danh đăng ký</th>
-                                            <th scope="col">Ngân hàng sử dung</th>
-                                            <th scope="col">Số tài khoản</th>
                                             <th scope="col">Ngày xin cấp</th>
+                                            <th scope="col">Tình trạng xét duyệt</th>
                                             <th scope="col">Thao tác</th>
                                         </tr>
                                     </thead>
@@ -43,13 +42,20 @@ $authors = Author::orderBy('id', 'DESC')->where('iStatus',0)->get();
                                             {{-- <td>{{ $author->idUser }}</td> --}}
                                             <td>{{ $user->name }}</td>
                                             <td >{{ $author->sNickName }}</td>
-                                            <td>{{ $author->sBank }}</td>
-                                            <td>{{ $author->sBankAccountNumber	 }}</td>
                                             <td>{{ $author->dCreateDay }}</td>
                                             <td>
-                                                <a href="#" class="btn btn-primary ntp_btn_author_detail" data-bs-toggle="modal"
+                                                @if($author->iStatus == 0)
+                                                    <span class="text text-warning">Chưa xét duyệt</span>
+                                                @elseif ($author->iStatus == 1)
+                                                    <span class="text text-success">Xét duyệt thành công</span>
+                                                @elseif ($author->iStatus == 3)
+                                                    <span class="text text-danger">Xét duyệt bị từ chối</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="#" class="btn btn-primary ntp_btn_author_detail" data-bs-toggle="modal" data-bs-target="#ntp_author_detail"
                                                     data-link="{{ route('Author.edit', [$author->id]) }}"
-                                                    data-bs-target="#ntp_author_detail"> Chi tiết</a>
+                                                    > Chi tiết</a>
                                             </td>
                                         </tr>
                                         <?php

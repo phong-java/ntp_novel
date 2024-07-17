@@ -145,7 +145,9 @@ class AuthorController extends Controller
     public function edit($id)
     {
         $author = Author::find($id);
-        return view('admincp.admin_page.admin_chitiet_tacgia')->with(compact('author'));
+        return view('admincp.admin_page.admin_chitiet_tacgia',[
+            'author' => $author
+        ]);
     }
 
     /**
@@ -252,13 +254,26 @@ class AuthorController extends Controller
     }
 
     public function xetduyet(Request $request,$id) {
+
+        $data = $request->validate(
+            [
+                'xuly' => ['required'],
+            ],
+            [
+                'xuly.required' => 'Bạn cần lựa chọn đồng ý hoặc từ trối xin cấp quyền trước khi cập nhật',
+            ]
+        );
         $author = Author::find($id);
-        $author->iStatus = $request['xuly'];
-        if ($request['xuly'] == 1) {
+        $author->iStatus = $data['xuly'];
+        if ($data['xuly'] == 1) {
             $user = User::find($author->idUser);
             $user->sRole = 'author';
             $user->save();
-        }  
+        } elseif ($data['xuly'] == 0) {
+            $user = User::find($author->idUser);
+            $user->sRole = 'user';
+            $user->save();
+        }
        
         $author->save();
         return response()->json([

@@ -4,6 +4,7 @@ use Illuminate\Support\Str;
 
 $cats = Categories::orderBy('id', 'DESC')->where('iStatus', 1)->get();
 
+$count = $chapters->count();
 $matchingIds = [];
 
 foreach ($theloai as $loai) {
@@ -39,8 +40,7 @@ foreach ($theloai as $loai) {
                                     <div class="my-3">
                                         <div class="alert alert-success ntp_hidden update_anhdaidien" role="alert"></div>
                                         <div class="alert alert-danger ntp_hidden update_anhdaidien" role="alert"></div>
-                                        <label for="ntp_input_anhbiatruyen" class="btn m-0 btn-primary form-label">Chọn ảnh
-                                            bìa</label>
+                                        <label for="ntp_input_anhbiatruyen" class="btn m-0 btn-primary form-label">Chọn ảnh bìa</label>
                                     </div>
                                 </div>
                             </div>
@@ -51,7 +51,9 @@ foreach ($theloai as $loai) {
                                 <div class="card-header fw-bold">Thông tin chi tiết truyện</div>
                                 <div class="card-body">
                                     @if ( $novel->iLicense_Status == 3)
-                                    <div class="alert alert-danger" role="alert">Việc xin kiểm duyệt truyện của bạn đã bị từ trối hãy kiểm tra lại kĩ thông tin bạn cung cấp, và các thông tin mô tả, xác thực bản quyền. Nếu có lỗi làm ơn hãy viết báo cáo. NTP Xin cám ơn.</div>
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="ntp_alert_close bg-danger"><button type="button" class="btn-close"></button></span>
+                                        Việc xin kiểm duyệt truyện của bạn đã bị từ trối hãy kiểm tra lại kĩ thông tin bạn cung cấp, và các thông tin mô tả, xác thực bản quyền. Nếu có lỗi làm ơn hãy viết báo cáo. NTP Xin cám ơn.</div>
                                     @endif
                                     <form method="POST" id="ntp_form_create_novel"
                                         action="{{ route('Novel.update', [$novel->id]) }}">
@@ -144,24 +146,29 @@ foreach ($theloai as $loai) {
                                             <textarea name="noidungchuong" id="noidungchuong" class="ntp_ckeditor ckeditor w-100"></textarea>
                                         </div>
 
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <label class="small mb-1">Đăng tải không ?</label>
-                                                <select class="form-select" name="tinhtrang" aria-label="Default select example">
-                                                    <option value="1" selected>Đăng tải</option>
-                                                    <option value="0">Không đăng tải</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <label class="small mb-1">Có tính phí không</label>
-                                                <select class="form-select" name="tinhphi" aria-label="Default select example">
-                                                    <option value="0" selected>Không tính phí</option>
-                                                    <option value="1">Tính phí</option>
-                                                </select>
-                                            </div>
+                                        <div class="mb-3">
+                                            <label class="small mb-1">Đăng tải không ?</label>
+                                            <select class="form-select" name="tinhtrang" aria-label="Default select example">
+                                                <option value="1" selected>Đăng tải</option>
+                                                <option value="0">Không đăng tải</option>
+                                            </select>
                                         </div>
+                                        @if ($count>= 10)
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label class="small mb-1">Có tính phí không</label>
+                                                    <select class="form-select" name="tinhphi" aria-label="Default select example">
+                                                        <option value="0" selected>Không tính phí</option>
+                                                        <option value="1">Tính phí</option>
+                                                    </select>
+                                                </div>
 
+                                                <div class="col-md-6">
+                                                    <label class="small mb-1" for="inputchapterprice">Giá tiền</label>
+                                                    <input class="form-control" id="inputchapterprice" name="giatien" value="1" type="number" min="0" placeholder="Giá tiền bạn đặt cho chương này là (Nếu không nhập sẽ mặc định là 1)">
+                                                </div>
+                                            </div>
+                                        @endif
                                         <!-- Save changes button-->
                                         <button class="btn btn-primary ntp_btn_create_chapter" type="button">Thêm mới</button>
                                     </form>
@@ -174,7 +181,7 @@ foreach ($theloai as $loai) {
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-md-12 mb-5">
-                            @include('single.single_mucluc')
+                            @include('author.novel.single_mucluc')
                         </div>
                     </div>
                 </div>

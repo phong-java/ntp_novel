@@ -5,14 +5,14 @@
 use Carbon\Carbon;
 
 ?>
-<div class="card">
+<div class="card" id="ntp_mucluc">
     <div class="card-header fw-bold">Mục lục</div>
     <div class="card-body">
         <div class="overflow-auto ntp_custom_ver_scrollbar" style="height: 500px;">
             @foreach ($chapters as $key => $chapter)
                 <div class="d-flex ntp_mucluc p-2 gap-2 w-100">
                     <div class="flex-grow-1 w-70">
-                        <a href="{{ route('Chapter.show', [1]) }}"
+                        <a href="{{ route('Chapter.show', [$chapter->id]) }}"
                             class="title text-decoration-none text-reset fw-bold">
                             Chương
                             <?php echo $chapter->iChapterNumber; ?>: {{$chapter->sChapter}}.

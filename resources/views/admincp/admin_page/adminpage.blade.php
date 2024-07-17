@@ -48,13 +48,7 @@
                                                     <button class="dropdown-item" id="xet_duyet_tacgia-tab" data-bs-toggle="pill"
                                                         data-bs-target="#xet_duyet_tacgia" type="button" role="tab"
                                                         aria-controls="xet_duyet_tacgia" aria-selected="false"
-                                                        data-link="{{ route('Author.danhsach_xetduyet') }}">Xét duyệt tác
-                                                        giả</button>
-                                                </li>
-                                                <li>
-                                                    <button class="dropdown-item" id="danh_sach_tacgia-tab" data-bs-toggle="pill"
-                                                        data-bs-target="#danh_sach_tacgia" type="button" role="tab"
-                                                        aria-controls="danh_sach_tacgia">Danh sách tác giả đang hoạt động</button>
+                                                        data-link="{{ route('Author.danhsach_xetduyet', [0]) }}">Danh sách tác giả</button>
                                                 </li>
                                             </ul>
                                         </div>
@@ -68,10 +62,8 @@
                                                     <button class="dropdown-item" id="xet_duyet_tacpham-tab" data-bs-toggle="pill"
                                                         data-bs-target="#xet_duyet_tacpham" type="button" role="tab"
                                                         aria-controls="xet_duyet_tacpham" aria-selected="false"
-                                                        data-link="{{ route('Novel.danhsach_xetduyet') }}">Xét duyệt tác
-                                                        phẩm</button>
+                                                        data-link="{{ route('Novel.danhsach_xetduyet') }}">Xét duyệt tác phẩm</button>
                                                 </li>
-
                                             </ul>
                                         </div>
                                     </div>
@@ -90,17 +82,13 @@
                                             aria-labelledby="xet_duyet_tacgia-tab">
                                             @include('admincp.admin_page.admin_xetduyet_tacgia')
                                         </div>
-                                        <div class="tab-pane fade" id="danh_sach_tacgia" role="tabpanel"
-                                            aria-labelledby="danh_sach_tacgia-tab">
-                                            {{-- @include('admincp.admin_page.admin_danhsach_tacgia') --}}
-                                        </div>
                                         <div class="tab-pane fade" id="xet_duyet_tacpham" role="tabpanel"
                                             aria-labelledby="xet_duyet_tacpham-tab">
                                             {{-- @include('admincp.admin_page.admin_xetduyet_tacpham') --}}
                                         </div>
                                     </div>
                                     <!-- Modal -->
-                                    <div class="modal fade ntp_edit_cat_ppoup" id="ntp_edit_cat_ppoup" data-bs-backdrop="static"
+                                    <div class="modal fade ntp_edit_cat_ppoup" id="ntp_edit_cat_ppoup"
                                         data-bs-keyboard="false" tabindex="-1" aria-labelledby="ntp_edit_cat_ppoupLabel"
                                         aria-hidden="true">
                                         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -121,7 +109,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="modal fade ntp_author_detail" id="ntp_author_detail" data-bs-backdrop="static"
+                                    <div class="modal fade ntp_author_detail" id="ntp_author_detail"
                                         data-bs-keyboard="false" tabindex="-1" aria-labelledby="ntp_author_detailLabel"
                                         aria-hidden="true">
                                         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -132,7 +120,7 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
-                                                <div class="modal-body">
+                                                <div class="modal-body pb-0">
 
                                                 </div>
                                                 <div class="modal-footer">
@@ -145,7 +133,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="modal fade ntp_edit_novel_poup" id="ntp_edit_novel_poup" data-bs-backdrop="static"
+                                    <div class="modal fade ntp_edit_novel_poup" id="ntp_edit_novel_poup"
                                     data-bs-keyboard="false" tabindex="-1" aria-labelledby="ntp_edit_novel_poupLabel"
                                     aria-hidden="true">
                                     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -155,7 +143,7 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
-                                            <div class="modal-body">
+                                            <div class="modal-body pb-0">
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"

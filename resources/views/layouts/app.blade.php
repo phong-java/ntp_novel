@@ -55,7 +55,6 @@
     <div id="app">
         <main class="main">
             @include('layouts.nav')
-            @include('search.search')
             @yield('content')
         </main>
         @include('layouts.footer')

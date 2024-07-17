@@ -1,3 +1,7 @@
+
+<?php
+use App\Models\Chapter;
+?>
 <div class="container" id="ntp_novel_list_wrap">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -20,7 +24,8 @@
                                     <th scope="col">Tên truyện</th>
                                     <th scope="col">Số chương</th>
                                     <th scope="col">Tiến độ</th>
-                                    <th scope="col">Trạng thái</th>
+                                    <th scope="col">Trạng thái đăng tải</th>
+                                    <th scope="col">Xét duyệt bản quyền</th>
                                     <th scope="col">Ngày khởi tạo</th>
                                     <th scope="col">Thao tác</th>
                                 </tr>
@@ -34,13 +39,13 @@
                                         {{-- <td>{{ $cat->id }}</td> --}}
                                         <td> <img class="ntp_anh_bia mb-2 w-100" src="{{ asset('uploads/images/'.$novel->sCover) }}" alt=""></td>
                                         <td class="name">{{ $novel->sNovel }}</td>
-                                        <td>X chương</td>
+                                        <td>{{Chapter::orderBy('iChapterNumber', 'ASC')->where('idNovel',$novel->id)->get()->count();}} Chương</td>
                                         <td>
                                             @if ($novel->sProgress == 1)
                                                 <span class="text text-success">Còn tiếp</span>
-                                            @elseif($novel->sProgress == 2)
+                                            @elseif ($novel->sProgress == 2)
                                                 <span class="text text-warning">Tạm ngưng</span>
-                                            @elseif($novel->sProgress == 3)
+                                            @elseif ($novel->sProgress == 3)
                                                 <span class="text text-danger">Hoàn thành</span>
                                             @endif
                                         </td>
@@ -50,6 +55,15 @@
                                                 <span class="text text-success">Đăng tải</span>
                                             @else
                                                 <span class="text text-danger">Đã bị ghỡ bỏ</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($novel->iLicense_Status == 1)
+                                                <span class="text text-success">Thông qua</span>
+                                            @elseif ($novel->iLicense_Status == 0)
+                                                <span class="text text-danger">Chưa xét duyệt</span>
+                                            @elseif ($novel->iLicense_Status == 3)
+                                                <span class="text text-danger">Không thông qua</span>
                                             @endif
                                         </td>
                                         <td>{{ $novel->dCreateDay }}</td>

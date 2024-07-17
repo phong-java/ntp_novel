@@ -38,7 +38,7 @@
                             <a class="dropdown-item" href="{{ route('User.show', [Auth::user()->id]) }}">Trang cá nhân</a>
 
                             @if (Auth::user()->sRole == 'admin')
-                            <a class="dropdown-item" href="{{ route('User.admin',[Auth::user()->id])}}">Trang quản trị</a>
+                                <a class="dropdown-item" href="{{ route('User.admin',[Auth::user()->id])}}">Trang quản trị</a>
                             @endif
 
                             <a class="dropdown-item" href="{{ route('Author.show',[Auth::user()->id])}}">Trang tác giả</a>

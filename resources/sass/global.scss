@@ -9,6 +9,61 @@
     overflow-x: scroll;
 }
 
+.alert {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: fit-content;
+    z-index: 999;
+
+    .ntp_alert_close {
+        padding: 3px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        border-radius: 50%;
+    }
+}
+
+.modal-body {
+    max-height: 75vh;
+    overflow: auto;
+
+    /* width */
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: #efefef;
+        border-radius: 10px;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+}
+
+table {
+    th, td {
+        padding: 10px;
+        text-align: center;
+        vertical-align: middle;
+    }
+}
+
 .overflow-Xv {
     overflow-x: visible;
 }

@@ -5,8 +5,8 @@
             <div class="w-25 ntp_novel_single_img mb-4 mb-md-0">
                 {{-- Ảnh bìa --}}
                 <div class="bg-image hover-overlay rounded  overflow-hidden ripple" data-mdb-ripple-color="light">
-                    <a href="{{ route('Novel.show', [1]) }}">
-                        <img src="{{ asset('uploads/images/bookcover256.jpg') }}" class=" w-100 img-fluid"
+                    <a href="{{ route('Novel.show', [$novel->id]) }}">
+                        <img src="{{ asset('uploads/images/'.$novel->sCover) }}" class=" w-100 img-fluid"
                             alt="bookcover256">
                     </a>
                 </div>
@@ -19,7 +19,7 @@
                             <p class="mb-0">Tên truyện</p>
                         </div>
                         <div class="col-sm-9">
-                            <p class="text-muted mb-0"> Tên truyện </p>
+                            <p class="text-muted mb-0"> {{$novel->sNovel}} </p>
                         </div>
                     </div>
                     <hr>
@@ -30,7 +30,7 @@
                         <div class="col-sm-9">
 
                             <a href="#!" class=" w-50">
-                                <p class="mb-0 text-success"><i class="fa-solid fa-user me-2"></i>Buts danh tác giả
+                                <p class="mb-0 text-success"><i class="fa-solid fa-user me-2"></i>{{$author->sNickName}}
                                 </p>
                             </a>
                         </div>
@@ -41,7 +41,7 @@
                             <p class="mb-0">Số chương</p>
                         </div>
                         <div class="col-sm-9">
-                            <p class="text-muted mb-0"> XX chương </p>
+                            <p class="text-muted mb-0"> {{$count}} chương </p>
                         </div>
                     </div>
                     <hr>
@@ -50,18 +50,7 @@
                             <p class="mb-0">Giới thiệu</p>
                         </div>
                         <div class="col-sm-9 ntl_tomtat overflow-auto ntp_custom_ver_scrollbar">
-                            <p class="text-muted mb-0">
-                                xxxxx xxx xx xxxx, xxx xxx xx xxx xxx xxx xxx.<br>
-                                1: xx xxx xxx x xxx xx xxxxx xx xxx xx.<br>
-                                2:  xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx.<br>
-                                3:  xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx.<br>
-                                xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx.<br>
-                                xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx<br>
-                                xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx<br>
-                                xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx.<br>
-                                xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx<br>
-                                xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx xxx x xxx xx</p>
-                                
+                            {!!htmlspecialchars_decode($novel->sDes)!!}
                         </div>
                     </div>
                     <hr>
@@ -83,7 +72,15 @@
                             <p class="mb-0">Tiến độ</p>
                         </div>
                         <div class="col-sm-9">
-                            <p class="mb-0 text-success">Còn tiếp</p>
+                            <p class="mb-0 text-success">
+                                @if ($novel->sProgress == 1)
+                                    <span class="text text-success">Còn tiếp</span>
+                                @elseif ($novel->sProgress == 2)
+                                    <span class="text text-warning">Tạm ngưng</span>
+                                @elseif ($novel->sProgress == 3)
+                                    <span class="text text-danger">Hoàn thành</span>
+                                @endif
+                            </p>
                         </div>
                     </div>
                     <hr>
@@ -126,7 +123,7 @@
                             </div>
                             <hr>
                             <div class="row w-100">
-                                <a href="{{ route('Novel.show', [1]) }}" class=" w-50">
+                                <a href="#ntp_mucluc" class=" w-50">
                                     <p class="text-muted mb-0"><i class="fa-solid fa-bars me-2"></i>Mục lục
                                     </p>
                                 </a>

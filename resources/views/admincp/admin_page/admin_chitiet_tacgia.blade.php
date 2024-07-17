@@ -34,17 +34,24 @@
             class="w-100 vh-100"></iframe>
     </div>
 
-    <div class="gx-3 mb-3">
+    <div class="gx-3 p-3 bg-body sticky-bottom">
         {{-- <input class="btn-check" type="radio" name="vuly" id="xuly1" value="1">
         <label class="btn btn-outline-primary" for="xuly1">Đồng ý cấp quyền</label>
 
         <input class="btn-check" type="radio" name="vuly" id="xuly2" value="3">
         <label class="btn btn-outline-primary" for="xuly2">Từ chối cấp quyền</label> --}}
 
-        <input class="btn-check" type="radio" name="xuly" id="xuly1" value="1">
-        <label class="btn btn-outline-primary" for="xuly1">Đồng ý cấp quyền</label>
+        @if($author->iStatus != 1)
+            <input class="btn-check" type="radio" name="xuly" id="xuly_author1" value="1">
+            <label class="btn btn-outline-primary" for="xuly_author1">Đồng ý cấp quyền</label>
 
-        <input class="btn-check" type="radio" name="xuly" id="xuly2" value="3">
-        <label class="btn btn-outline-primary" for="xuly2">Từ chối cấp quyền</label>
+            @if($author->iStatus != 3)
+                <input class="btn-check" type="radio" name="xuly" id="xuly_author3" value="3">
+                <label class="btn btn-outline-primary" for="xuly_author3">Từ chối cấp quyền</label>
+            @endif
+        @else
+            <input class="btn-check" type="radio" name="xuly" id="xuly_author2" value="0">
+            <label class="btn btn-outline-primary" for="xuly_author2">Gỡ quyền</label>
+        @endif
     </div>
 </form>

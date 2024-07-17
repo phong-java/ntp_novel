@@ -2,8 +2,9 @@
 
 @section('content')
     <div class="container">
+        
         <div class="row justify-content-center">
-
+            @include('search.search')
             <div class="col-md-12 mb-5">
                 @include('home_template.danhgiacao')
             </div>
