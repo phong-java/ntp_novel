@@ -363,16 +363,31 @@ $(document).ready(function () {
         processData: false,
         dataType: "json",
         success: function (data) {
-          if (data.av_update.avatar_change_status == 1) {
-            $('.ntp_av_wrap').find('.alert-danger').fadeOut(200);
-            $('.ntp_av_wrap').find('.alert-success').fadeIn(200).html(data.av_update.avatar_change + btn_close_success);
-            var _av = $('.ntp_av');
-            $(_av).each(function () {
-              $(this).attr('src', data.av_update.av_link);
-            });
-          } else if (data.av_update.avatar_change_status == 0) {
+
+
+          if (data.status == 1) {
+            if (data.av_update.avatar_change_status == 1) {
+              $('.ntp_av_wrap').find('.alert-danger').fadeOut(200);
+              $('.ntp_av_wrap').find('.alert-success').fadeIn(200).html(data.av_update.avatar_change + btn_close_success);
+              var _av = $('.ntp_av');
+              $(_av).each(function () {
+                $(this).attr('src', data.av_update.av_link);
+              });
+            } else if (data.av_update.avatar_change_status == 0) {
+              $('.ntp_av_wrap').find('.alert-success').fadeOut(200);
+              $('.ntp_av_wrap').find('.alert-danger').fadeIn(200).html(data.av_update.avatar_change + btn_close_danger);
+            }
+          } else {
+            var errors = data.errors;
+            var errorMessages = '';
+            for (var key in errors) {
+              errorMessages += errors[key] + '</br>';
+            }
+
+            console.log(data.errors);
+
             $('.ntp_av_wrap').find('.alert-success').fadeOut(200);
-            $('.ntp_av_wrap').find('.alert-danger').fadeIn(200).html(data.av_update.avatar_change + btn_close_danger);
+            $('.ntp_av_wrap').find('.alert-danger').fadeIn(200).html(errorMessages);
           }
 
           $('body').trigger('ntp-alert-out');
