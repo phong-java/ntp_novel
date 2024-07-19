@@ -1,7 +1,29 @@
-<div class="card ntp_novel_single">
+
+<?php
+    use App\Models\Chapter;
+    use App\Models\Categories;
+    use App\Models\Bookmarks;
+    use Illuminate\Support\Str;
+    use Illuminate\Support\Facades\Auth;
+
+    $firtschapter = Chapter::where('idNovel',$novel->id)->where('iChapterNumber', 1)->first(); 
+
+    $cats = Categories::orderBy('id', 'DESC')->where('iStatus', 1)->get();
+
+    $matchingIds = [];
+
+    foreach ($theloai as $loai) {
+        foreach ($cats as $cat) {
+            if ($cat->id == $loai->idCategories) {
+                $matchingIds[] = $cat->id;
+            }
+        }
+    }
+?>
+<div class="card ntp_novel_single" data-novel-id="{{$novel->id}}">
     <div class="card-header fw-bold">Thông tin truyện </div>
     <div class="card-body">
-        <div class="ntp_novel_single d-flex gap-4">
+        <div class="d-flex gap-4">
             <div class="w-25 ntp_novel_single_img mb-4 mb-md-0">
                 {{-- Ảnh bìa --}}
                 <div class="bg-image hover-overlay rounded  overflow-hidden ripple" data-mdb-ripple-color="light">
@@ -11,7 +33,7 @@
                     </a>
                 </div>
             </div>
-            <div class="w-75 ntp_novel_single_infor overflow-Y overflow-Xh  ntp_custom_ver_scrollbar">
+            <div class="w-75 ntp_novel_single_infor overflow-Y overflow-Xh  ntp_custom_ver_scrollbar" >
                 {{-- Thông tin --}}
                 <div class="card-body">
                     <div class="row">
@@ -19,7 +41,7 @@
                             <p class="mb-0">Tên truyện</p>
                         </div>
                         <div class="col-sm-9">
-                            <p class="text-muted mb-0"> {{$novel->sNovel}} </p>
+                            <p class="text-muted mb-0 ntp_novel_name"> {{$novel->sNovel}} </p>
                         </div>
                     </div>
                     <hr>
@@ -59,11 +81,11 @@
                             <p class="mb-0">Thể loại</p>
                         </div>
                         <div class="col-sm-9 d-flex flex-wrap gap-3">
-                            <button type="button" class="btn btn-primary position-relative"> Thể loại </button>
-                            <button type="button" class="btn btn-primary position-relative"> Thể loại  </button>
-                            <button type="button" class="btn btn-primary position-relative"> Thể loại  </button>
-                            <button type="button" class="btn btn-primary position-relative"> Thể loại  </button>
-                            <button type="button" class="btn btn-primary position-relative"> Thể loại </button>
+                            @foreach ($cats as $key => $cat)
+                                @if (in_array($cat->id, $matchingIds))
+                                    <span>{{ $cat->sCategories}}</span> |
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                     <hr>
@@ -90,8 +112,8 @@
                         </div>
                         <div class="col-sm-9">
                             <div class="row w-100">
-                                <p class="text-muted mb-0 w-50">XXX lượt đọc</p>
-                                <p class="text-muted mb-0 w-50">XXX đánh dấu</p>
+                                <p class="text-muted mb-0 w-50">{{$readingHistory}} lượt đọc</p>
+                                <p class="text-muted mb-0 w-50 ntp_count_bookmark">{{$bookmark}} đánh dấu</p>
                             </div>
                             <hr>
                             <div class="row w-100">
@@ -113,12 +135,24 @@
                         </div>
                         <div class="col-sm-9">
                             <div class="row w-100">
-                                <a href="{{ route('Novel.show', [1]) }}" class=" w-50">
+                                <a href="{{route('Chapter.show', [$firtschapter->id])}}" class=" w-50">
                                     <p class="text-muted mb-0"><i class="fa-solid fa-book-open me-2"></i>Đọc luôn
                                     </p>
                                 </a>
-                                <a href="#!" class=" w-50">
-                                    <p class="text-muted mb-0"><i class="fa-solid fa-bookmark me-2"></i>Đánh dấu</p>
+                                <?php
+                                    $text = 'Đánh dấu';
+                                    $class = 'text-success';
+                                    if(Auth::check()) {
+                                        $bookmark = Bookmarks::where('idUser',Auth::user()->id)->where('idNovel', $novel->id)->first();
+
+                                        if($bookmark) {
+                                            $text = 'Hủy ánh dấu';
+                                            $class = 'text-danger';
+                                        }
+                                    }
+                                ?>
+                                <a href="javascript:void(0);" data-name="{{$novel->sNovel}}"  data-novel-link="{{route('Novel.show',[$novel->id])}}" data-link="{{route('Bookmark.store')}}" data-novel-id="{{$novel->id}}" class="ntp_mark w-50">
+                                    <p class="{{$class}} mb-0"><i class="fa-solid fa-bookmark me-2"></i>{{$text}}</p>
                                 </a>
                             </div>
                             <hr>

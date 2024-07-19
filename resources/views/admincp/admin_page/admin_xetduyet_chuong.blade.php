@@ -141,7 +141,6 @@ foreach ($theloai as $loai) {
                                 <div class="mb-3">
                                     Nội dung: <div class="sContent ntp_load border-1 border mt-2 rounded-2 p-2">Loading...</div>
                                 </div>
-
                                 
                             </div>
                             <div class="modal-footer justify-content-between">
@@ -158,7 +157,7 @@ foreach ($theloai as $loai) {
 
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" name="trangthai" id="trangthai_chapter">
-                                        <label class="form-check-label" for="trangthai_chapter">Gỡ chương truyện</label>
+                                        <label class="form-check-label" for="trangthai_chapter">Tình trạng đăng tải</label>
                                     </div>
                                 </form>
                                 <div>

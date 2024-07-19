@@ -9,13 +9,30 @@
     overflow-x: scroll;
 }
 
+.ntp_pass_wrap {
+    position: relative;
+    .ntp-show-hide-pass {
+        width: 30px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translate(0,-50%);
+    }
+}
+
 .alert {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    width: fit-content;
-    z-index: 999;
+    &:not(.ntp_default) {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: fit-content;
+        z-index: 999;
+    }
 
     .ntp_alert_close {
         padding: 3px;

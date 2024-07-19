@@ -24,7 +24,10 @@
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
 
                             <div class="ntp_av_nav overflow-hidden rounded-circle">
-                                <img class="ntp_av_nav ntp_av" src="{{ asset('uploads/user_av/'.Auth::user()->sAvatar) }}" alt="">
+                                <?php  
+                                    $avatar = Auth::user()->sAvatar != ''? Auth::user()->sAvatar:'time_1719592364_file_default-avatar-photo-placeholder-icon-grey-vector-38594401.jpg';
+                                ?>
+                                <img class="ntp_av_nav ntp_av" src="{{ asset('uploads/user_av/'.$avatar) }}" alt="">
                             </div>
                             {{ Auth::user()->name }}
                         </a>

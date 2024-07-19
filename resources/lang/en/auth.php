@@ -14,7 +14,7 @@ return [
     */
 
     'failed' => 'Hãy kiểm tra lại thông tin đăng nhập.',
-    'password' => 'Mật khẩu không cính xác',
+    'password' => 'Mật khẩu không chính xác',
     'throttle' => 'Bạn đang gửi quá nhiều yêu cầu. Hãy thử lại trong ít phút',
 
 ];

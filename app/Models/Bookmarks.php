@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Bookmarks extends Model
 {
     use HasFactory;
-    protected $fillable= ['iMoney','iCoint','idUser'];
+    protected $fillable= ['idUser','idNovel'];
     // public $timestamps = false;
     const CREATED_AT = 'dCreateDay';
     const UPDATED_AT = 'dUpdateDay';
     protected $primaryKey = 'id';
-    protected $table = 'tblbill';
+    protected $table = 'tblbookmarks';
 }

@@ -9,13 +9,13 @@
                 <div class="card-body">
                     <form id="ntp_login_form" action="{{ route('login') }}">
                         @csrf
-                        <div class="alert alert-success ntp_hidden" role="alert"></div>
-                        <div class="alert alert-danger ntp_hidden" role="alert"></div>
+                        <div class="alert alert-success ntp_default ntp_hidden" role="alert"></div>
+                        <div class="alert alert-danger ntp_default ntp_hidden" role="alert"></div>
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">Tài khoản (Email)</label>
+                            <label for="email_login" class="col-md-4 col-form-label text-md-end">Tài khoản (Email)</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                <input id="email_login" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -26,10 +26,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">Mật khẩu</label>
+                            <label for="password_login" class="col-md-4 col-form-label text-md-end">Mật khẩu</label>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                            <div class="col-md-6 ntp_pass_wrap">
+                                <input id="password_login" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password"><a href="javascript:void(0);" class="ntp-show-hide-pass text-success"><i class="fa-solid fa-eye"></i></a>
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">

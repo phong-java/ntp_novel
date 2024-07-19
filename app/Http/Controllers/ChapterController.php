@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Chapter;
 use App\Models\Novel;
+use App\Models\Reading_history;
 use App\Models\Categories;
 use App\Models\Classify;
 use Illuminate\Support\Facades\Auth;
@@ -138,6 +139,19 @@ class ChapterController extends Controller
         $previousChapterId = $previousChapter ? $previousChapter->id : 0;
         $nextChapterId = $nextChapter ? $nextChapter->id : 0;
 
+        if (Auth::check()) {
+            $iduser = Auth::user()->id;
+            $history = Reading_history::where('idUser',$iduser)->where('idChapter',$id)->first();
+            
+            if (!$history) {
+                $history = new Reading_history();
+                $history->idUser = $iduser;
+                $history->idChapter = $id;
+            }
+            
+            $history->dUpdateDay = time();
+            $history->save();
+        }
 
         return view('chapter.chapter_page', [
             'is_chapter_page' => $this->is_chapter_page,
@@ -286,5 +300,31 @@ class ChapterController extends Controller
                 'status' =>1
             ]);
         }
+    }
+
+    public function xoa_lichsu_doc($id_novel) {
+        if (Auth::check()) {
+            $iduser = Auth::user()->id;
+            $chapters = Chapter::where('idNovel', $id_novel)->pluck('id'); // Get the list of chapter IDs
+            $history = Reading_history::where('idUser', $iduser)
+                ->whereIn('idChapter', $chapters)
+                ->get();
+            foreach ($history as $record) {
+                $record->delete();
+            }
+            return response()->json([
+                'message' => 'Xóa lịch sử thành công',
+                'status' =>1,
+                'history'=>view('user.user_read_history')->render()
+            ]);
+            
+        } else {
+            return response()->json([
+                'message' => 'Bạn phải đăng nhập đã',
+                'status' =>0,
+                'history'=>view('user.user_read_history')->render()
+            ]);
+        }
+        
     }
 }

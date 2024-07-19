@@ -4,16 +4,20 @@
     use App\Models\Chapter;
 
     $new_updates = DB::table('tblchapter')
-            ->select('tblchapter.dCreateDay','tblnovel.sNovel','tblnovel.sCover','tblnovel.id','tblauthor.sNickName')
-            ->join(DB::raw('(SELECT MAX(dCreateDay) as dCreateDay, idNovel FROM tblchapter  WHERE iStatus = 1 AND iPublishingStatus = 1 GROUP BY idNovel) as latest'), function($join) {
-                $join->on('tblchapter.dCreateDay', '=', 'latest.dCreateDay')
-                    ->on('tblchapter.idNovel', '=', 'latest.idNovel');
-            })
-            ->join('tblnovel', 'tblchapter.idNovel', '=', 'tblnovel.id')
-            ->join('tblauthor', 'tblnovel.idUser', '=', 'tblauthor.idUser')
-            ->orderBy('tblchapter.dCreateDay', 'DESC')
-            ->limit(20)
-            ->get();
+        ->select('tblchapter.dCreateDay','tblnovel.sNovel','tblnovel.sCover','tblnovel.id','tblauthor.sNickName')
+        ->join(DB::raw('(SELECT MAX(dCreateDay) as dCreateDay, idNovel FROM tblchapter  WHERE iStatus = 1 AND iPublishingStatus = 1 GROUP BY idNovel) as latest'), function($join) {
+            $join->on('tblchapter.dCreateDay', '=', 'latest.dCreateDay')
+                ->on('tblchapter.idNovel', '=', 'latest.idNovel');
+        })
+        ->join('tblnovel', function($join) {
+            $join->on('tblchapter.idNovel', '=', 'tblnovel.id')
+                ->where('tblnovel.iLicense_Status', '=', 1)
+                ->where('tblnovel.iStatus', '=', 1);
+        })
+        ->join('tblauthor', 'tblnovel.idUser', '=', 'tblauthor.idUser')
+        ->orderBy('tblchapter.dCreateDay', 'DESC')
+        ->limit(20)
+        ->get();
 ?>
 
 <div class="card">

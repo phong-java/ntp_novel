@@ -10,6 +10,8 @@ use App\Models\Categories;
 use App\Models\Chapter;
 use App\Models\Author;
 use App\Models\Classify;
+use App\Models\Bookmarks;
+use App\Models\Reading_history;
 use Illuminate\Support\Facades\Auth;
 
 class NovelController extends Controller
@@ -171,13 +173,19 @@ class NovelController extends Controller
         $chapters = Chapter::orderBy('iChapterNumber', 'ASC')->where('idNovel',$id)->get();
         $theloai = Classify::orderby('id', 'ASC')->where('idNovel',$id)->get();
         $author = Author::where('idUser',$novel->idUser)->first();
+        $bookmark = Bookmarks::where('idNovel',$id)->get()->count();
+        $chapterIds = $chapters->pluck('id');
+        $readingHistory = Reading_history::whereIn('idChapter', $chapterIds)->get()->count();
+
         return view('single.single_page',[
             'isSingle' => $this->isSingle,
             'chapters' => $chapters,
             'novel' => $novel,
             'count' => $chapters->count(),
             'theloai' => $theloai,
-            'author' => $author
+            'author' => $author,
+            'bookmark' => $bookmark,
+            'readingHistory' =>  $readingHistory
         ]);
     }
 
