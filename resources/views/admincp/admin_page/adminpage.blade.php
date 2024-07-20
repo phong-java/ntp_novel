@@ -48,7 +48,7 @@
                                                     <button class="dropdown-item" id="xet_duyet_tacgia-tab" data-bs-toggle="pill"
                                                         data-bs-target="#xet_duyet_tacgia" type="button" role="tab"
                                                         aria-controls="xet_duyet_tacgia" aria-selected="false"
-                                                        data-link="{{ route('Author.danhsach_xetduyet', [0]) }}">Danh sách tác giả</button>
+                                                        data-link="{{ route('Author.danhsach_xetduyet') }}">Danh sách tác giả</button>
                                                 </li>
                                             </ul>
                                         </div>

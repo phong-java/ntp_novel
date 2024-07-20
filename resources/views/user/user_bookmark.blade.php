@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Auth;
                     <div class="d-flex flex-row my-1 align-items-center justify-content-between">
                         <a href="{{ route('Novel.show', [$novel->id]) }}"
                             class="title text-truncate text-decoration-none text-reset">{{ $novel->sNovel }}</a>
-                        <a href="javascript:void(0);" data-link="{{ route('Bookmark.destroy', [$novel->id]) }}"
+                        <a href="javascript:void(0);" data-link="{{ route('Bookmark.bookmark_remove', [$novel->id]) }}"
                             class="btn btn-danger ntp_bookmark_remove mx-2">X</a>
                     </div>
                     <hr>

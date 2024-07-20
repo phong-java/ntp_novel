@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Bill;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Storage;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 class UserController extends Controller
@@ -140,14 +141,14 @@ class UserController extends Controller
         $file = $request->file("anhdaidien");
         $user = User::find($id);
 
-        if($file) {
+        if ($file) {
             $destination = "uploads/user_av";
-            $filename = 'time_'.time().'_file_'.$file->getClientOriginalName();
+            $filename = 'time_' . time() . '_file_' . $file->getClientOriginalName();
             if ($file->move($destination, $filename)) {
                 $send = [
                     'avatar_change' => 'Cập nhật Avatar thành công',
                     'avatar_change_status' => 1,
-                    'av_link' => url($destination.'/'.$filename)
+                    'av_link' => url($destination . '/' . $filename)
                 ];
                 $user->sAvatar = $filename;
             } else {
@@ -161,9 +162,50 @@ class UserController extends Controller
         $user->save();
 
         return response()->json([
-            'status' => 1, 
-            'av_update'=>$send,
+            'status' => 1,
+            'av_update' => $send,
         ]);
+    }
+
+    public function save_user_setting(Request $request, $id)
+    {
+        if (!Auth::check()) {
+            return response()->json([
+                'status' => 0,
+                'errors' => 'Bạn chưa đăng nhập',
+            ]);
+        }
+
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json([
+                'status' => 0,
+                'errors' => 'Không tìm thấy người dùng',
+            ]);
+        }
+
+        if(Auth::user()->id == $id) {
+            $ntp_font = $request['ntp_font'];
+            $ntp_mode = $request['ntp_mode'];
+            
+            $data = array(
+                'ntp_font' => $ntp_font,
+                'ntp_mode' => $ntp_mode
+            );
+            
+            $json_data = json_encode($data);
+            $user->sSetup = $json_data;
+            $user->save();
+            return response()->json([
+                'status' => 1,
+                'message' => 'Cài đặt thành công',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 0,
+                'errors' => 'Bạn không có quyền thay đổi cho nguòi dùng này',
+            ]);
+        }
     }
 
     /**

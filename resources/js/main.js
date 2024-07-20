@@ -123,7 +123,7 @@ $(document).ready(function () {
     var _this = $(this)
     var url = $(_this).attr('data-link');
     $.ajax({
-      method: "POST",
+      method: "Get",
       url: url,
       success: function (data) {
         var ntp_efit_popup = $('.ntp_edit_cat_ppoup');
@@ -189,7 +189,7 @@ $(document).ready(function () {
       var url = $(btn).attr('data-link');
 
       $.ajax({
-        method: "POST",
+        method: "get",
         url: url,
         success: function (data) {
           var danh_sach_theloai = $('#danh_sach_theloai');
@@ -568,7 +568,7 @@ $(document).ready(function () {
       var url = $(btn).attr('data-link');
 
       $.ajax({
-        method: "POST",
+        method: "Get",
         url: url,
         success: function (data) {
           var xet_duyet_tacgia = $('#xet_duyet_tacgia');
@@ -585,7 +585,7 @@ $(document).ready(function () {
     var _this = $(this)
     var url = $(_this).attr('data-link');
     $.ajax({
-      method: "POST",
+      method: "Get",
       url: url,
       success: function (data) {
         var ntp_edit_novel_poup = $('#ntp_edit_novel_poup ');
@@ -654,7 +654,7 @@ $(document).ready(function () {
       var url = $(btn).attr('data-link');
 
       $.ajax({
-        method: "POST",
+        method: "Get",
         url: url,
         success: function (data) {
           var xet_duyet_tacpham = $('#xet_duyet_tacpham');
@@ -883,46 +883,46 @@ $(document).ready(function () {
     });
   });
 
-  $('body').on('ntp_bookmark_load_locall',function(){
-    if($('.ntp_bookmarks').hasClass('ntp_bookmarks_locall') && $('.ntp_bookmarks').length) {
+  $('body').on('ntp_bookmark_load_locall', function () {
+    if ($('.ntp_bookmarks').hasClass('ntp_bookmarks_locall') && $('.ntp_bookmarks').length) {
       var bookmarks = localStorage.getItem('ntp_bookmarks');
       if (bookmarks) {
-        
-        bookmarks = JSON.parse(bookmarks); 
-  
+
+        bookmarks = JSON.parse(bookmarks);
+
         if (bookmarks.length !== 0) {
           var html = '';
           $.each(bookmarks, function (index, value) {
-            html += '<div class="d-flex flex-row my-1 align-items-center justify-content-between">'+
-                    '<a href="' + value.link + '" class="title text-truncate text-decoration-none text-reset">' + value.title + '</a>'+
-                    '<a href="javascript:void(0);" data-id-novel="' + value.id + '" class="btn ntp_bookmark_remove ntp_locall btn-danger mx-2">X</a>'+
-                    '</div><hr>';
+            html += '<div class="d-flex flex-row my-1 align-items-center justify-content-between">' +
+              '<a href="' + value.link + '" class="title text-truncate text-decoration-none text-reset">' + value.title + '</a>' +
+              '<a href="javascript:void(0);" data-id-novel="' + value.id + '" class="btn ntp_bookmark_remove ntp_locall btn-danger mx-2">X</a>' +
+              '</div><hr>';
           });
-  
+
           $('.ntp_bookmarks').html(html);
-        }else {
+        } else {
           $('.ntp_bookmarks').html('');
         }
       }
     }
   }).trigger('ntp_bookmark_load_locall');
 
-  $('body').on('ntp_history_load_locall',function(){
-    if($('.ntp_read_history').length && $('.ntp_read_history').hasClass('ntp_read_history_locall') ) {
+  $('body').on('ntp_history_load_locall', function () {
+    if ($('.ntp_read_history').length && $('.ntp_read_history').hasClass('ntp_read_history_locall')) {
       var wrap = $('.ntp_read_history');
       var historys = localStorage.getItem('ntp_historys');
       if (historys) {
-        var html='';
+        var html = '';
         historys = JSON.parse(historys);
         if (historys.length !== 0) {
           $.each(historys, function (index, value) {
-              html += '<div class="d-flex flex-row my-1 align-items-center justify-content-between">'+
-                        '<a href="' + value.link_novel + '" class="title text-truncate text-decoration-none text-reset">' + value.novel_name + '<br> ' + value.chapter_name + ' </a>'+
-                        '<div class="d-flex flex-row align-items-center">'+
-                          '<a href="' + value.link + '" title="Đọc tiếp" class="btn btn-success mx-2">...</a>'+
-                          '<a href="javascript:void(0);"  data-id-novel="' + value.id_novel + '" title="Xóa lịch sử" class="btn ntp_remove_readding_history btn-danger me-2">X</a>'+
-                        '</div>'+
-                      '</div>'
+            html += '<div class="d-flex flex-row my-1 align-items-center justify-content-between">' +
+              '<a href="' + value.link_novel + '" class="title text-truncate text-decoration-none text-reset">' + value.novel_name + '<br> ' + value.chapter_name + ' </a>' +
+              '<div class="d-flex flex-row align-items-center">' +
+              '<a href="' + value.link + '" title="Đọc tiếp" class="btn btn-success mx-2">...</a>' +
+              '<a href="javascript:void(0);"  data-id-novel="' + value.id_novel + '" title="Xóa lịch sử" class="btn ntp_remove_readding_history btn-danger me-2">X</a>' +
+              '</div>' +
+              '</div>'
           });
         }
         $(wrap).html(html);
@@ -931,21 +931,21 @@ $(document).ready(function () {
   }).trigger('ntp_history_load_locall');
 
 
-  $('body').on('click', '.ntp_bookmark_remove',function (e) { 
+  $('body').on('click', '.ntp_bookmark_remove', function (e) {
     var _this = $(this);
-    if($(_this).hasClass('ntp_locall')) {
-     
+    if ($(_this).hasClass('ntp_locall')) {
+
       var bookmarks = localStorage.getItem('ntp_bookmarks');
       // console.log($(_this).attr('data-id-novel'));
       if (bookmarks) {
-        
+
         bookmarks = JSON.parse(bookmarks);
         if (bookmarks.length !== 0) {
           var index_bm = null;
           $.each(bookmarks, function (index, value) {
-              if(value.id == parseInt($(_this).attr('data-id-novel')) ) {
-                index_bm = index;
-              }
+            if (value.id == parseInt($(_this).attr('data-id-novel'))) {
+              index_bm = index;
+            }
           });
 
           bookmarks.splice(index_bm, 1);
@@ -960,13 +960,13 @@ $(document).ready(function () {
       var url = $(_this).attr('data-link');
 
       $.ajax({
-        method: "DELETE",
+        method: "Get",
         url: url,
         success: function (data) {
           $(_this).parents('.ntp_bookmarks_card').replaceWith(data.bookmarks);
         },
         error: function (error) {
-  
+
         }
       });
     }
@@ -974,9 +974,9 @@ $(document).ready(function () {
     e.preventDefault();
   });
 
-  $('body').on('click', '.ntp_remove_readding_history',function (e) { 
+  $('body').on('click', '.ntp_remove_readding_history', function (e) {
     var _this = $(this);
-    if($(_this).parents('.ntp_read_history').hasClass('ntp_read_history_locall')) { 
+    if ($(_this).parents('.ntp_read_history').hasClass('ntp_read_history_locall')) {
       var id_novel = $(this).attr('data-id-novel');
       var historys = localStorage.getItem('ntp_historys');
       var indexh = null;
@@ -984,12 +984,12 @@ $(document).ready(function () {
         historys = JSON.parse(historys);
         if (historys.length !== 0) {
           $.each(historys, function (index, value) {
-              if(value.id_novel == id_novel) {
-                indexh = index;
-              }
+            if (value.id_novel == id_novel) {
+              indexh = index;
+            }
           });
 
-          if(indexh != null) {
+          if (indexh != null) {
             historys.splice(indexh, 1);
             localStorage.setItem('ntp_historys', JSON.stringify(historys));
             $('body').trigger('ntp_history_load_locall');
@@ -1007,7 +1007,7 @@ $(document).ready(function () {
           $(_this).parents('.ntp_read_history_card').replaceWith(data.history);
         },
         error: function (error) {
-  
+
         }
       });
     }
@@ -1015,29 +1015,111 @@ $(document).ready(function () {
     e.preventDefault();
   });
 
-
-  if($('#ntp_login_register_modal').length) {
+  $('body').on('load_user_setting',function(){
+    var _form = $('#ntp_form_user_seting');
+    var setting ='';
+    if ($(_form).hasClass('ntp_locall_store')) {
+      setting = localStorage.getItem('ntp_settings');
+    } else {
+      setting = $(_form).attr('data-setting');
+    }
     
+    setting = JSON.parse(setting);
+
+    $("body").css("font-family", setting.ntp_font);
+    $(_form).find('#ntp_font_set').val(setting.ntp_font);
+
+    if (setting.ntp_mode === 1) {
+        $("html").attr("data-bs-theme", "dark");
+        $(_form).find('#ntp_dark_mode').prop('checked', true);
+    } else {
+        $("html").attr("data-bs-theme", "light");
+        $(_form).find('#ntp_dark_mode').prop('checked', false);
+    }
+
+  }).trigger('load_user_setting');
+
+  $('body').on('click', '.ntp_user_seting_save', function () {
+    var _this = $(this);
+    var _form = $(_this).parents('.modal-content').find('#ntp_form_user_seting');
+    var url = $(_form).attr('action');
+
+    var ntp_font = $(_form).find('#ntp_font_set').val();
+    var ntp_mode = $(_form).find('#ntp_dark_mode').is(':checked') ? 1 : 0;
+    var _data = {
+      ntp_font: ntp_font,
+      ntp_mode: ntp_mode
+    };
+    
+
+    if ($(_form).hasClass('ntp_locall_store')) {
+      localStorage.setItem('ntp_settings', JSON.stringify(_data));
+      $('body').trigger('load_user_setting');
+      $(_form).find('.alert-success').fadeIn(200).html('Cài đặt của bạn đã được lưu trên trình duyệt bạn nên đăng nhập để lưu trữ tốt hơn' + btn_close_success);
+
+    } else {
+      $.ajax({
+        method: "POST",
+        url: url,
+        data: JSON.stringify(_data),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (data) {
+          if (data.status == 1) {
+            $(_form).find('.alert-danger').fadeOut(200);
+            $(_form).find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
+
+            $(_form).attr('data-setting',JSON.stringify(_data));
+            $('body').trigger('load_user_setting');
+
+          } else if (data.status == 0) {
+            var errors = data.errors;
+            var errorMessages = '';
+            for (var key in errors) {
+              errorMessages += errors[key] + '</br>';
+            }
+            $(_form).find('.alert-danger').fadeIn(200).html(errorMessages + btn_close_danger);
+          }
+        },
+        error: function (error) {
+          var errorMessages = '';
+          for (var key in error) {
+            errorMessages += errors[key] + '</br>';
+          }
+          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages + btn_close_danger);
+        }
+      });
+    }
+    setTimeout(function () {
+      $('.alert-success').fadeOut(200);
+      $('.alert-danger ').fadeOut(200);
+    }, 1000);
+    
+  });
+
+
+  if ($('#ntp_login_register_modal').length) {
+
     if ($('.ntp_novel_single').length) {
-     
+
       var bookmarks = localStorage.getItem('ntp_bookmarks');
       var id = $('.ntp_novel_single').attr('data-novel-id');
 
       if (bookmarks) {
-        bookmarks = JSON.parse(bookmarks); 
+        bookmarks = JSON.parse(bookmarks);
 
         if (bookmarks.length !== 0) {
           $.each(bookmarks, function (index, value) {
-              if(value.id == id) {
-                // console.log(id);
-                $('.ntp_novel_single .ntp_mark>p').removeClass('text-success').addClass('text-danger').html('<i class="fa-solid fa-bookmark me-2" aria-hidden="true"></i>Hủy đánh dấu');
-              }
+            if (value.id == id) {
+              // console.log(id);
+              $('.ntp_novel_single .ntp_mark>p').removeClass('text-success').addClass('text-danger').html('<i class="fa-solid fa-bookmark me-2" aria-hidden="true"></i>Hủy đánh dấu');
+            }
           });
         }
       }
     }
 
-    if($('.ntp_chapter_page').length) {
+    if ($('.ntp_chapter_page').length) {
       var historys = localStorage.getItem('ntp_historys');
       var novel_name = $('.ntp_chapter_title').find('.ntp_novel_name').text();
       var chapter_name = $('.ntp_chapter_title').find('.ntp_chapter_name').text();
@@ -1054,13 +1136,13 @@ $(document).ready(function () {
 
       if (historys.length !== 0) {
         $.each(historys, function (index, value) {
-            if(value.id_novel == id_novel) {
-              historyExist = true;
-              value.link = link;
-              value.novel_name = novel_name;
-              value.chapter_name = chapter_name;
-              value.link_novel = link_novel;
-            }
+          if (value.id_novel == id_novel) {
+            historyExist = true;
+            value.link = link;
+            value.novel_name = novel_name;
+            value.chapter_name = chapter_name;
+            value.link_novel = link_novel;
+          }
         });
       }
 
@@ -1070,7 +1152,7 @@ $(document).ready(function () {
           chapter_name: chapter_name,
           id_novel: id_novel,
           link: link,
-          link_novel:link_novel
+          link_novel: link_novel
         });
       }
       localStorage.setItem('ntp_historys', JSON.stringify(historys));
@@ -1115,10 +1197,10 @@ $(document).ready(function () {
 
           if (bookmarks.length !== 0) {
             $.each(bookmarks, function (index, value) {
-                if(value.id == id) {
-                  bookmarlExist = true;
-                  index_bookmar = index;
-                }
+              if (value.id == id) {
+                bookmarlExist = true;
+                index_bookmar = index;
+              }
             });
           }
 
@@ -1151,15 +1233,15 @@ $(document).ready(function () {
     var type = $(input).attr('type');
 
     if (type === "password") {
-      $(input).attr('type','text');
+      $(input).attr('type', 'text');
       $(this).addClass('text-danger').removeClass('text-success');
     } else {
-      $(input).attr('type','password');
+      $(input).attr('type', 'password');
       $(this).addClass('text-success').removeClass('text-danger');
     }
   });
 
-  $('body').on('click', '.ntp_alert_close .btn-close', function () {
+  $('body').on('click', '.ntp_alert_close .btn-close,.modal .btn-close', function () {
     $('.alert-success').fadeOut(200);
     $('.alert-danger ').fadeOut(200);
   });
