@@ -49,7 +49,6 @@ trait AuthenticatesUsers
             if ($request->hasSession()) {
                 $request->session()->put('auth.password_confirmed_at', time());
             }
-
             return $this->sendLoginResponse($request);
         }
 
@@ -118,15 +117,12 @@ trait AuthenticatesUsers
             return $response;
         }
 
-        return response()->json([
-            'message' => 'Chào mừng quay chở lại',
-            'status' =>1
-        ]);
-
-
-        // return $request->wantsJson()
-        //     ? new JsonResponse([], 204)
-        //     : redirect()->intended($this->redirectPath());
+        return $request->wantsJson()
+            ? new JsonResponse([
+                'message' => 'Chào mừng quay chở lại asdasd',
+                'status' =>1
+            ], 200)
+            : redirect()->intended($this->redirectPath());
     }
 
     /**

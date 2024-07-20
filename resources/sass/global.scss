@@ -92,6 +92,19 @@ table {
         text-align: center;
         vertical-align: middle;
     }
+
+    &.ntp_user_list {
+        .ntp_av {
+            height: 40px !important;
+            width: 40px !important;
+            border-radius: 50%;
+        }
+
+        input,
+        select {
+            cursor: pointer;
+        }
+    }
 }
 
 .overflow-Xv {

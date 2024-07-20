@@ -206,13 +206,15 @@ class AuthorController extends Controller
         $author->sBankAccountNumber = $data['maso_nganhhang'];
         $author->sBank = $data['nganhang'];
 
+        $message = 'cập nhật thông tin xin cấp quyền thành công hãy tiếp tục đợi đợi quản trị viên xét duyệt ( quá trình mất 2 -3 ngày)';
+
         if($author->iStatus != 1) {
             $author->iStatus = 0;
         }
-        
 
         if ($user->sRole == 'admin') {
-            $author->iStatus = 1;   
+            $author->iStatus = 1;
+            $message = 'Admin rồi xin cái j';
         }
         
         $destination = "uploads/camket";
@@ -234,7 +236,7 @@ class AuthorController extends Controller
         $author->save();
 
         return response()->json([
-            'message' => ' cập nhật thông tin xin cấp quyền thành công hãy tiếp tục đợi đợi quản trị viên xét duyệt ( quá trình mất 2 -3 ngày)',
+            'message' => $message,
             'status' =>1,
             'file' => url($destination.'/'.$author->sCommit),
             'file_cccd' => url($destination_cccd.'/'.$author->sImg_identity),
@@ -264,13 +266,20 @@ class AuthorController extends Controller
             ]
         );
         $author = Author::find($id);
+       
+        $user = User::find($author->idUser);
+        if( $user->sRole == 'admin') {
+            return response()->json([
+                'message' => 'Người dùng này đang là admin bạn không thể gỡ quyền của người này',
+                'status' =>1
+            ]);
+        }
         $author->iStatus = $data['xuly'];
+        
         if ($data['xuly'] == 1) {
-            $user = User::find($author->idUser);
             $user->sRole = 'author';
             $user->save();
         } elseif ($data['xuly'] == 0) {
-            $user = User::find($author->idUser);
             $user->sRole = 'user';
             $user->save();
         }

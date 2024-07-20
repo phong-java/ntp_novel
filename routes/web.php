@@ -71,6 +71,10 @@ Route::post('/User-update/{id}', [UserController::class, 'update'])->name('User.
 Route::get('/User/{id}/show', [UserController::class, 'show'])->name('User.show');
 Route::post('/update-anhdaidien/{id}', [UserController::class, 'update_anhdaidien'])->name('User.update_anhdaidien');
 Route::post('/User-setting/{id}', [UserController::class, 'save_user_setting'])->name('User.save_user_setting');
+Route::get('/User-list', [UserController::class, 'danh_sach_user'])->name('User.danh_sach_user');
+Route::post('/User-cap-quyen/{id_user}', [UserController::class, 'cap_quyen_user'])->name('User.cap_quyen_user');
+Route::post('/User-khoa-tai-khoan/{id_user}', [UserController::class, 'khoa_user'])->name('User.khoa_user');
+Route::post('/User-lhoa-binhluan/{id_user}', [UserController::class, 'khoa_comment_user'])->name('User.khoa_comment_user');
 
 Route::post('/Nap-tien', [BillController::class, 'Naptien'])->name('Bill.Naptien');
 Route::get('/Nap-tien-thanh-cong/{id}', [BillController::class, 'Naptienthanhcong'])->name('Bill.Naptienthanhcong');

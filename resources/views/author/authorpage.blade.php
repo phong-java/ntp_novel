@@ -46,7 +46,7 @@
                                                 </li>
                                                 @endif
                                             </ul>
-                                            @if($author_found == 1 && $author->iStatus == 1)
+                                            @if(($author_found == 1 && $author->iStatus == 1) || $user->sRole = 'admin')
                                             <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
                                                 aria-expanded="false">
                                                 Quản lý truyện
@@ -83,7 +83,7 @@
 
                                                 </div>
                                             </div>
-                                            @if($author_found == 1 && $author->iStatus == 1)
+                                            @if(($author_found == 1 && $author->iStatus == 1) || $user->sRole = 'admin')
                                             <div class="tab-pane fade" id="thongke_baocao" role="tabpanel"
                                                 aria-labelledby="thongke_baocao-tab">
                                                 {{-- @include('user.thongke_baocao') --}}

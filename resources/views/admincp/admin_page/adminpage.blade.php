@@ -41,7 +41,7 @@
                                         <div class="btn-group">
                                             <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
                                                 aria-expanded="false">
-                                                Quản lý tác giả
+                                                Quản lý nguời dùng
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
@@ -49,6 +49,11 @@
                                                         data-bs-target="#xet_duyet_tacgia" type="button" role="tab"
                                                         aria-controls="xet_duyet_tacgia" aria-selected="false"
                                                         data-link="{{ route('Author.danhsach_xetduyet') }}">Danh sách tác giả</button>
+
+                                                    <button class="dropdown-item" id="danh_sach_nguoi_dung-tab" data-bs-toggle="pill"
+                                                        data-bs-target="#danh_sach_nguoi_dung" type="button" role="tab"
+                                                        aria-controls="danh_sach_nguoi_dung" aria-selected="false"
+                                                        data-link="{{ route('User.danh_sach_user') }}">Danh sách người dùng</button>
                                                 </li>
                                             </ul>
                                         </div>
@@ -81,6 +86,11 @@
                                         <div class="tab-pane fade" id="xet_duyet_tacgia" role="tabpanel"
                                             aria-labelledby="xet_duyet_tacgia-tab">
                                             @include('admincp.admin_page.admin_xetduyet_tacgia')
+                                        </div>
+                                        <div class="tab-pane fade" id="danh_sach_nguoi_dung" role="tabpanel"
+                                            aria-labelledby="danh_sach_nguoi_dung-tab">
+                                            ôkok
+                                            {{-- @include('admincp.admin_page.admin_xetduyet_tacgia') --}}
                                         </div>
                                         <div class="tab-pane fade" id="xet_duyet_tacpham" role="tabpanel"
                                             aria-labelledby="xet_duyet_tacpham-tab">

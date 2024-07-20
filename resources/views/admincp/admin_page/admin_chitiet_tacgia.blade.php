@@ -3,21 +3,23 @@
     <div class="alert alert-success ntp_hidden" role="alert"></div>
     <div class="alert alert-danger ntp_hidden" role="alert"></div>
     <div class="mb-3">
-        <label class="small mb-1" for="inputNickname">Nick name (bút danh tác giả)</label>
-        <input class="form-control" type="text" value="{{ $author->sNickName }}" readonly>
+        <label class="small mb-1" for="inputNickname">Nick name (bút danh tác giả): </label>
+        <span class="text-primary">{{ $author->sNickName }}</span>
     </div>
     <div class="mb-3">
         <label class="small mb-1" for="mota_tacgia">Mô tả về bạn</label>
-        <textarea class="form-control" rows="10" readonly>{{ $author->sDes }}</textarea>
+        <div class="border-1 border mt-2 rounded-2 p-2">
+            {{ $author->sDes }}
+        </div>
     </div>
     <div class="row gx-3 mb-3">
         <div class="col-md-6">
-            <label class="small mb-1" for="inputBirthday">Ngân hàng sử dụng</label>
-            <input class="form-control" readonly value="{{ $author->sBank }}">
+            <label class="small mb-1" for="inputBirthday">Ngân hàng sử dụng:</label>
+            <span class="text-primary">{{ $author->sBank }}</span>
         </div>
         <div class="col-md-6">
-            <label class="small mb-1" for="maso_nganhhang">Số tài khoản ( viết sai dáng chịu)</label>
-            <input class="form-control" type="text" value="{{ $author->sBankAccountNumber }}">
+            <label class="small mb-1" for="maso_nganhhang">Số tài khoản: </label>
+            <span class="text-primary">{{ $author->sBankAccountNumber }}</span>
         </div>
 
     </div>

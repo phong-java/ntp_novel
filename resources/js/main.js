@@ -216,6 +216,7 @@ $(document).ready(function () {
       method: "POST",
       url: url,
       data: _data,
+      Accept: 'application/json',
       contentType: false,
       processData: false,
       dataType: "json",
@@ -560,22 +561,128 @@ $(document).ready(function () {
     });
   });
 
+  $('body').on('click','#danh_sach_nguoi_dung-tab',function(){
+    var _this = $(this);
+    var url = $(_this).attr('data-link');
+    var danh_sach_nguoi_dung = $('#danh_sach_nguoi_dung');
+      $.ajax({
+        method: "Get",
+        url: url,
+        success: function (data) {
+          
+          $(danh_sach_nguoi_dung).html(data);
+        },
+        error: function (error) {
+          $(danh_sach_nguoi_dung).html('<div class="alert alert-danger" role="alert">Có lỗi xảy ra</div>');
+        }
+      });
+  });
+
+  $('body').on('change','.admin_user_role_sl',function() {
+    var selectedValue = $(this).val();
+    var url =$(this).attr('data-link');
+    var data = {
+        admin_user_role: selectedValue
+    };
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        contentType: 'application/json', 
+        data: JSON.stringify(data), 
+        success: function(data) {
+          if (data.status == 1) {
+            $('.alert-danger').fadeOut(200);
+            $('#ntp_admin_user_list_wrap').find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
+
+          } else if (data.status == 0) {
+            var errors = data.errors;
+            var errorMessages = '';
+            for (var key in errors) {
+              errorMessages += errors[key] + '</br>';
+            }
+            $('.alert-success').fadeOut(200);
+            $('#ntp_admin_user_list_wrap').find('.alert-danger').fadeIn(200).html(data.message + btn_close_success);
+          }
+        },
+        error: function(xhr, status, error) {
+            console.log('Error:', error);
+        }
+    });
+
+    setTimeout(function () {
+      $('.alert-success').fadeOut(200);
+      $('.alert-danger ').fadeOut(200);
+    }, 2000);
+});
+
+$('body').on('change','input.admin_user_status, input.admin_user_comment',function() {
+  var trangthai = $(this).is(':checked') ? 1 : 0;
+  var url =$(this).attr('data-link');
+  var data = {
+      admin_user_status: trangthai
+  };
+
+  if ($(this).hasClass('admin_user_comment')) {
+    data = {
+      admin_user_comment: trangthai
+    };
+  }
+
+  $.ajax({
+      url: url,
+      type: 'POST',
+      contentType: 'application/json', 
+      data: JSON.stringify(data), 
+      success: function(data) {
+        if (data.status == 1) {
+          $('.alert-danger').fadeOut(200);
+          $('#ntp_admin_user_list_wrap').find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
+
+        } else if (data.status == 0) {
+          var errors = data.errors;
+          var errorMessages = '';
+          for (var key in errors) {
+            errorMessages += errors[key] + '</br>';
+          }
+          $('.alert-success').fadeOut(200);
+          $('#ntp_admin_user_list_wrap').find('.alert-danger').fadeIn(200).html(data.message + btn_close_success);
+        }
+      },
+      error: function(xhr, status, error) {
+          console.log('Error:', error);
+      }
+  });
+
+  setTimeout(function () {
+    $('.alert-success').fadeOut(200);
+    $('.alert-danger ').fadeOut(200);
+  }, 2000);
+});
+
+
+
+
+  $('body').on('click','#xet_duyet_tacgia-tab',function(){
+    $('body').trigger('ntp_admin_load_xetduyet_author_list');
+  });
+
   // Load lại danh sách xét duyệt tác giả trong admin
   $('body').on('ntp_admin_load_xetduyet_author_list', function () {
     var btn = $('#xet_duyet_tacgia-tab');
-
+    var xet_duyet_tacgia = $('#xet_duyet_tacgia');
+    
     if ($(btn).length) {
       var url = $(btn).attr('data-link');
 
       $.ajax({
         method: "Get",
         url: url,
-        success: function (data) {
-          var xet_duyet_tacgia = $('#xet_duyet_tacgia');
+        success: function (data) {          
           $(xet_duyet_tacgia).html(data);
         },
         error: function (error) {
-
+          $(xet_duyet_tacgia).html('<div class="alert alert-danger" role="alert">Có lỗi xảy ra</div>');
         }
       });
     }
