@@ -40,12 +40,16 @@
 
                             <a class="dropdown-item" href="{{ route('User.show', [Auth::user()->id]) }}">Trang cá nhân</a>
 
-                            @if (Auth::user()->sRole == 'admin')
-                                <a class="dropdown-item" href="{{ route('User.admin',[Auth::user()->id])}}">Trang quản trị</a>
-                            @endif
+                            @if (Auth::user()->email_verified_at == null)
+                                <a class="dropdown-item" href="{{ route('verification.notice')}}">Xác thực email</a>
+                            @else
+                                @if (Auth::user()->sRole == 'admin')
+                                    <a class="dropdown-item" href="{{ route('User.admin',[Auth::user()->id])}}">Trang quản trị</a>
+                                @endif
 
-                            <a class="dropdown-item" href="{{ route('Author.show',[Auth::user()->id])}}">Trang tác giả</a>
-                            
+                                <a class="dropdown-item" href="{{ route('Author.show',[Auth::user()->id])}}">Trang tác giả</a>
+                            @endif
+                           
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>

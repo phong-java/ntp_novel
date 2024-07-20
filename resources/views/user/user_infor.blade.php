@@ -7,8 +7,10 @@
                 <div class="card-header fw-bold">Ảnh đại diện</div>
                 <div class="card-body ntp_av_wrap text-center">
                     <!-- Profile picture image-->
-                    <img class="ntp_av rounded-circle mb-2"
-                        src="{{ asset('uploads/user_av/'.Auth::user()->sAvatar) }}" alt="">
+                    <?php  
+                    $avatar = Auth::user()->sAvatar != ''? Auth::user()->sAvatar:'time_1719592364_file_default-avatar-photo-placeholder-icon-grey-vector-38594401.jpg';
+                    ?>
+                    <img class="ntp_av rounded-circle mb-2" src="{{ asset('uploads/user_av/'.$avatar) }}" alt="">
                     <!-- Profile picture help block-->
                     <div class="my-3">
                         <form method="POST" id="ntp_form_update_av_user">

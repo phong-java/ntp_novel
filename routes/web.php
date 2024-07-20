@@ -25,7 +25,13 @@ Route::get('/', function () {
     return view('home');
 });
 
-Auth::routes();
+Auth::routes([
+    'verify' => true
+]);
+
+Route::get('/email/verify', function () {
+    return view('auth.verify');
+})->middleware('auth')->name('verification.notice');
 
 // Route::post('/them-the-loai',[TestController::class,'themtheloai']);
 
@@ -35,7 +41,7 @@ Route::post('/sua-the-loai/{id}',[CategoriesController::class,'update'])->name('
 Route::get('/chi-tiet-the-loai/{id}',[CategoriesController::class,'show'])->name('Categories.show');
 
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('verified');
 // Route::resource('/Categories', CategoriesController::class);
 // Route::resource('/User', UserController::class);
 Route::resource('/Novel', NovelController::class);

@@ -41,7 +41,7 @@ trait RegistersUsers
 
         return $request->wantsJson()
                     ? new JsonResponse([ 
-                        'message' => 'Bạn đã đăng ký thành công, hãy đăng nhập ngay.Trang sẽ tự tải lại trong 2s',
+                        'message' => 'Bạn đã đăng ký thành công, hãy kiểm tra email kích hoạt tài khoản',
                         'status' =>1], 201)
                     : redirect($this->redirectPath());
     }

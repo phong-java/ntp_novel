@@ -84,6 +84,23 @@ trait AuthenticatesUsers
      */
     protected function attemptLogin(Request $request)
     {
+
+        $credentials = $this->credentials($request);
+
+        $user = \App\Models\User::where($this->username(), $credentials[$this->username()])->first();
+
+        if ($user && $user->iStatus !== 1) { 
+            throw ValidationException::withMessages([
+                $this->username() => ['Tài khoản của bạn đã bị khóa đăng nhập hãy liên hệ với quản trị viên để biết thêm chi tiết'],
+            ]);
+        }
+
+        // if ($user && $user->email_verified_at == null) { 
+        //     throw ValidationException::withMessages([
+        //         $this->username() => ['Tài khoản của bạn chưa được kích hoạt, hãy kiểm tra email'],
+        //     ]);
+        // }
+
         return $this->guard()->attempt(
             $this->credentials($request),
             $request->boolean('remember')
@@ -119,9 +136,9 @@ trait AuthenticatesUsers
 
         return $request->wantsJson()
             ? new JsonResponse([
-                'message' => 'Chào mừng quay chở lại asdasd',
+                'message' => 'Chào mừng quay chở lại',
                 'status' =>1
-            ], 200)
+            ], 201)
             : redirect()->intended($this->redirectPath());
     }
 
