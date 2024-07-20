@@ -1017,25 +1017,34 @@ $(document).ready(function () {
 
   $('body').on('load_user_setting',function(){
     var _form = $('#ntp_form_user_seting');
-    var setting ='';
+    var settingjson = '';
+
     if ($(_form).hasClass('ntp_locall_store')) {
-      setting = localStorage.getItem('ntp_settings');
+      settingjson = localStorage.getItem('ntp_settings');
     } else {
-      setting = $(_form).attr('data-setting');
+      settingjson = $(_form).attr('data-setting');
+    }
+
+    if(settingjson) {
+      var setting = JSON.parse(settingjson);
+    
+      if(setting.length !== 0) {
+        $("body").css("font-family", setting.ntp_font);
+        $(_form).find('#ntp_font_set').val(setting.ntp_font);
+    
+        if (setting.ntp_mode === 1) {
+            $("html").attr("data-bs-theme", "dark");
+            $(_form).find('#ntp_dark_mode').prop('checked', true);
+        } else {
+            $("html").attr("data-bs-theme", "light");
+            $(_form).find('#ntp_dark_mode').prop('checked', false);
+        }
+      }
     }
     
-    setting = JSON.parse(setting);
 
-    $("body").css("font-family", setting.ntp_font);
-    $(_form).find('#ntp_font_set').val(setting.ntp_font);
 
-    if (setting.ntp_mode === 1) {
-        $("html").attr("data-bs-theme", "dark");
-        $(_form).find('#ntp_dark_mode').prop('checked', true);
-    } else {
-        $("html").attr("data-bs-theme", "light");
-        $(_form).find('#ntp_dark_mode').prop('checked', false);
-    }
+
 
   }).trigger('load_user_setting');
 
@@ -1050,6 +1059,8 @@ $(document).ready(function () {
       ntp_font: ntp_font,
       ntp_mode: ntp_mode
     };
+
+    console.log(_data);
     
 
     if ($(_form).hasClass('ntp_locall_store')) {
@@ -1057,7 +1068,8 @@ $(document).ready(function () {
       $('body').trigger('load_user_setting');
       $(_form).find('.alert-success').fadeIn(200).html('Cài đặt của bạn đã được lưu trên trình duyệt bạn nên đăng nhập để lưu trữ tốt hơn' + btn_close_success);
 
-    } else {
+    } 
+    else {
       $.ajax({
         method: "POST",
         url: url,
@@ -1092,7 +1104,7 @@ $(document).ready(function () {
     }
     setTimeout(function () {
       $('.alert-success').fadeOut(200);
-      $('.alert-danger ').fadeOut(200);
+      $('.alert-danger').fadeOut(200);
     }, 1000);
     
   });

@@ -2,6 +2,11 @@
 /public/storage
 /storage/*.key
 /vendor
+public/uploads/banquyen
+public/uploads/camket
+public/uploads/cccd
+public/uploads/images
+public/uploads/user_av
 .env.backup
 .phpunit.result.cache
 docker-compose.override.yml
@@ -11,3 +16,4 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+.env.example
