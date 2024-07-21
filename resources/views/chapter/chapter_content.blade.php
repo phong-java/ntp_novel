@@ -27,7 +27,7 @@ use App\Models\Purchase_history;
 </div>
 
 <div class="card">
-    <div class="alert alert-success ntp_alert_static ntp_alert_content ntp_hidden" role="alert"></div>
+    <div class="alert alert-success ntp_alert_content ntp_hidden" role="alert"></div>
     <div class="alert alert-danger ntp_alert_content ntp_hidden" role="alert"></div>
     <div class="card-header d-flex gap-3 fw-bold justify-content-evenly align-items-center">
         <a href="{{$p_link}}" class="d-flex gap-2 align-items-center"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i> Chương trước </a>

@@ -31,7 +31,7 @@ use Carbon\Carbon;
                         <td class="ntp_chapter_price w-20">
                             <?php
                                 if($chapter->icharges == 1) {
-                                    echo $chapter->iPrice . 'Xu';
+                                    echo $chapter->iPrice . ' <i class="fa-solid fa-coins" aria-hidden="true"></i>';
                                 } else {
                                     echo 'Miễn phí';
                                 }

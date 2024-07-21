@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Purchase_history extends Model
 {
     use HasFactory;
-    protected $fillable= ['idUser','idChapter'];
+    protected $fillable= ['idUser','idChapter','iprice'];
     // public $timestamps = false;
     const CREATED_AT = 'dCreateDay';
     const UPDATED_AT = 'dUpdateDay';

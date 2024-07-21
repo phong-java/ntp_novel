@@ -354,6 +354,7 @@ class ChapterController extends Controller
                         $purchase_history = new Purchase_history();
                         $purchase_history->idChapter = $id_chapter;
                         $purchase_history->idUser = $iduser;
+                        $purchase_history->iprice = $price;
                         $purchase_history->save();
     
                         return response()->json([

@@ -146,7 +146,7 @@
                                         $bookmark = Bookmarks::where('idUser',Auth::user()->id)->where('idNovel', $novel->id)->first();
 
                                         if($bookmark) {
-                                            $text = 'Hủy ánh dấu';
+                                            $text = 'Hủy đánh dấu';
                                             $class = 'text-danger';
                                         }
                                     }
