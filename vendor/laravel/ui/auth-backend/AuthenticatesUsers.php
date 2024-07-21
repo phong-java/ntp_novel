@@ -89,7 +89,7 @@ trait AuthenticatesUsers
 
         $user = \App\Models\User::where($this->username(), $credentials[$this->username()])->first();
 
-        if ($user && $user->iStatus !== 1) { 
+        if ($user && $user->iStatus != 1) { 
             throw ValidationException::withMessages([
                 $this->username() => ['Tài khoản của bạn đã bị khóa đăng nhập hãy liên hệ với quản trị viên để biết thêm chi tiết'],
             ]);

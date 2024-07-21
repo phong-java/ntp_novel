@@ -8,7 +8,7 @@ $cats = Categories::orderBy('id', 'DESC')->where('iStatus',1)->get();
 ?>
 <div class="container mb-4">
     <div class="row">
-        <div class="col-xl-4">
+        <div class="col-md-4">
             <!-- Profile picture card-->
             <div class="card mb-4 mb-xl-0">
                 <div class="card-header fw-bold">Ảnh bìa truyện</div>
@@ -25,7 +25,7 @@ $cats = Categories::orderBy('id', 'DESC')->where('iStatus',1)->get();
                 </div>
             </div>
         </div>
-        <div class="col-xl-8">
+        <div class="col-md-8">
             <!-- Account details card-->
             <div class="card mb-4">
                 <div class="card-header fw-bold">Thông tin chi tiết truyện</div>

@@ -262,9 +262,9 @@ class NovelController extends Controller
             if($user) {
                 if($user['sRole'] != 'user') {
                     
-                    if ($novel->idUser !==  $iduser) {
+                    if ($novel->idUser !=  $iduser) {
                         return response()->json([
-                            'errors' => ['Nguoidung_quyen' => 'Bạn không có quyền cập nhật truyện này'],
+                            'errors' => ['Nguoidung_quyen' => 'Bạn không có quyền cập nhật truyện này 1'],
                             'status' => 0
                         ]);
                     }

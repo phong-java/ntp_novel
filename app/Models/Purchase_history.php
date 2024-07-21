@@ -13,5 +13,5 @@ class Purchase_history extends Model
     const CREATED_AT = 'dCreateDay';
     const UPDATED_AT = 'dUpdateDay';
     protected $primaryKey = 'id';
-    protected $table = 'tblbookmarks';
+    protected $table = 'tblpurchase_history';
 }

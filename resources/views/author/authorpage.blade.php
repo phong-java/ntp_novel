@@ -46,7 +46,7 @@
                                                 </li>
                                                 @endif
                                             </ul>
-                                            @if(($author_found == 1 && $author->iStatus == 1) || $user->sRole = 'admin')
+                                            @if(($author_found == 1 && $author->iStatus == 1) || $user->sRole == 'admin')
                                             <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
                                                 aria-expanded="false">
                                                 Quản lý truyện

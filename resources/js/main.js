@@ -823,7 +823,6 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
     var dataform = $(_this).parents('#ntp_form_create_chapter')[0];
     var _data = new FormData(dataform);
     _data.set('noidungchuong', noidungchuong);
-    console.log(_data);
 
     $.ajax({
       method: "POST",
@@ -835,7 +834,10 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
         if (data.status == 1) {
           $(_form).find('.alert-danger').fadeOut(200);
           $(_form).find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
-          $('body').trigger('ntp_author_load_novel_list');
+
+          setTimeout(function(){
+            location.reload();
+          },3000);
 
         } else if (data.status == 0) {
           $(_form).find('.alert-success').fadeOut(200);
@@ -934,6 +936,38 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
               $(_wrap).find('.' + key).html(chapters[key]);
           }
         }
+      },
+      error: function (error) {
+
+      }
+    });
+  });
+
+  $('body').on('click', '.ntp_chapter_page .ntp_pay_chapter', function () {
+    var _this = $(this);
+    var _ntp_content = $('.ntp_chapter_page .ntp_content');
+    var url = $(_this).attr('data-link');
+
+    $.ajax({
+      method: "Get",
+      url: url,
+      success: function (data) {
+        if (data.status == 1) {
+          $(_this).parents('.card').find('.alert-danger.ntp_alert_content').fadeOut(200);
+          $(_this).parents('.card').find('.alert-success.ntp_alert_content').fadeIn(200).html(data.message + btn_close_success);
+          $(_ntp_content).html(data.content);
+        } else if (data.status == 0) {
+          $(_this).parents('.card').find('.alert-success.ntp_alert_content').fadeOut(200);
+
+          var errors = data.errors;
+          var errorMessages = '';
+          for (var key in errors) {
+            errorMessages += errors[key] + '</br>';
+          }
+          $(_this).parents('.card').find('.alert-danger.ntp_alert_content').fadeIn(200).html(errorMessages + btn_close_danger);
+        }
+
+        $('body').trigger('ntp-alert-out');
       },
       error: function (error) {
 
@@ -1361,14 +1395,12 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
   });
 
   $('body').on('click', '.ntp_alert_close .btn-close,.modal .btn-close', function () {
-    $('.alert-success').fadeOut(200);
-    $('.alert-danger ').fadeOut(200);
+    $('.alert:not(.ntp_alert_static)').fadeOut(200);
   });
 
   $('body').on('ntp-alert-out', function () {
     setTimeout(function () {
-      $('.alert-success').fadeOut(200);
-      $('.alert-danger ').fadeOut(200);
+      $('.alert:not(.ntp_alert_static)').fadeOut(200);
     }, 10000);
   });
 

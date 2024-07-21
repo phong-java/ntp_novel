@@ -55,6 +55,7 @@ Route::get('/Chi-tiet-chuong-tacgia/{id}',[ChapterController::class,'page_chitie
 Route::get('/Chi-tiet-chuong-kiemduyet/{id}',[ChapterController::class,'admin_kiemquyet_chuong'])->name('Chapter.admin_kiemquyet_chuong');
 Route::post('/Ketqua-kiem-duyet-chuong-truyen',[ChapterController::class,'kiem_duyet_chuong'])->name('Chapter.kiem_duyet_chuong');
 Route::get('/Xoa-lich-su-doc/{id}',[ChapterController::class,'xoa_lichsu_doc'])->name('Chapter.xoa_lichsu_doc');
+Route::get('/Mua-chuong/{id}',[ChapterController::class,'mua_chuong'])->name('Chapter.mua_chuong');
 
 Route::post('/Danh-sachtruyen-tacgia',[NovelController::class,'Danh_sachtruyen_tacgia'])->name('Novel.Danh_sachtruyen_tacgia');
 Route::get('/Quan-ly-truyen/{id}',[NovelController::class,'quan_ly_truyen'])->name('Novel.quan_ly_truyen');

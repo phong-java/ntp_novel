@@ -4,7 +4,7 @@
     <div class="alert alert-danger ntp_hidden" role="alert"></div>
 
     @if ( $author_found == 1 && $author->iStatus == 3)
-    <div class="alert alert-danger" role="alert">Đơn xin cấp quyền của bạn đã bị từ trối hãy kiểm tra lại kĩ thông tin bạn cung cấp, và các thông tin mô tả, xác thực định danh cá nhân. Nếu có lỗi làm ơn hãy viết báo cáo. NTP Xin cám ơn.</div>
+    <div class="alert alert-danger" role="alert"><span class="ntp_alert_close bg-danger"><button type="button" class="btn-close"></button></span>Đơn xin cấp quyền của bạn đã bị từ trối hãy kiểm tra lại kĩ thông tin bạn cung cấp, và các thông tin mô tả, xác thực định danh cá nhân. Nếu có lỗi làm ơn hãy viết báo cáo. NTP Xin cám ơn.</div>
     @endif
     <div class="mb-3">
         <label class="small mb-1" for="inputNickname">Nick name (bút danh tác giả)</label>

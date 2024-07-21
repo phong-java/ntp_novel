@@ -11,6 +11,7 @@ use App\Models\Categories;
 use App\Models\Classify;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Purchase_history;
 use Illuminate\Validation\Rule;
 
 class ChapterController extends Controller
@@ -323,6 +324,62 @@ class ChapterController extends Controller
                 'message' => 'Bạn phải đăng nhập đã',
                 'status' =>0,
                 'history'=>view('user.user_read_history')->render()
+            ]);
+        }
+        
+    }
+
+    public function mua_chuong($id_chapter) {
+        if (Auth::check()) {
+            $chapter = Chapter::find($id_chapter);
+
+            if ($chapter) {
+                $iduser = Auth::user()->id;
+                $purchase_history = Purchase_history::where('idChapter',$id_chapter)->where('idUser',$iduser)->first();
+
+                if ($purchase_history) {
+                    return response()->json([
+                        'message' => 'Bạn mua chương này rồi',
+                        'status' =>1
+                    ]);
+                } else {
+                    $price = $chapter->iPrice;
+                    
+                    if(Auth::user()->iCoint >= $price) {
+                       
+                        $user = User::find($iduser);
+                        $user->iCoint = $user->iCoint - $price;
+                        $user->save();
+
+                        $purchase_history = new Purchase_history();
+                        $purchase_history->idChapter = $id_chapter;
+                        $purchase_history->idUser = $iduser;
+                        $purchase_history->save();
+    
+                        return response()->json([
+                            'message' => 'Mua chương: ' . $chapter->iChapterNumber . ' ' . $chapter->sChapter . ' thành công',
+                            'status' =>1,
+                            'content' =>$chapter->sContent
+                        ]);
+
+                    } else {
+                        return response()->json([
+                            'errors' => ['errors' => 'Bạn không dủ xu để mua chương này'],
+                            'status' =>0
+                        ]);
+                    }
+                }
+            } else {
+                return response()->json([
+                    'errors' => ['errors' => 'Không tìm thấy chương truyện bạn cần mua'],
+                    'status' =>0
+                ]);
+            }
+            
+        } else {
+            return response()->json([
+                'errors' => ['errors' => 'Bạn phải đăng nhập đã'],
+                'status' => 0
             ]);
         }
         
