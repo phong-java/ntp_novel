@@ -9,12 +9,12 @@
                         <img class="ntp_av_review rounded-circle shadow-1-strong" width="65"
                             height="65"src="{{ asset('uploads/user_av/time_1719592364_file_default-avatar-photo-placeholder-icon-grey-vector-38594401.jpg') }}" alt="">
                         <div class="w-100">
-                            <ul class="rating mb-3 list-inline d-flex gap-2" data-mdb-toggle="rating">
-                                <li><i class="far fa-star fa-sm text-warning " title="Bad"></i></li>
-                                <li><i class="far fa-star fa-sm text-warning " title="Poor"></i></li>
-                                <li><i class="far fa-star fa-sm text-warning " title="OK"></i></li>
-                                <li><i class="far fa-star fa-sm text-warning " title="Good"></i></li>
-                                <li><i class="far fa-star fa-sm text-warning " title="Excellent"></i></li>
+                            <ul class="ntp_novel_rating mb-3 list-inline d-flex gap-2" data-mdb-toggle="rating">
+                                <li><i class="fa-solid fa-star fa-sm text-warning rating-start" data-point="1" title="Bad"></i></li>
+                                <li><i class="far fa-star fa-sm text-warning rating-start" data-point="2" title="Poor"></i></li>
+                                <li><i class="far fa-star fa-sm text-warning rating-start" data-point="3" title="OK"></i></li>
+                                <li><i class="far fa-star fa-sm text-warning rating-start" data-point="4" title="Good"></i></li>
+                                <li><i class="far fa-star fa-sm text-warning rating-start" data-point="5" title="Excellent"></i></li>
                             </ul>
                             <div data-mdb-input-init class="form-outline mb-3">
                                 <textarea class="form-control" id="textAreaExample" rows="4"

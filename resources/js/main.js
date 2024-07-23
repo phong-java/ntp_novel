@@ -84,7 +84,8 @@ $(document).ready(function () {
     var formdata = $('#ntp_form_user_report')[0];
     var _data = new FormData(formdata);
     var _form = $('#ntp_form_user_report');
-    $(this).append(load);
+    var _this = $(this);
+    $(_this).append(load);
 
     $.ajax({
       method: "POST",
@@ -110,7 +111,8 @@ $(document).ready(function () {
           $(_form).find('.alert-danger').fadeIn(200).html(errorMessages + btn_close_danger);
         }
 
-        $(this).find('.spinner-border').remove();
+        $(_this).find('.spinner-border').remove();
+        
         $('body').trigger('ntp-alert-out');
       },
       error: function (error) {
@@ -1593,6 +1595,17 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
 
   $('body').on('click', '.ntp_alert_close .btn-close,.modal .btn-close', function () {
     $('.alert:not(.ntp_alert_static)').fadeOut(200);
+  });
+
+  $('body').on('click', '.ntp_novel_rating .rating-start', function () {
+    var clickedPoint = $(this).data('point');
+    $('.rating-start').each(function() {
+        if ($(this).data('point') <= clickedPoint) {
+            $(this).addClass('fa-solid').removeClass('far');
+        } else {
+            $(this).removeClass('fa-solid').addClass('far');
+        }
+    });
   });
 
   $('body').on('ntp-alert-out', function () {
