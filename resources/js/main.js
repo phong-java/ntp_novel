@@ -7,6 +7,7 @@ $(document).ready(function () {
 
   var btn_close_success = '<span class="ntp_alert_close bg-success"><button type="button" class="btn-close"></button></span>';
   var btn_close_danger = '<span class="ntp_alert_close bg-danger"><button type="button" class="btn-close"></button></span>';
+  var load = '<div class="spinner-border spinner-border-sm me-2 text-light" role="status"><span class="visually-hidden">Loading...</span></div>';
 
   $.ajaxSetup({
     headers: {
@@ -75,6 +76,189 @@ $(document).ready(function () {
         }
       }
     ]
+  });
+
+  //report 
+
+  $('body').on('click','.ntp_btn_report',function() {
+    var formdata = $('#ntp_form_user_report')[0];
+    var _data = new FormData(formdata);
+    var _form = $('#ntp_form_user_report');
+    $(this).append(load);
+
+    $.ajax({
+      method: "POST",
+      url: $(_form).attr('action'),
+      contentType: false,
+      processData: false,
+      data: _data,
+      dataType: "json",
+
+      success: function (data) {
+        if (data.status == 1) {
+          $(_form).find('.alert-danger').fadeOut(200);
+          $(_form).find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
+          $(formdata)[0].reset();
+        } else if (data.status == 0) {
+          $(_form).find('.alert-success').fadeOut(200);
+
+          var errors = data.errors;
+          var errorMessages = '';
+          for (var key in errors) {
+            errorMessages += errors[key] + '</br>';
+          }
+          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages + btn_close_danger);
+        }
+
+        $(this).find('.spinner-border').remove();
+        $('body').trigger('ntp-alert-out');
+      },
+      error: function (error) {
+
+      }
+    });
+  });
+  //report update
+  $('body').on('click','.ntp_report_detail_update',function() {
+    var _form = $('#ntp_form_user_report_update');
+
+    if($(_form).length) {
+      var formdata = $('#ntp_form_user_report_update')[0];
+      var _data = new FormData(formdata);
+
+      $.ajax({
+        method: "POST",
+        url: $(_form).attr('action'),
+        contentType: false,
+        processData: false,
+        data: _data,
+        dataType: "json",
+  
+        success: function (data) {
+          if (data.status == 1) {
+            $(_form).find('.alert-danger').fadeOut(200);
+            $(_form).find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
+  
+          } else if (data.status == 0) {
+            $(_form).find('.alert-success').fadeOut(200);
+  
+            var errors = data.errors;
+            var errorMessages = '';
+            for (var key in errors) {
+              errorMessages += errors[key] + '</br>';
+            }
+            $(_form).find('.alert-danger').fadeIn(200).html(errorMessages + btn_close_danger);
+          }
+  
+          $('body').trigger('ntp-alert-out');
+        },
+        error: function (error) {
+  
+        }
+      });
+    }
+  });
+
+// load lai bao cao ca nhan
+  $('body').on('click','#user_report_list-tab',function() {
+    var _this = $(this)
+    var url = $(_this).attr('data-link');
+    $.ajax({
+      method: "Get",
+      url: url,
+      success: function (data) {
+        var user_report_list = $('#user_report_list');
+        $(user_report_list).find('.user_reports').html(data.html);
+      },
+      error: function (error) {
+
+      }
+    });
+  });
+
+// load lai bao cao cao admin
+  $('body').on('click','.xu_ly_bao_cao_tab',function() {
+    var _this = $(this)
+    var url = $(_this).attr('data-link');
+    $.ajax({
+      method: "Get",
+      url: url,
+      success: function (data) {
+        var xu_ly_bao_cao = $((_this).attr('data-bs-target'));
+        $(xu_ly_bao_cao).html(data.html);
+      },
+      error: function (error) {
+
+      }
+    });
+  });
+
+  $('body').on('click','.ntp_report_admin_detail_update',function() {
+    var _form = $('#ntp_form_admin_report_update');
+
+    if($(_form).length) {
+      var formdata = $('#ntp_form_admin_report_update')[0];
+      var _data = new FormData(formdata);
+
+      $.ajax({
+        method: "POST",
+        url: $(_form).attr('action'),
+        contentType: false,
+        processData: false,
+        data: _data,
+        dataType: "json",
+  
+        success: function (data) {
+          if (data.status == 1) {
+            $(_form).find('.alert-danger').fadeOut(200);
+            $(_form).find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
+            $('.xu_ly_bao_cao_tab.active').trigger('click');
+          } else if (data.status == 0) {
+            $(_form).find('.alert-success').fadeOut(200);
+  
+            var errors = data.errors;
+            var errorMessages = '';
+            for (var key in errors) {
+              errorMessages += errors[key] + '</br>';
+            }
+            $(_form).find('.alert-danger').fadeIn(200).html(errorMessages + btn_close_danger);
+          }
+  
+          $('body').trigger('ntp-alert-out');
+        },
+        error: function (error) {
+  
+        }
+      });
+    }
+  });
+  
+
+  // load thông tin chi tiết của tố cáo
+  $('body').on('click', '.ntp_btn_report_detail_user', function () {
+    var _this = $(this)
+    var url = $(_this).attr('data-link');
+    $.ajax({
+      method: "Get",
+      url: url,
+      success: function (data) {
+        var ntp_report_detail = $('.ntp_report_detail');
+        $(ntp_report_detail).find('.modal-body').html(data.html);
+        $(ntp_report_detail).find('.modal-title').html(data.report_title);
+
+        if($('.xu_ly_bao_cao_tab').length <= 0) {
+          if (data.report_status != 0) {
+            $(ntp_report_detail).find('.modal-footer').hide();
+          } else {
+             $(ntp_report_detail).find('.modal-footer').show();
+          }
+        }
+
+      },
+      error: function (error) {
+
+      }
+    });
   });
 
   // tạo mới thể loại trong admin
@@ -835,9 +1019,9 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
           $(_form).find('.alert-danger').fadeOut(200);
           $(_form).find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
 
-          setTimeout(function(){
-            location.reload();
-          },3000);
+          // setTimeout(function(){
+          //   location.reload();
+          // },3000);
 
         } else if (data.status == 0) {
           $(_form).find('.alert-success').fadeOut(200);
@@ -1005,6 +1189,9 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
           $(_form).find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
           $('body').trigger('ntp_author_load_novel_list');
           $('#ntp_mucluc').html(data.table);
+          setTimeout(function () {
+            $(pa).find('.btn-close').trigger('click');
+          }, 1000);
         } else if (data.status == 0) {
           $(_form).find('.alert-success').fadeOut(200);
 
@@ -1394,6 +1581,16 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
     }
   });
 
+  $('body').on('click', '.dropdown-item[data-bs-toggle="pill"]:not(.ntp_view_child)', function () {
+    var id = $(this).attr('id');
+    var target = $(this).attr('data-bs-target');
+    setUrlParameter('view',id);
+    $('html, body').animate({
+      scrollTop: $(target).offset().top-100
+    }, 200);
+
+  });
+
   $('body').on('click', '.ntp_alert_close .btn-close,.modal .btn-close', function () {
     $('.alert:not(.ntp_alert_static)').fadeOut(200);
   });
@@ -1404,4 +1601,53 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
     }, 10000);
   });
 
+
+  
 });
+
+$(window).on('load', function() {
+  queryParams = getUrlParameter($);
+  setTimeout(function(){
+
+    if (Object.keys(queryParams).length != 0) {
+      if ('view' in queryParams && queryParams.view != '') {
+        var target = $('#'+queryParams.view).attr('data-bs-target');
+        $('#'+queryParams.view).trigger('click');
+        if ($(target).length) {
+          $('html, body').animate({
+            scrollTop: $(target).offset().top-100
+          }, 200);
+        }
+      }
+    }
+  },100);
+
+  if($('#user_report_list-tab').length) {
+    $('#user_report_list-tab').trigger('click');
+  }
+});
+
+function getUrlParameter($) {
+    var currentURL = window.location.href;
+    var queryString = currentURL.split('?')[1];
+    var queryParams = {};
+
+    if (queryString) {
+        var paramsArray = queryString.split('&');
+        
+        for (var i = 0; i < paramsArray.length; i++) {
+            var pair = paramsArray[i].split('=');
+            var key = decodeURIComponent(pair[0]);
+            var value = decodeURIComponent(pair[1] || '');
+            queryParams[key] = value;
+        }
+    }
+
+    return queryParams;
+}
+
+function setUrlParameter(paramName, paramValue) {
+  var urlObj = new URL(window.location.href);
+  urlObj.searchParams.set(paramName, paramValue);
+  window.history.pushState({ path: urlObj.toString() }, '', urlObj.toString());
+}

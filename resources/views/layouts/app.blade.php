@@ -1,5 +1,18 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="dark">
+
+<?php
+    $theme = 'light';
+    $font = '';
+    if (Auth::check()) {
+        $data_them = Auth::user()->sSetup;
+        if($data_them != '' && $data_them != null) {
+            $array = json_decode($data_them, true);
+            $theme =  $array['ntp_mode'] = 0? 'light' : 'dark';
+            $font = $array['ntp_font'];
+        }
+    }
+?>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="{{$theme}}">
 
 <head>
     <meta charset="utf-8">
@@ -51,7 +64,7 @@
 
 </head>
 
-<body>
+<body style="font-family: {{$font}};">
     <div id="app">
         <main class="main">
             @include('layouts.nav')

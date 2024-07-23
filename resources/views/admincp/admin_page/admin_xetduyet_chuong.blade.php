@@ -67,19 +67,18 @@ foreach ($theloai as $loai) {
 
                                     <div class="gx-3 mb-3">Tiến độ:
                                         <?php
-                                        if ($novel->sProgress == '1') {
-                                            echo '<span class="text-success"> Còn tiếp</span>';
-                                        } elseif ($novel->sProgress == '2') {
-                                            echo '<span class="text-danger"> Tạm ngừng</span>';
-                                        } elseif ($novel->sProgress == '3') {
-                                            echo '<span class="text-success"> Hoàn thành</span>';
-                                        }
+                                            if ($novel->sProgress == '1') {
+                                                echo '<span class="text-success"> Còn tiếp</span>';
+                                            } elseif ($novel->sProgress == '2') {
+                                                echo '<span class="text-danger"> Tạm ngừng</span>';
+                                            } elseif ($novel->sProgress == '3') {
+                                                echo '<span class="text-success"> Hoàn thành</span>';
+                                            }
                                         ?>
                                     </div>
                                     <div class="gx-3 mb-3">
                                         <a class="btn btn-outline-success"
-                                            href="{{ route('Novel.quan_ly_truyen', [$novel->id]) }}">Quay lại trang chi tiết
-                                            truyện</a>
+                                            href="{{ route('Novel.show', [$novel->id]) }}">Trang truyện</a>
                                     </div>
 
                                 </div>

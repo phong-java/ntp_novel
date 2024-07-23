@@ -10,6 +10,8 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookmarksController;
+use App\Http\Controllers\ReportController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -63,7 +65,7 @@ Route::get('/Danh_sach_truyen',[NovelController::class,'danhsach_xetduyet'])->na
 Route::post('/Xet-duyet-ban-quyen-truyen/{id}',[NovelController::class,'xetduyet'])->name('Novel.xetduyet');
 Route::get('/Chi-tiet-truyen/{id}',[NovelController::class,'chi_tiet_truyen'])->name('Novel.chi_tiet_truyen');
 Route::get('/Kiem-duyet-chuong-truyen/{id}',[NovelController::class,'page_kiem_duyet_chuong'])->name('Novel.page_kiem_duyet_chuong');
-
+Route::post('/Tim-kiem',[NovelController::class,'page_tim_kiem'])->name('Novel.page_tim_kiem');
 
 
 Route::post('/them-thong-tin-tac-gia',[AuthorController::class,'store'])->name('Author.store');
@@ -85,3 +87,10 @@ Route::post('/User-lhoa-binhluan/{id_user}', [UserController::class, 'khoa_comme
 
 Route::post('/Nap-tien', [BillController::class, 'Naptien'])->name('Bill.Naptien');
 Route::get('/Nap-tien-thanh-cong/{id}', [BillController::class, 'Naptienthanhcong'])->name('Bill.Naptienthanhcong');
+
+Route::post('/Bao-cao', [ReportController::class, 'bao_cao'])->name('Report.bao_cao');
+Route::get('/Bao-cao-list', [ReportController::class, 'bao_cao_list_user'])->name('Report.bao_cao_list_user');
+Route::get('/Bao-cao-chitiet-user/{id}', [ReportController::class, 'chitiet_report_user'])->name('Report.chitiet_report_user');
+Route::post('/Bao-cao-capnhat-user/{id}', [ReportController::class, 'update_report_user'])->name('Report.update_report_user');
+Route::get('/Bao-cao-list-admin/{status}', [ReportController::class, 'bao_cao_list_admin'])->name('Report.bao_cao_list_admin');
+Route::post('/Bao-cao-capnhat-admin/{id}', [ReportController::class, 'update_report_admin'])->name('Report.update_report_admin');

@@ -262,7 +262,7 @@ class AuthorController extends Controller
                 'xuly' => ['required'],
             ],
             [
-                'xuly.required' => 'Bạn cần lựa chọn đồng ý hoặc từ trối xin cấp quyền trước khi cập nhật',
+                'xuly.required' => 'Bạn cần lựa chọn đồng ý hoặc từ chối xin cấp quyền trước khi cập nhật',
             ]
         );
         $author = Author::find($id);

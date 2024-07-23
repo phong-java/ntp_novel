@@ -122,28 +122,32 @@ class BillController extends Controller
 
         if (empty($vnp_TxnRef) || empty($vnp_ResponseCode) || empty($vnp_TransactionStatus)) {
             return view('user.thankyou', [
-                'message' => 'Thiếu thông tin nhanh toán rồi. Nếu có lỗi xảy ra hãy viết báo cáo',
+                'message' => 'Thiếu thông tin nhanh toán rồi. Nếu có lỗi xảy ra hãy viết tố cáo',
             ]);
         } else {
             $bill = Bill::where('vnp_TxnRef', $vnp_TxnRef)->first();
             if (!$bill) {
                 return view('user.thankyou', [
-                    'message' => 'Không tìm thấy hóa đơn của bạn trong hệ thống. Nếu có lỗi xảy ra hãy viết báo cáo',
+                    'message' => 'Không tìm thấy hóa đơn của bạn trong hệ thống. Nếu có lỗi xảy ra hãy viết tố cáo',
                 ]);
             } else {
 
                 if($user) {
-                    $user->iCoint = $user->iCoint + $bill->iCoint;
-                    $user->save();
+                    if($bill->iStatus != 1){
+                        $user->iCoint = $user->iCoint + $bill->iCoint;
+                        $user->save();
+                    }
                 } else {
                     return view('user.thankyou', [
-                        'message' => 'không tìm thấy thông tin người dùng của bạn. Nếu có lỗi xảy ra hãy viết báo cáo',
+                        'message' => 'không tìm thấy thông tin người dùng của bạn. Nếu có lỗi xảy ra hãy viết tố cáo',
                     ]);
                 }
 
                 if($bill->iStatus == 1) {
                     return view('user.thankyou', [
-                        'message' => 'Hóa đơn của bạn đã đươc thanh toán. Nếu có lỗi xảy ra hãy viết báo cáo',
+                        'message' => 'Hóa đơn của ' . $user->name  . ' đã đươc thanh toán hãy kiểm tra số xu của mình trong ví ở trang cá nhân (trang cá nhân > quản lý thông tin cá nhân > ví tiền). Nếu có lỗi xảy ra hãy viết tố cáo',
+                        'user' => $user,
+                        'bill' => $bill
                     ]);
                 }
 
@@ -152,7 +156,9 @@ class BillController extends Controller
                     $bill->save();
 
                     return view('user.thankyou', [
-                        'message' => 'Hóa đơn của bạn đã đươc thanh toán thành công hãy kiểm tra số xu của mình trong ví ở trang cá nhân. Nếu có lỗi xảy ra hãy viết báo cáo',
+                        'message' => 'Hóa đơn của ' . $user->name  . ' đã đươc thanh toán thành công hãy kiểm tra số xu của mình trong ví ở trang cá nhân (trang cá nhân > quản lý thông tin cá nhân > ví tiền). Nếu có lỗi xảy ra hãy viết tố cáo',
+                        'user' => $user,
+                        'bill' => $bill
                     ]);
                 }
             }

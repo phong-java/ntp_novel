@@ -10,7 +10,7 @@ use App\Models\Purchase_history;
 
     $is_paied = false;
 
-        $btn_pay = '<button class="btn btn-success ntp_pay_chapter" data-link="' . route('Chapter.mua_chuong',[$chapter->id]) . '">Mua ngay <i class="fa-solid fa-coins" aria-hidden="true"></i></button>';
+        $btn_pay = '<button class="btn btn-success ntp_pay_chapter" data-link="' . route('Chapter.mua_chuong',[$chapter->id]) . '">Mua ngay ' . $chapter->iPrice . ' <i class="fa-solid fa-coins" aria-hidden="true"></i></button>';
     if(Auth::check()) {
         $purchase_history = Purchase_history::where('idChapter',$chapter->id)->where('idUser',Auth::user()->id)->first();
 

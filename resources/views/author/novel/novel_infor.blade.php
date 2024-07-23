@@ -48,10 +48,10 @@ $cats = Categories::orderBy('id', 'DESC')->where('iStatus',1)->get();
                         <div class="gx-3 mb-3 input-group"> 
                             <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-auto-close="outside" data-bs-toggle="dropdown"
                             aria-expanded="false"> Thể loại</button>
-                            <div class="dropdown-menu">
+                            <div class="dropdown-menu dropdown-menu-lg-end">
                                 <div class="d-flex gap-3 flex-wrap p-2 ntp_select_the_loai overflow-auto ntp_custom_ver_scrollbar" role="group" aria-label="Basic checkbox toggle button group">
                                     @foreach ($cats as $key => $cat)
-                                        <input class="form-check-input btn-check" type="checkbox" autocomplete="off" value="{{$cat->id}}" name="theloai[]" id="{{Str::slug($cat->sCategories).'_'.$cat->id}}" name="selected_assets">
+                                        <input class="form-check-input btn-check" type="checkbox" autocomplete="off" value="{{$cat->id}}" name="theloai[]" id="{{Str::slug($cat->sCategories).'_'.$cat->id}}">
                                         <label class="btn btn-outline-primary" for="{{Str::slug($cat->sCategories).'_'.$cat->id}}">{{$cat->sCategories}}</label>
                                     @endforeach
                                   </div>

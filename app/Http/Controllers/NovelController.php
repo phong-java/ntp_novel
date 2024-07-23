@@ -13,6 +13,7 @@ use App\Models\Classify;
 use App\Models\Bookmarks;
 use App\Models\Reading_history;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class NovelController extends Controller
 {
@@ -279,13 +280,21 @@ class NovelController extends Controller
                         if ($file->move($destination, $filename)) {
                             $novel->sCover = $filename;
                         }
+
                     }
             
                     if($file_banquyen) {
-                        $destination_banquyen = "uploads/banquyen";
-                        $filename_banquyen = 'time_'.time().'_file_'.$file_banquyen->getClientOriginalName();
-                        if ($file_banquyen->move($destination_banquyen, $filename_banquyen)) {
-                            $novel->sLicense = $filename_banquyen;
+                        if($novel->iLicense_Status == 0) {
+                            $destination_banquyen = "uploads/banquyen";
+                            $filename_banquyen = 'time_'.time().'_file_'.$file_banquyen->getClientOriginalName();
+                            if ($file_banquyen->move($destination_banquyen, $filename_banquyen)) {
+                                $novel->sLicense = $filename_banquyen;
+                            }
+                        } else {
+                            return response()->json([
+                                'errors' => ['Nguoidung_quyen' => 'Bạn không cập nhật lại được thông tin bản quyền khi đã được xét duyệt'],
+                                'status' => 0
+                            ]);
                         }
                     }
     
@@ -293,7 +302,6 @@ class NovelController extends Controller
                     $novel->sNovel = $data['tentruyen'];
                     $novel->sDes = htmlspecialchars($data['motatruyen']);
                     $novel->sProgress = $data['tiendo'];
-                    $novel->iLicense_Status = 0;
     
                     $novel->save();
 
@@ -432,4 +440,138 @@ class NovelController extends Controller
             'chapters' => $chapters
         ]);
     }
+
+    public function page_tim_kiem(Request $request)
+    {
+        $name = $request->input('novel_name');
+        // $novels = Novel::whereRaw('LOWER(sNovel) LIKE ?', ['%' . strtolower($name) . '%']);
+        $novels = Novel::select(
+                'tblnovel.id as novelId',
+                'tblnovel.sNovel',
+                'tblnovel.sCover',
+                'tblnovel.sDes',
+                'tblnovel.dCreateDay as novelCreateDay',
+                'tblnovel.dUpdateDay',
+                'tblnovel.sProgress',
+                'tblnovel.iStatus',
+                'tblnovel.idUser',
+                'tblnovel.iLicense_Status',
+                'tblnovel.sLicense',
+                'users.id as authorId',
+                'tblauthor.sNickName as sNickName ',
+                'users.name as authorName',
+                'users.email as authorEmail',
+                'users.sRole as authorRole',
+                'users.sAvatar as authorAvatar',
+                'users.sAdress as authorAddress',
+                'users.dBirthday as authorBirthday',
+                DB::raw('COUNT(tblreading_history.id) as totalReads'),
+                DB::raw('COUNT(DISTINCT tblchapter.id) as totalChapters'),
+                DB::raw('COALESCE(AVG(tblcomment.sPoint), 0) AS averagePoints'))
+
+                ->join('tblchapter', 'tblnovel.id', '=', 'tblchapter.idNovel')
+                ->leftJoin('tblreading_history', 'tblchapter.id', '=', 'tblreading_history.idChapter')
+                ->join('users', 'tblnovel.idUser', '=', 'users.id')
+                ->join('tblauthor', 'tblnovel.idUser', '=', 'tblauthor.idUser')
+                ->leftJoin('tblcomment', 'tblnovel.id', '=', 'tblcomment.idNovel')
+                ->where('tblnovel.iLicense_Status', 1)
+                ->where('tblnovel.iStatus', 1)
+                ->where('tblchapter.iPublishingStatus', 1)
+                ->where('tblchapter.iStatus', 1)
+                ->whereRaw('LOWER(tblnovel.sNovel) LIKE ?', ['%' . strtolower($name) . '%'])
+                ->groupBy('tblnovel.id', 
+                'users.id',
+                'tblnovel.sNovel',
+                'tblnovel.sCover',
+                'tblnovel.sDes',
+                'tblauthor.id',
+                'tblnovel.dCreateDay',
+                'tblnovel.dUpdateDay',
+                'tblnovel.sProgress',
+                'tblnovel.iStatus',
+                'tblnovel.idUser',
+                'tblnovel.iLicense_Status',
+                'tblnovel.sLicense',
+                'users.id',
+                'tblauthor.sNickName',
+                'users.name',
+                'users.email',
+                'users.sRole',
+                'users.sAvatar',
+                'users.sAdress',
+                'users.dBirthday',);
+
+        $Search_type_id = [];
+        $sapxep = '';
+        $author_name = '';
+        $tiendo = '';
+    
+        if ($request->has('theloai') && !empty($request->input('theloai'))) {
+            $Search_type_id = $request->input('theloai');
+            $totalCategories = count($Search_type_id);
+            $id_novel_cat = DB::table('tblnovel as n')
+                            ->join('tblclassify as c', 'n.id', '=', 'c.idNovel')
+                            ->select('n.id')
+                            ->whereIn('c.idCategories', $Search_type_id)
+                            ->groupBy('n.id')
+                            ->havingRaw('COUNT(DISTINCT c.idCategories) = ?', [$totalCategories])
+                            ->pluck('n.id');
+
+            $novels = $novels->whereIn('tblnovel.id', $id_novel_cat);
+        }
+    
+
+        if ($request->has('sapxep') && !empty($request->input('sapxep'))) {
+            $sapxep = $request->input('sapxep');
+            
+            if ($sapxep === 'luot_doc') {
+                $novels->orderBy('totalReads', 'desc');
+            }
+    
+            if ($sapxep === 'cap_nhat') {
+                $novelIds = DB::table('tblnovel as n')
+                        ->select('n.id as idNovel')
+                        ->join('tblchapter as c', 'n.id', '=', 'c.idNovel')
+                        ->where('c.dCreateDay', '=', function($query) {
+                            $query->select(DB::raw('MAX(dCreateDay)'))
+                                ->from('tblchapter')
+                                ->whereColumn('idNovel', 'n.id')
+                                ->where('iPublishingStatus', 1);
+                        })
+                        ->orderBy('c.dCreateDay', 'desc')
+                        ->pluck('idNovel')
+                        ->toArray(); 
+
+                $novels = $novels->orderByRaw(DB::raw("FIELD(novelId, " . implode(',', $novelIds) . ")"));
+            }
+
+            if ($sapxep === 'danh_gia') {
+                $novels->orderBy('averagePoints', 'desc');
+            }
+        }
+    
+        if ($request->has('author_name') && !empty($request->input('author_name'))) {
+            $author_name = $request->input('author_name');
+            $novels = $novels->whereRaw('LOWER(tblauthor.sNickName) LIKE ?', ['%' . strtolower($author_name) . '%']);
+        }
+
+        if ($request->has('tiendo') && !empty($request->input('tiendo'))) {
+            $tiendo = $request->input('tiendo');
+            $novels = $novels->where('tblnovel.sProgress', $tiendo);
+        }
+    
+
+        $novels = $novels->get();
+    
+        return view('search.search_page', [
+            'novels' => $novels,
+            'name' => $name,
+            'ispage_timkiem' => true,
+            'Search_type_id' => $Search_type_id,
+            'sapxep' => $sapxep,
+            'author_name' => $author_name,
+            'tiendo' =>$tiendo
+        ]);
+    }
+    
 }

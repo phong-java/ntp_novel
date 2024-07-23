@@ -1,6 +1,14 @@
 <div class="col-md-12">
     <div class=" row">
-        <div class="col-md-12 mb-4">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header fw-bold">Thu nhập</div>
+                <div class="card-body card-body text-center fs-1">
+                    {{$user->iCoint_receive}} <i class="fa-solid fa-coins"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
             <div class="card">
                 <div class="card-header fw-bold">Số xu bạn có trong ví là</div>
                 <div class="card-body card-body text-center fs-1">
@@ -125,15 +133,7 @@
 
                         <div class="w-100">
                             <label class="" for="bankcode">Phương thức giao dịch</label>
-                            <select name="bankcode" id="bankcode" class="form-control" required>   			
-                                <option value="MBAPP">Ung dung MobileBanking</option>			
-                                <option value="VNPAYQR">VNPAYQR</option>
-                                <option value="VNBANK">LOCAL BANK</option>
-                                <option value="IB">INTERNET BANKING</option>
-                                <option value="ATM">ATM CARD</option>
-                                <option value="INTCARD">INTERNATIONAL CARD</option>
-                                <option value="VISA">VISA</option>
-                                <option value="MASTERCARD"> MASTERCARD</option>
+                            <select name="bankcode" id="bankcode" class="form-control" required>
                                 <option value="JCB">JCB</option>
                                 <option value="UPI">UPI</option>
                                 <option value="VIB">VIB</option>
@@ -160,8 +160,6 @@
                                 <option value="OCB">Ngan hang OCB </option>
                                 <option value="IVB">Ngan hang IVB </option>
                                 <option value="SHB">Ngan hang SHB </option>
-                                <option value="APPLEPAY">Apple Pay </option>
-                                <option value="GOOGLEPAY">Google Pay </option>
                             </select>
                         </div>
 

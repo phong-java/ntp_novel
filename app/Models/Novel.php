@@ -14,4 +14,9 @@ class Novel extends Model
     const UPDATED_AT = 'dUpdateDay';
     protected $primaryKey = 'id';
     protected $table = 'tblnovel';
+
+    public function readingHistories()
+    {
+        return $this->hasManyThrough(Reading_history::class, Chapter::class, 'idNovel', 'idChapter', 'id', 'id');
+    }
 }

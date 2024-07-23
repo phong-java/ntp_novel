@@ -1,7 +1,7 @@
 <nav class="ntp_nav navbar navbar-expand-lg  bg-body shadow-sm mb-4">
     <div class="container col-md-11 justify-content-between">
         <a class="navbar-brand" href="{{ url('/') }}"><img class="ntp_logo me-2"
-            src="{{ asset('uploads/logo/Logo.jpg') }}" alt="">NTP Novel 
+            src="{{ asset('uploads/logo/Logo.jpg') }}" alt="">TNP Novel 
             @if (isset($isadmin) && $isadmin)
             - Admin
             @endif
@@ -19,7 +19,7 @@
                         <a class="nav-link d-flex gap-2 align-items-center" href="#" data-bs-toggle="modal" data-bs-target="#ntp_login_register_modal"><i class="fa-regular fa-user"></i>Đăng nhập / Đăng ký</a>
                     </li>
                 @else
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown ntp_dropdown">
                         <a id="navbarDropdown" class="ntp_user_loged nav-link dropdown-toggle" href="#" role="button"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
 
@@ -32,22 +32,26 @@
                             {{ Auth::user()->name }}
                         </a>
 
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu dropdown-menu-lg-end dropdown-menu dropdown-menu-lg-end-end" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                                <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
                             </a>
 
-                            <a class="dropdown-item" href="{{ route('User.show', [Auth::user()->id]) }}">Trang cá nhân</a>
+                            <a class="dropdown-item" href="{{ route('User.show', [Auth::user()->id]) }}"><i class="fa-solid fa-user"></i> Trang cá nhân</a>
+
+                            <a class="dropdown-item" href="{{route('User.show', [Auth::user()->id,'view=user_report-tab']) }}"><i class="fa-solid fa-flag"></i> Tố cáo</a>
+
+                            <a class="dropdown-item" href="{{route('User.show', [Auth::user()->id,'view=user_bill-tab']) }}"><i class="fa-solid fa-coins"></i> Ví tiền và hóa đơn</a>
 
                             @if (Auth::user()->email_verified_at == null)
-                                <a class="dropdown-item" href="{{ route('verification.notice')}}">Xác thực email</a>
+                                <a class="dropdown-item" href="{{ route('verification.notice')}}"><i class="fa-solid fa-envelope"></i> Xác thực email</a>
                             @else
                                 @if (Auth::user()->sRole == 'admin')
-                                    <a class="dropdown-item" href="{{ route('User.admin',[Auth::user()->id])}}">Trang quản trị</a>
+                                    <a class="dropdown-item" href="{{ route('User.admin',[Auth::user()->id])}}"><i class="fa-solid fa-user-tie"></i> Trang quản trị</a>
                                 @endif
 
-                                <a class="dropdown-item" href="{{ route('Author.show',[Auth::user()->id])}}">Trang tác giả</a>
+                                <a class="dropdown-item" href="{{ route('Author.show',[Auth::user()->id])}}"><i class="fa-solid fa-pen-nib"></i> Trang tác giả</a>
                             @endif
                            
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

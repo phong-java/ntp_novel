@@ -22,15 +22,15 @@
     <nav class="navbar navbar-expand-lg  bg-light shadow-sm">
         <div class="container col-md-11">
             @guest
-            <a class="navbar-brand" href="{{ url('/') }}">NTP Novel</a>
+            <a class="navbar-brand" href="{{ url('/') }}">TNP Novel</a>
         @else
             @auth
                 @if (Auth::user()->sRole == 'admin')
-                    <a class="navbar-brand" href="{{ url('/') }}">NTP Novel - Admin</a>
+                    <a class="navbar-brand" href="{{ url('/') }}">TNP Novel - Admin</a>
                 @elseif (Auth::user()->sRole == 'author')
-                    <a class="navbar-brand" href="{{ url('/') }}">NTP Novel - Author</a>
+                    <a class="navbar-brand" href="{{ url('/') }}">TNP Novel - Author</a>
                 @else
-                    <a class="navbar-brand" href="{{ url('/') }}">NTP Novel</a>
+                    <a class="navbar-brand" href="{{ url('/') }}">TNP Novel</a>
                 @endif
             @endauth
         @endguest
@@ -49,7 +49,7 @@
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                         Quản lý thể loại
                                     </a>
-                                    <ul class="dropdown-menu">
+                                    <ul class="dropdown-menu dropdown-menu-lg-end">
                                         <li><a class="dropdown-item" href="{{route('Categories.create')}}">Thêm thể loại</a></li>
                                         <li><a class="dropdown-item" href="{{route('Categories.index')}}">Danh sách thể loại</a></li>
                                         <!-- <li>
@@ -89,7 +89,7 @@
                                 {{ Auth::user()->name }}
                             </a>
 
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu dropdown-menu-lg-end dropdown-menu dropdown-menu-lg-end-end" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">

@@ -53,7 +53,7 @@ foreach ($theloai as $loai) {
                                     @if ( $novel->iLicense_Status == 3)
                                     <div class="alert alert-danger" role="alert">
                                         <span class="ntp_alert_close bg-danger"><button type="button" class="btn-close"></button></span>
-                                        Việc xin kiểm duyệt truyện của bạn đã bị từ trối hãy kiểm tra lại kĩ thông tin bạn cung cấp, và các thông tin mô tả, xác thực bản quyền. Nếu có lỗi làm ơn hãy viết báo cáo. NTP Xin cám ơn.</div>
+                                        Việc xin kiểm duyệt truyện của bạn đã bị từ chối hãy kiểm tra lại kĩ thông tin bạn cung cấp, và các thông tin mô tả, xác thực bản quyền. Nếu có lỗi làm ơn hãy viết tố cáo. TNP Xin cám ơn.</div>
                                     @endif
                                     <form method="POST" id="ntp_form_create_novel"
                                         action="{{ route('Novel.update', [$novel->id]) }}">
@@ -78,7 +78,7 @@ foreach ($theloai as $loai) {
                                             <button type="button" class="btn btn-outline-secondary dropdown-toggle"
                                                 data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false"> Thể
                                                 loại</button>
-                                            <div class="dropdown-menu">
+                                            <div class="dropdown-menu dropdown-menu-lg-end">
                                                 <div class="d-flex gap-3 flex-wrap p-2 ntp_select_the_loai overflow-auto ntp_custom_ver_scrollbar"
                                                     role="group" aria-label="Basic checkbox toggle button group">
 
@@ -86,8 +86,7 @@ foreach ($theloai as $loai) {
                                                         <input class="form-check-input btn-check"
                                                             {{ in_array($cat->id, $matchingIds) ? 'checked' : '' }} type="checkbox"
                                                             autocomplete="off" value="{{ $cat->id }}" name="theloai[]"
-                                                            id="{{ Str::slug($cat->sCategories) . '_' . $cat->id }}"
-                                                            name="selected_assets">
+                                                            id="{{ Str::slug($cat->sCategories) . '_' . $cat->id }}">
                                                         <label class="btn btn-outline-primary"
                                                             for="{{ Str::slug($cat->sCategories) . '_' . $cat->id }}">{{ $cat->sCategories }}</label>
                                                     @endforeach

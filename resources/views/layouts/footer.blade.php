@@ -1,23 +1,70 @@
 <div class="ntp_footer py-3 mt-4 border-top">
     <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Trang chủ</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Tìm kiếm</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Liên hệ</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Tố cáo</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Trang cá nhân</a></li>
+        <li class="nav-item"><a href="{{ url('/') }}" class="nav-link px-2 text-muted"><i class="fa-solid fa-house"></i> Trang chủ</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted"><i class="fa-solid fa-address-book"></i> Liên hệ</a></li>
+        @if(Auth::check())
+            <li class="nav-item"><a class="nav-link px-2 text-muted" href="{{route('User.show', [Auth::user()->id,'view=user_report-tab']) }}"><i class="fa-solid fa-flag"></i> Tố cáo</a></li>
+            <li class="nav-item"><a class="nav-link px-2 text-muted" href="{{ route('User.show', [Auth::user()->id]) }}"><i class="fa-solid fa-user"></i> Trang cá nhân</a></li>
+        @endif
     </ul>
-    <p class="text-center text-muted">© 2025 NTP_Novel - Đồ án</p>
+    <p class="text-center text-muted">© 2024 TNP Novel - Đồ án - HOU</p>
 </div>
 
 <!-- Modal trigger button -->
-<button type="button" class="btn btn-secondary btn-lg ntp_user_seting position-fixed bottom-0 end-0 translate-middle"
-    data-bs-toggle="modal" data-bs-target="#modalId">
-    <i class="fa-solid fa-user-gear"></i>
-</button>
+<div class="ntp_popup_btn position-fixed bottom-0 end-0 translate-middle">
+    @if(Auth::check() && Auth::user()->email_verified_at != null)
+        <button type="button" class="btn btn-secondary btn-lg shadow-lg ntp_user_report mb-3" data-bs-toggle="modal" data-bs-target="#ntp_user_report">
+            <i class="fa-solid fa-flag"></i>
+        </button>
+    @endif
+    <button type="button" class="btn btn-secondary btn-lg shadow-lg ntp_user_seting" data-bs-toggle="modal" data-bs-target="#ntp_user_seting">
+        <i class="fa-solid fa-user-gear"></i>
+    </button>
+    
+</div>
+@if(Auth::check() && Auth::user()->email_verified_at != null)
+<div class="modal fade" id="ntp_user_report" tabindex="-1"data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content col-10">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitleId">Tố cáo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert ntp_default ntp_alert_static alert-success" role="alert">
+                    <h4 class="alert-heading">TNP Xin chào {{Auth::user()->name}}!</h4>
+                    <p>Vì để tránh trường hợp người dùng spam tố cáo gây quá tải hệ thống chúng tôi giới hạn mỗi người dùng chỉ có thể tố cáo 1 lần / ngày.</p>
+                    <hr>
+                    <p class="mb-0">Nếu có gì cần bổ sung bạn có thể thêm vào tố cáo của ngày hôm nay. TNP xin cám ơn bạn</p>
+                </div>
+                <form method="POST" id="ntp_form_user_report" action="{{ route('Report.bao_cao') }}">
+                    <div class="alert alert-success ntp_hidden" role="alert"></div>
+                    <div class="alert alert-danger ntp_hidden" role="alert"></div>
+                    <div class="mb-3">
+                        <label class="small mb-1" for="report_title">Tiêu đề tố cáo</label>
+                        <input class="form-control" id="report_title" maxlength="255" name="report_title"
+                            type="text" placeholder="Tiêu đề tố cáo là">
+                    </div>
 
+                    <div class="mb-3">
+                        <label class="small mb-1">Nội dung tố cáo</label>
+                        <textarea name="content_report" id="content_report" rows="10" maxlength="3000" class="w-100"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Đóng
+                </button>
+                <button type="button" class="btn btn-primary ntp_btn_report">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
 <!-- Modal Body -->
 <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
-<div class="modal fade" id="modalId" tabindex="-1"data-bs-keyboard="false" role="dialog"
+<div class="modal fade" id="ntp_user_seting" tabindex="-1"data-bs-keyboard="false" role="dialog"
     aria-labelledby="modalTitleId" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">

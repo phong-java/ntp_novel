@@ -351,6 +351,11 @@ class ChapterController extends Controller
                         $user->iCoint = $user->iCoint - $price;
                         $user->save();
 
+                        $novel = Novel::find($chapter->idNovel);
+                        $novel_owner = User::find($novel->idUser);
+                        $novel_owner->iCoint_receive = $novel_owner->iCoint_receive + $price*0.7;
+                        $novel_owner->save();
+
                         $purchase_history = new Purchase_history();
                         $purchase_history->idChapter = $id_chapter;
                         $purchase_history->idUser = $iduser;
@@ -365,7 +370,7 @@ class ChapterController extends Controller
 
                     } else {
                         return response()->json([
-                            'errors' => ['errors' => 'Bạn không dủ xu để mua chương này'],
+                            'errors' => ['errors' => 'Bạn không dủ xu để mua chương này hãy vào ví tiền nạp tiền <a class="link-success text-decoration-underline" href="' . route('User.show', [Auth::user()->id,'view=user_bill-tab']) . '">Vào ví tiền</a>'],
                             'status' =>0
                         ]);
                     }

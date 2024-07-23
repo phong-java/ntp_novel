@@ -4,7 +4,7 @@
     <div class="alert alert-danger ntp_hidden" role="alert"></div>
 
     @if ( $author_found == 1 && $author->iStatus == 3)
-    <div class="alert alert-danger" role="alert"><span class="ntp_alert_close bg-danger"><button type="button" class="btn-close"></button></span>Đơn xin cấp quyền của bạn đã bị từ trối hãy kiểm tra lại kĩ thông tin bạn cung cấp, và các thông tin mô tả, xác thực định danh cá nhân. Nếu có lỗi làm ơn hãy viết báo cáo. NTP Xin cám ơn.</div>
+    <div class="alert alert-danger" role="alert"><span class="ntp_alert_close bg-danger"><button type="button" class="btn-close"></button></span>Đơn xin cấp quyền của bạn đã bị từ chối hãy kiểm tra lại kĩ thông tin bạn cung cấp, và các thông tin mô tả, xác thực định danh cá nhân. Nếu có lỗi làm ơn hãy viết tố cáo. TNP Xin cám ơn.</div>
     @endif
     <div class="mb-3">
         <label class="small mb-1" for="inputNickname">Nick name (bút danh tác giả)</label>
@@ -64,22 +64,24 @@
             đã up load</label>
         <iframe id="ntp_camket_da_upload" src="<?php echo $author_found == 1 ? ($author->sCommit != '' ? asset('uploads/camket/' . $author->sCommit) : '') : ''; ?>" class="w-100 vh-100"></iframe>
     </div>
-
-    <div class="row gx-3 mb-3">
-        <label for="upload_camket" class="form-label">Up load cam kết</label>
-        <input class="form-control mb-3" type="file" name="camket" id="upload_camket">
-        <a class="text-decoration-underline" href="{{ asset('uploads/camket/mau/ban-cam-ket-chiu-trach-nhiem.pdf"') }}" download> Tải bản cam kết mẫu </a>
-    </div>
-
+    @if($author_found == 0 || $user->sRole=='admin')
+        <div class="row gx-3 mb-3">
+            <label for="upload_camket" class="form-label">Up load cam kết</label>
+            <input class="form-control mb-3" type="file" name="camket" id="upload_camket">
+            <a class="text-decoration-underline" href="{{ asset('uploads/camket/mau/ban-cam-ket-chiu-trach-nhiem.pdf"') }}" download> Tải bản cam kết mẫu </a>
+        </div>
+    @endif
     <div class="row gx-3 mb-3 <?php echo $author_found == 0 ? 'd-none' : ($author->sImg_identity != '' ? '' : 'd-none'); ?>">
         <label class="form-label">CCCD đã cung cấp (bạn cần chụp ảnh 2 mặt CCCD cho vào file pdf)</label>
         <iframe id="ntp_cccd_da_upload" src="<?php echo $author_found == 1 ? ($author->sImg_identity != '' ? asset('uploads/cccd/' . $author->sImg_identity) : '') : ''; ?>" class="w-100 vh-100"></iframe>
     </div>
 
+    @if($author_found == 0 || $user->sRole=='admin')
     <div class="row gx-3 mb-3">
         <label for="upload_cccd" class="form-label">Ảnh CCCD (bạn cần chụp ảnh 2 mặt CCCD cho vào file pdf)</label>
         <input class="form-control mb-3" type="file" name="cccd" id="upload_cccd">
     </div>
+    @endif
 
     <!-- Save changes button-->
     <button class="btn btn-primary ntp_btn_create_author" type="button"><?php echo $author_found == 0 ? 'Xin cấp quyền tác giả' : 'Cập nhật thông tin tác giả'; ?></button>

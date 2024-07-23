@@ -32,11 +32,11 @@ use App\Models\Novel;
                         <tr>
                             <th scope="row">{{ $key + 1 }}</th>
                             <td><?php 
-                                $chapter = Chapter::find($purchase_history->idChapter)->first();
+                                $chapter = Chapter::find($purchase_history->idChapter);
                                 $novel = Novel::find($chapter->idNovel);
                                 echo($novel->sNovel);
                             ?></td>
-                            <td>{{ $chapter->sChapter }}</td>
+                            <td>Chương {{ $chapter->iChapterNumber }}: {{ $chapter->sChapter }}</td>
                             <td>{{ $purchase_history->iprice }} <i class="fa-solid fa-coins" aria-hidden="true"></i></td>
                             <td><?php
                                 $date = $purchase_history->dCreateDay;
