@@ -117,14 +117,7 @@
                             </div>
                             <hr>
                             <div class="row w-100">
-                                <p class="text-muted mb-0 w-25">Đánh giá: </p>
-                                <ul class="rating mb-3 list-inline flex-row d-flex gap-2 w-50" data-mdb-toggle="rating">
-                                    <li><i class="fas fa-star fa-sm text-warning " title="Bad"></i></li>
-                                    <li><i class="fas fa-star fa-sm text-warning " title="Poor"></i></li>
-                                    <li><i class="fas fa-star fa-sm text-warning " title="OK"></i></li>
-                                    <li><i class="fas fa-star fa-sm text-warning " title="Good"></i></li>
-                                    <li><i class="far fa-star fa-sm text-warning " title="Excellent"></i></li>
-                                </ul>
+                                <p class="text-muted mb-0 w-25">Đánh giá: {{round($averagePoint, 1)}} <i class="fas fa-star fa-sm text-warning "></i></p>
                             </div>
                         </div>
                     </div>

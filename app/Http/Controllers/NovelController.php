@@ -12,6 +12,7 @@ use App\Models\Author;
 use App\Models\Classify;
 use App\Models\Bookmarks;
 use App\Models\Reading_history;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -177,6 +178,10 @@ class NovelController extends Controller
         $bookmark = Bookmarks::where('idNovel',$id)->get()->count();
         $chapterIds = $chapters->pluck('id');
         $readingHistory = Reading_history::whereIn('idChapter', $chapterIds)->get()->count();
+        $averagePoint = Comment::where('idNovel', $id)
+                    ->where('iDelete', 0)
+                    ->whereNull('id_Comment_parent')
+                    ->avg('sPoint');
 
         return view('single.single_page',[
             'isSingle' => $this->isSingle,
@@ -186,7 +191,8 @@ class NovelController extends Controller
             'theloai' => $theloai,
             'author' => $author,
             'bookmark' => $bookmark,
-            'readingHistory' =>  $readingHistory
+            'readingHistory' =>  $readingHistory,
+            'averagePoint' => $averagePoint
         ]);
     }
 
@@ -473,7 +479,11 @@ class NovelController extends Controller
                 ->leftJoin('tblreading_history', 'tblchapter.id', '=', 'tblreading_history.idChapter')
                 ->join('users', 'tblnovel.idUser', '=', 'users.id')
                 ->join('tblauthor', 'tblnovel.idUser', '=', 'tblauthor.idUser')
-                ->leftJoin('tblcomment', 'tblnovel.id', '=', 'tblcomment.idNovel')
+                ->leftJoin('tblcomment', function($join) {
+                    $join->on('tblnovel.id', '=', 'tblcomment.idNovel')
+                         ->whereNull('tblcomment.id_Comment_parent')
+                         ->where('tblcomment.iDelete', 0);
+                })
                 ->where('tblnovel.iLicense_Status', 1)
                 ->where('tblnovel.iStatus', 1)
                 ->where('tblchapter.iPublishingStatus', 1)

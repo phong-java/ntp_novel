@@ -78,6 +78,238 @@ $(document).ready(function () {
     ]
   });
 
+  // comment
+  $('body').on('click','.ntp_submit_comment',function() {
+    var formdata = $('#ntp_rating_form')[0];
+    var _data = new FormData(formdata);
+    var _form = $('#ntp_rating_form');
+    var _this = $(this);
+    $(_this).append(load);
+
+    $.ajax({
+      method: "POST",
+      url: $(_form).attr('action'),
+      contentType: false,
+      processData: false,
+      data: _data,
+      dataType: "json",
+
+      success: function (data) {
+        if (data.status == 1) {
+          $(_form).find('.alert-danger').fadeOut(200);
+          $(_form).find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
+          $(formdata)[0].reset();
+          $('.ntp_novel_rating .rating-start').removeClass('fa-solid').addClass('far');
+          $('body').trigger('ntp_novel_review');
+        } else if (data.status == 0) {
+          $(_form).find('.alert-success').fadeOut(200);
+
+          var errors = data.errors;
+          var errorMessages = '';
+          for (var key in errors) {
+            errorMessages += errors[key] + '</br>';
+          }
+          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages + btn_close_danger);
+        }
+
+        $(_this).find('.spinner-border').remove();
+        
+        $('body').trigger('ntp-alert-out');
+      },
+      error: function (error) {
+        $(_this).find('.spinner-border').remove();
+      }
+    });
+  });
+
+  // gán link
+  $('body').on('click', '.ntp_comment_reply', function () {
+    var _form = $('#ntp_rating_reply_form');
+    $(_form).attr('action',$(this).attr('data-link'));
+  });
+
+  $('body').on('click', '.ntp_comment_update', function () {
+    var _form = $('#ntp_update_rating_reply_form');
+    var content = $(this).parents('.comment_item').find('p.comment_content').text().trim();
+    $(_form).attr('action',$(this).attr('data-link'));
+    $(_form).find('textarea[name="ntp_comment_update"]').text(content);
+  });
+  // phản hồi đánh giá
+    $('body').on('click','.ntp_comment_reply_submit',function() {
+    var formdata = $('#ntp_rating_reply_form')[0];
+    var _data = new FormData(formdata);
+    var _form = $('#ntp_rating_reply_form');
+    var _this = $(this);
+    $(_this).append(load);
+
+    $.ajax({
+      method: "POST",
+      url: $(_form).attr('action'),
+      contentType: false,
+      processData: false,
+      data: _data,
+      dataType: "json",
+
+      success: function (data) {
+        if (data.status == 1) {
+          $(_form).find('.alert-danger').fadeOut(200);
+          $(_form).find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
+          $(formdata)[0].reset();
+          $('.ntp_novel_rating .rating-start').removeClass('fa-solid').addClass('far');
+          $('body').trigger('ntp_novel_review');
+          $(_this).parents('.modal').find('.btn-close').trigger('click')
+        } else if (data.status == 0) {
+          $(_form).find('.alert-success').fadeOut(200);
+
+          var errors = data.errors;
+          var errorMessages = '';
+          for (var key in errors) {
+            errorMessages += errors[key] + '</br>';
+          }
+          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages + btn_close_danger);
+        }
+
+        $(_this).find('.spinner-border').remove();
+        
+        $('body').trigger('ntp-alert-out');
+      },
+      error: function (error) {
+        $(_this).find('.spinner-border').remove();
+      }
+    });
+  });
+
+  // cập nhật phản hồi đánh giá
+  $('body').on('click','.ntp_update_comment_reply_submit',function() {
+    var formdata = $('#ntp_update_rating_reply_form')[0];
+    var _data = new FormData(formdata);
+    var _form = $('#ntp_update_rating_reply_form');
+    var _this = $(this);
+    $(_this).append(load);
+
+    $.ajax({
+      method: "POST",
+      url: $(_form).attr('action'),
+      contentType: false,
+      processData: false,
+      data: _data,
+      dataType: "json",
+
+      success: function (data) {
+        if (data.status == 1) {
+          $(_form).find('.alert-danger').fadeOut(200);
+          $(_form).find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
+          $(formdata)[0].reset();
+          $('.ntp_novel_rating .rating-start').removeClass('fa-solid').addClass('far');
+          $('body').trigger('ntp_novel_review');
+          $(_this).parents('.modal').find('.btn-close').trigger('click')
+        } else if (data.status == 0) {
+          $(_form).find('.alert-success').fadeOut(200);
+
+          var errors = data.errors;
+          var errorMessages = '';
+          for (var key in errors) {
+            errorMessages += errors[key] + '</br>';
+          }
+          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages + btn_close_danger);
+        }
+
+        $(_this).find('.spinner-border').remove();
+        
+        $('body').trigger('ntp-alert-out');
+      },
+      error: function (error) {
+        $(_this).find('.spinner-border').remove();
+      }
+    });
+  });
+
+  // cho điểm
+  $('body').on('click', '.ntp_novel_rating .rating-start', function () {
+    var clickedPoint = $(this).data('point');
+    var input = $('.rating_start_input');
+
+    $('.rating-start').each(function() {
+        if ($(this).data('point') <= clickedPoint) {
+            $(this).addClass('fa-solid').removeClass('far');
+        } else {
+            $(this).removeClass('fa-solid').addClass('far');
+        }
+    });
+
+    $(input).val($(this).data('point'));
+
+  });
+
+  // ẩn/gỡ bình luận đánh giá
+  $('body').on('click', '.ntp_show_hide_comment,.ntp_delete_comment', function () {
+    var url = $(this).attr('data-link');
+    var value = $(this).attr('data-value');
+    var id_comment = $(this).attr('data-id-comment');
+    var data = {
+      value: value,
+      id_comment:id_comment
+    };
+    var text = 'Bạn có chắc muốn thay đổi trạng thái của bình luận này?';
+
+    if ($(this).hasClass('ntp_show_hide_comment')) {
+      var text = value == 0 ? 'Bạn có chắc muốn ẩn bình luận này?' : 'Bạn có chắc muốn hiển thị bình luận này?';
+    } else {
+      var text = value == 0 ? 'Bạn có chắc muốn khôi phục bình luận này?' : 'Bạn có chắc muốn gỡ bình luận này?';
+    }
+
+    var confirmAction = confirm(text);
+    if (confirmAction) {
+      $.ajax({
+        method: "POST",
+        url: url,
+        dataType: "json",
+        contentType: 'application/json', 
+        data: JSON.stringify(data), 
+
+        success: function (data) {
+          if (data.status == 1) {
+            $('.alert-danger.ntp_alert_public').fadeOut(200);
+            $('.alert-success.ntp_alert_public').fadeIn(200).html(data.message + btn_close_success);
+            $('body').trigger('ntp_novel_review');
+          } else if (data.status == 0) {
+            $('.alert-success.ntp_alert_public').fadeOut(200);
+
+            var errors = data.errors;
+            var errorMessages = '';
+            for (var key in errors) {
+              errorMessages += errors[key] + '</br>';
+            }
+            $('.alert-danger.ntp_alert_public').fadeIn(200).html(errorMessages + btn_close_danger);
+          }
+          
+          $('body').trigger('ntp-alert-out');
+        },
+        error: function (error) {
+        }
+      });
+    }
+
+  });
+  // Load lại review
+  $('body').on('ntp_novel_review', function () {
+    var ntp_novel_review = $('#ntp_novel_review');
+    if ($(ntp_novel_review).length) {
+      var url = $(ntp_novel_review).attr('data-link');
+      $.ajax({
+        method: "Get",
+        url: url,
+        success: function (data) {
+          
+          $(ntp_novel_review).replaceWith(data.html);
+        },
+        error: function (error) {
+  
+        }
+      });
+    }
+  });
+
   //report 
 
   $('body').on('click','.ntp_btn_report',function() {
@@ -116,7 +348,7 @@ $(document).ready(function () {
         $('body').trigger('ntp-alert-out');
       },
       error: function (error) {
-
+        $(_this).find('.spinner-border').remove();
       }
     });
   });
@@ -609,7 +841,7 @@ $(document).ready(function () {
     var _data = new FormData(dataform);
 
     var url = $(_form).attr('action');
-    console.log(dataform);
+    
     $.ajax({
       method: "POST",
       url: url,
@@ -1584,34 +1816,24 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
   });
 
   $('body').on('click', '.dropdown-item[data-bs-toggle="pill"]:not(.ntp_view_child)', function () {
-    var id = $(this).attr('id');
-    var target = $(this).attr('data-bs-target');
-    setUrlParameter('view',id);
-    $('html, body').animate({
-      scrollTop: $(target).offset().top-100
-    }, 200);
-
+    if ($(this).attr('data-bs-toggle') == 'pill') {
+      var id = $(this).attr('id');
+      var target = $(this).attr('data-bs-target');
+      setUrlParameter('view',id);
+      $('html, body').animate({
+        scrollTop: $(target).offset().top-100
+      }, 200);
+    }
   });
 
   $('body').on('click', '.ntp_alert_close .btn-close,.modal .btn-close', function () {
     $('.alert:not(.ntp_alert_static)').fadeOut(200);
   });
 
-  $('body').on('click', '.ntp_novel_rating .rating-start', function () {
-    var clickedPoint = $(this).data('point');
-    $('.rating-start').each(function() {
-        if ($(this).data('point') <= clickedPoint) {
-            $(this).addClass('fa-solid').removeClass('far');
-        } else {
-            $(this).removeClass('fa-solid').addClass('far');
-        }
-    });
-  });
-
   $('body').on('ntp-alert-out', function () {
     setTimeout(function () {
       $('.alert:not(.ntp_alert_static)').fadeOut(200);
-    }, 10000);
+    }, 4000);
   });
 
 

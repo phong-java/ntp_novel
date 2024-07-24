@@ -8,6 +8,8 @@
         @endif
     </ul>
     <p class="text-center text-muted">© 2024 TNP Novel - Đồ án - HOU</p>
+    <div class="alert alert-success ntp_alert_public ntp_hidden" role="alert"></div>
+    <div class="alert alert-danger ntp_alert_public ntp_hidden" role="alert"></div>
 </div>
 
 <!-- Modal trigger button -->
