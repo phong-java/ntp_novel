@@ -495,6 +495,49 @@ $(document).ready(function () {
     });
   });
 
+  // Tạo báo cáo thống kê
+  $('body').on('click','.btn_get_thongke',function() {
+    var formdata = $('#author_form_thongke')[0];
+    var _data = new FormData(formdata);
+    var _form = $('#author_form_thongke');
+    var _this = $(this);
+    $(_this).append(load);
+    var target = $(_this).attr('target');
+
+    $.ajax({
+      method: "POST",
+      url: $(_form).attr('action'),
+      contentType: false,
+      processData: false,
+      data: _data,
+      dataType: "json",
+
+      success: function (data) {
+        if (data.status == 1) {
+          $(_form).find('.alert-danger').fadeOut(200);
+          $(_form).find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
+          $(target).html(data.html);
+        } else if (data.status == 0) {
+          $(_form).find('.alert-success').fadeOut(200);
+
+          var errors = data.errors;
+          var errorMessages = '';
+          for (var key in errors) {
+            errorMessages += errors[key] + '</br>';
+          }
+          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages + btn_close_danger);
+        }
+
+        $(_this).find('.spinner-border').remove();
+        
+        $('body').trigger('ntp-alert-out');
+      },
+      error: function (error) {
+        $(_this).find('.spinner-border').remove();
+      }
+    });
+  });
+
   // tạo mới thể loại trong admin
 
   $('button.ntp_btn_cat_create').on('click', function () {

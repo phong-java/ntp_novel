@@ -75,6 +75,9 @@ Route::post('/cap-nhat-thong-tin-tac-gia/{id}',[AuthorController::class,'update'
 Route::post('/xet-duyet-tac-gia/{id}',[AuthorController::class,'xetduyet'])->name('Author.xetduyet');
 Route::post('/chi-tiet-tac-gia/{id}',[AuthorController::class,'edit'])->name('Author.edit');
 Route::get('/danh-sach-xet-duyet-tac-gia',[AuthorController::class,'danhsach_xetduyet'])->name('Author.danhsach_xetduyet');
+Route::post('/Bao-cao-thong-ke-tacgia', [AuthorController::class, 'baocao_thongke'])->name('Author.baocao_thongke');
+
+
 
 Route::get('/User/{id}/admin', [UserController::class, 'admin'])->name('User.admin');
 Route::post('/User-update/{id}', [UserController::class, 'update'])->name('User.update');
@@ -95,6 +98,8 @@ Route::get('/Bao-cao-chitiet-user/{id}', [ReportController::class, 'chitiet_repo
 Route::post('/Bao-cao-capnhat-user/{id}', [ReportController::class, 'update_report_user'])->name('Report.update_report_user');
 Route::get('/Bao-cao-list-admin/{status}', [ReportController::class, 'bao_cao_list_admin'])->name('Report.bao_cao_list_admin');
 Route::post('/Bao-cao-capnhat-admin/{id}', [ReportController::class, 'update_report_admin'])->name('Report.update_report_admin');
+Route::post('/Bao-cao-thong-ke-nap-tien', [ReportController::class, 'thongke_nap'])->name('Report.thongke_nap');
+
 
 Route::post('/Danh-gia-truyen/{id_novel}', [CommentController::class, 'danhgia_novel'])->name('Comment.danhgia_novel');
 Route::get('/Danh-gia-list/{id_novel}', [CommentController::class, 'danhgia_list'])->name('Comment.danhgia_list');
@@ -103,8 +108,6 @@ Route::post('/Danh-gia-Phan-hoi-capnhat/{id_comment}', [CommentController::class
 
 Route::post('/Danh-gia-Phan-hoi-an', [CommentController::class, 'danhgia_phanhoi_hide'])->name('Comment.danhgia_phanhoi_hide');
 Route::post('/Danh-gia-Phan-hoi-go', [CommentController::class, 'danhgia_phanhoi_delete'])->name('Comment.danhgia_phanhoi_delete');
-
-
 
 
 

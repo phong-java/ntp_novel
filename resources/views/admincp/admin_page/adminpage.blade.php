@@ -83,21 +83,47 @@
                                                     <button class="dropdown-item xu_ly_bao_cao_tab" id="xu_ly_bao_cao_0-tab" data-bs-toggle="pill"
                                                         data-bs-target="#xu_ly_bao_cao_0" type="button" role="tab"
                                                         aria-controls="xu_ly_bao_cao_0" aria-selected="false"
-                                                        data-link="{{ route('Report.bao_cao_list_admin', [0]) }}"><i class="fa-solid fa-circle-minus"></i> tố cáo chưa xử lý</button>
+                                                        data-link="{{ route('Report.bao_cao_list_admin', [0]) }}"><i class="fa-solid fa-circle-minus"></i> Tố cáo chưa xử lý</button>
                                                 </li>
                                                 <li>
                                                     <button class="dropdown-item xu_ly_bao_cao_tab" id="xu_ly_bao_cao_3-tab" data-bs-toggle="pill"
                                                         data-bs-target="#xu_ly_bao_cao_3" type="button" role="tab"
                                                         aria-controls="xu_ly_bao_cao_3" aria-selected="false"
-                                                        data-link="{{ route('Report.bao_cao_list_admin', [3]) }}"><i class="fa-solid fa-circle-xmark"></i> tố cáo từ chối xử lý</button>
+                                                        data-link="{{ route('Report.bao_cao_list_admin', [3]) }}"><i class="fa-solid fa-circle-xmark"></i> Tố cáo từ chối xử lý</button>
                                                 </li>
                                                 <li>
                                                     <button class="dropdown-item xu_ly_bao_cao_tab" id="xu_ly_bao_cao_1-tab" data-bs-toggle="pill"
                                                         data-bs-target="#xu_ly_bao_cao_1" type="button" role="tab"
                                                         aria-controls="xu_ly_bao_cao_1" aria-selected="false"
-                                                        data-link="{{ route('Report.bao_cao_list_admin', [1]) }}"><i class="fa-solid fa-circle-check"></i> tố cáo đã xử lý</button>
+                                                        data-link="{{ route('Report.bao_cao_list_admin', [1]) }}"><i class="fa-solid fa-circle-check"></i> Tố cáo đã xử lý</button>
                                                 </li>
                                             </ul>
+                                        </div>
+                                        <div class="btn-group ntp_dropdown">
+                                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            <i class="fa-solid fa-chart-simple"></i> Báo cáo thông kê
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-lg-end">
+                                            <li>
+                                                <button class="dropdown-item bao_cao_thong_ke_nap-tab" id="bao_cao_thong_ke_nap-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#bao_cao_thong_ke_nap" type="button" role="tab"
+                                                    aria-controls="bao_cao_thong_ke_nap" aria-selected="false"
+                                                    data-link=""><i class="fa-solid fa-file-invoice-dollar"></i> Báo cáo việc nạp tiền</button>
+                                            </li>
+                                            <li>
+                                                <button class="dropdown-item bao_cao_thong_ke_author" id="bao_cao_thong_ke_author-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#bao_cao_thong_ke_author" type="button" role="tab"
+                                                    aria-controls="bao_cao_thong_ke_author" aria-selected="false"
+                                                    data-link=""><i class="fa-solid fa-person"></i> Báo cáo riêng tác giả</button>
+                                            </li>
+                                            <li>
+                                                <button class="dropdown-item bao_cao_thong_ke_web" id="bao_cao_thong_ke_web-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#bao_cao_thong_ke_web" type="button" role="tab"
+                                                    aria-controls="bao_cao_thong_ke_web" aria-selected="false"
+                                                    data-link=""><i class="fa-solid fa-globe"></i> Báo cáo tổng thể tất cả tác phẩm</button>
+                                            </li>
+                                        </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -117,7 +143,6 @@
                                         </div>
                                         <div class="tab-pane fade" id="danh_sach_nguoi_dung" role="tabpanel"
                                             aria-labelledby="danh_sach_nguoi_dung-tab">
-                                            ôkok
                                             {{-- @include('admincp.admin_page.admin_xetduyet_tacgia') --}}
                                         </div>
                                         <div class="tab-pane fade" id="xet_duyet_tacpham" role="tabpanel"
@@ -135,6 +160,40 @@
                                         <div class="tab-pane fade" id="xu_ly_bao_cao_3" role="tabpanel"
                                             aria-labelledby="xu_ly_bao_cao_3-tab">
                                             {{-- @include('admincp.admin_page.admin_xetduyet_tacpham') --}}
+                                        </div>
+                                        <div class="tab-pane fade" id="bao_cao_thong_ke_nap" role="tabpanel"
+                                            aria-labelledby="bao_cao_thong_ke_nap-tab">
+                                            <div class="row gx-3 mb-3">
+                                            <form method="POST" class="row col-md-10" action="{{route('Report.thongke_nap')}}" id="author_form_thongke">
+                                                <div class="alert alert-success ntp_hidden" role="alert"></div>
+                                                <div class="alert alert-danger ntp_hidden" role="alert"></div>
+                                                <div class="col-md-6">
+                                                    <label class="small mb-1" for="Ngay_batdau">Ngày bắt đầu báo cáo</label>
+                                                    <input class="form-control" id="Ngay_batdau" type="date" name="Ngay_batdau" placeholder="Chọn ngày bạn muốn bắt đầu báo cáo">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="small mb-1" for="Ngay_ketthuc">Ngày kết thúc báo cáo</label>
+                                                    <input class="form-control" id="Ngay_ketthuc" type="date" name="Ngay_ketthuc" placeholder="Chọn ngày bạn muốn kết thúc báo cáo">
+                                                </div>
+                                            </form>
+                                            <div class="col-md-2 d-lg-flex align-content-end flex-wrap">
+                                                <button class="btn btn-outline-success w-100 mt-3 btn_get_thongke" target=".ntp_admin_thongke_nap">Lập báo cáo</button>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header fw-bold">Nội dung báo cáo</div>
+                                            <div class="card-body ntp_admin_thongke_nap text-center">
+                                                {{-- @include('author.thongke_baocao') --}}
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="bao_cao_thong_ke_author" role="tabpanel" 
+                                            aria-labelledby="bao_cao_thong_ke_author-tab"> 
+                                            Báo cáo riêng tác giả
+                                        </div>
+                                        <div class="tab-pane fade" id="bao_cao_thong_ke_web" role="tabpanel" 
+                                            aria-labelledby="bao_cao_thong_ke_web-tab"> 
+                                            Báo cáo tổng thể tất cả tác phẩm
                                         </div>
                                     </div>
                                     <!-- Modal -->

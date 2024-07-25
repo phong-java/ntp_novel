@@ -13,10 +13,20 @@
             <textarea name="content_report" id="content_report" rows="10" maxlength="3000" class="w-100">{{$report->sContent}}</textarea>
         </div>
 
-        <div class="mb-3">
-            <label class="small mb-1"><Strong>Nội dung phản hồi: </Strong></label>
-            <div>{{$report->sReply}}</div>
-        </div>
+        @if($report->iStatus != 0)
+            <div class="mb-3">
+                @php
+                $class = 'alert-success';
+                    if($report->iStatus == 3) {
+                        $class = 'alert-danger';
+                    } elseif ($report->iStatus == 1) {
+                        $class = 'alert-success';
+                    }
+                @endphp
+                <label class="small mb-1"><Strong>Nội dung phản hồi: </Strong></label>
+                <div class="alert ntp_default ntp_alert_static {{ $class}}" >{!!$report->sReply!!}</div>
+            </div>
+        @endif
     </form>
 @else
     <div class="mb-3">
@@ -25,7 +35,15 @@
     </div>
 
     <div class="mb-3">
-        <label class="small mb-1"><strong>Nội dung phản hồi:</strong></label>
-        <div>{{$report->sReply}}</div>
+        @php
+        $class = 'alert-success';
+            if($report->iStatus == 3) {
+                $class = 'alert-danger';
+            } elseif ($report->iStatus == 1) {
+                $class = 'alert-success';
+            }
+        @endphp
+        <label class="small mb-1"><Strong>Nội dung phản hồi: </Strong></label>
+        <div class="alert ntp_default ntp_alert_static {{ $class}}" >{!!$report->sReply!!}</div>
     </div>
 @endif

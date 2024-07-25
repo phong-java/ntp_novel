@@ -48,7 +48,7 @@
                                                     @endif
                                                 </ul>
                                             </div>
-                                            @if (($author_found == 1 && $author->iStatus == 1) || $user->sRole == 'admin')
+                                            @if (($author_found == 1 && $author->iStatus == 1) || ($user->sRole = 'admin' && $author_found == 1))
                                                 <div class="btn-group ntp_dropdown">
                                                     <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
                                                         aria-expanded="false">
@@ -90,10 +90,82 @@
 
                                                 </div>
                                             </div>
-                                            @if (($author_found == 1 && $author->iStatus == 1) || ($user->sRole = 'admin'))
+                                            @if (($author_found == 1 && $author->iStatus == 1) || ($user->sRole = 'admin' && $author_found == 1))
                                                 <div class="tab-pane fade" id="thongke_baocao" role="tabpanel"
                                                     aria-labelledby="thongke_baocao-tab">
-                                                    {{-- @include('user.thongke_baocao') --}}
+                                                   
+
+                                                    <div class="row gx-3 mb-3">
+                                                        <form method="POST" class="row col-md-10" action="{{route('Author.baocao_thongke')}}" id="author_form_thongke">
+                                                            <div class="alert alert-success ntp_hidden" role="alert"></div>
+                                                            <div class="alert alert-danger ntp_hidden" role="alert"></div>
+                                                            <div class="col-md-6">
+                                                                <label class="small mb-1" for="Ngay_batdau">Ngày bắt đầu báo cáo</label>
+                                                                <input class="form-control" id="Ngay_batdau" type="date" name="Ngay_batdau" placeholder="Chọn ngày bạn muốn bắt đầu báo cáo">
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="small mb-1" for="Ngay_ketthuc">Ngày kết thúc báo cáo</label>
+                                                                <input class="form-control" id="Ngay_ketthuc" type="date" name="Ngay_ketthuc" placeholder="Chọn ngày bạn muốn kết thúc báo cáo">
+                                                            </div>
+                                                        </form>
+                                                        <div class="col-md-2 d-lg-flex align-content-end flex-wrap">
+                                                            <button class="btn btn-outline-success w-100 mt-3 btn_get_thongke" target=".ntp_author_thongke">Lập báo cáo</button>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    
+                                                    <div class="container-xl p-0 mb-3" id="author_static">
+                                                        <div class="row">
+                                                            <div class="col-xl-4">
+                                                                <div class="card mb-4 mb-xl-0">
+                                                                    <div class="card-header fw-bold">Ảnh đại diện</div>
+                                                                    <div class="card-body ntp_av_wrap_thongke text-center">
+                                                                        <?php
+                                                                        $avatar = Auth::user()->sAvatar != '' ? Auth::user()->sAvatar : 'time_1719592364_file_default-avatar-photo-placeholder-icon-grey-vector-38594401.jpg';
+                                                                        ?>
+                                                                        <img class="ntp_av rounded-circle mb-2" src="{{ asset('uploads/user_av/' . $avatar) }}" alt="">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-8">
+                                                                <!-- Account details card-->
+                                                                <div class="card mb-4">
+                                                                    <div class="card-header fw-bold">Thông tin chi tiết tác giả</div>
+                                                                    <div class="card-body">
+                                                                            <div class="mb-3">
+                                                                                <label class="small mb-1" for="inputUsername">Tên: </label><span>{{ ' '.Auth::user()->name }}</span>
+                                                                            </div>
+                                                                            <div class="mb-3">
+                                                                                <label class="small mb-1" for="inputEmailAddress">Email:  </label><span>{{ ' '.Auth::user()->email }}</span>
+                                                                            </div>
+                                                                            <div class="row gx-3 mb-3">
+                                                                                <div class="col-md-6">
+                                                                                    <label class="small mb-1" for="inputBirthday">Ngày sinh: </label><span>{{ ' '.Auth::user()->dBirthday }}</span>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label class="small mb-1" for="inputLocation">Giới tính: </label> <span> {{ ' '.(Auth::user()->sGender == 'nam' ? 'Nam' : 'Nữ') }}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="mb-3">
+                                                                                <label class="small mb-1" for="inputLocation">Địa chỉ: </label><span>{{ ' '.Auth::user()->sAdress }}</span>
+                                                                            </div>
+                                                                            <div class="mb-3">
+                                                                                <label class="small mb-1" for="inputLocation">Bút danh: </label><span>{{  ' '.$author->sNickName }}</span>
+                                                                            </div>
+                                                                            <div class="mb-3">
+                                                                                <label class="small mb-1" for="inputLocation">Mô tả: </label><div>{{  ' '.$author->sDes }}</div>
+                                                                            </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card">
+                                                            <div class="card-header fw-bold">Nội dung báo cáo</div>
+                                                            <div class="card-body ntp_author_thongke text-center">
+                                                                {{-- @include('author.thongke_baocao') --}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="tab-pane fade" id="rut_tien" role="tabpanel"
                                                     aria-labelledby="rut_tien-tab">

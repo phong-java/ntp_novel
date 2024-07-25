@@ -244,4 +244,43 @@ class ReportController extends Controller
             ]);
         }
     }
+
+    public function thongke_nap(Request $request) {
+        $data = $request->validate(
+            [
+                'Ngay_batdau' => ['date','nullable'],
+                'Ngay_ketthuc' => ['date','nullable'],
+            ],
+            [
+                'Ngay_batdau.datetime' => 'Ngày bắt đầu lọc phải có định dạng là date',
+                'Ngay_ketthuc.datetime' => 'Ngày kết thúc lọc phải có định dạng là date',
+            ]
+        );
+
+        if (Auth::check()) {
+            if (Auth::user()->sRole != 'admin') {
+                return response()->json([
+                    'errors' => ['Nguoidung' => 'Bạn Không có quyền xem những báo cáo này'],
+                    'status' => 0
+                ]);
+            }
+
+            $id = Auth::user()->id;
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Tạo báo cáo thành công',
+                'html' => view('admincp.admin_page.baocao_thongke.thongke_nap', [
+                    'day_start_filter' =>$data['Ngay_batdau'],
+                    'day_end_filter' =>$data['Ngay_ketthuc'],
+                ])->render()
+            ]);
+
+        } else {
+            return response()->json([
+                'errors' => ['Nguoidung' => 'Bạn chưa đăng nhập'],
+                'status' => 0
+            ]);
+        }
+    }
 }

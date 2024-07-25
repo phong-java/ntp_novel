@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Author;
 use Illuminate\Validation\Rule;
-
+use Illuminate\Support\Facades\Auth;
 class AuthorController extends Controller
 {
     /**
@@ -293,5 +293,40 @@ class AuthorController extends Controller
 
     public function danhsach_xetduyet() {
         return view('admincp.admin_page.admin_xetduyet_tacgia');
+    }
+
+    public function baocao_thongke(Request $request) {
+        
+        $data = $request->validate(
+            [
+                'Ngay_batdau' => ['date','nullable'],
+                'Ngay_ketthuc' => ['date','nullable'],
+            ],
+            [
+                'Ngay_batdau.datetime' => 'Ngày bắt đầu lọc phải có định dạng là date',
+                'Ngay_ketthuc.datetime' => 'Ngày kết thúc lọc phải có định dạng là date',
+            ]
+        );
+
+        if (Auth::check()) {
+            $id = Auth::user()->id;
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Tạo báo cáo thành công',
+                'html' => view('author.thongke_baocao', [
+                    'author_id' => $id,
+                    'nguoilapbaocao' => Auth::user()->name,
+                    'day_start_filter' =>$data['Ngay_batdau'],
+                    'day_end_filter' =>$data['Ngay_ketthuc'],
+                ])->render()
+            ]);
+
+        } else {
+            return response()->json([
+                'errors' => ['Nguoidung' => 'Bạn chưa đăng nhập'],
+                'status' => 0
+            ]);
+        }
     }
 }
