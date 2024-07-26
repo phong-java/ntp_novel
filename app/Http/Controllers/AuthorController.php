@@ -329,4 +329,20 @@ class AuthorController extends Controller
             ]);
         }
     }
+
+    public function Tim_kiem_tacgia($nickname) {
+        $html= '';
+        $authors = Author::select('sNickName', 'idUser')
+        ->where('sNickName', 'LIKE', '%' . $nickname . '%')
+        ->get();
+        
+        foreach ($authors as $author) {
+             $html .= ' <a class="ntp_item_tacgia link-primary text-decoration-none" href="javascript:void(0);" data-iduser="' . $author->idUser . '">' . $author->sNickName . '</a><hr>';
+        }
+        
+        return response()->json([
+            'html' =>  $html,
+            'status' => 1
+        ]);
+    }
 }

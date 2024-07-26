@@ -164,36 +164,93 @@
                                         <div class="tab-pane fade" id="bao_cao_thong_ke_nap" role="tabpanel"
                                             aria-labelledby="bao_cao_thong_ke_nap-tab">
                                             <div class="row gx-3 mb-3">
-                                            <form method="POST" class="row col-md-10" action="{{route('Report.thongke_nap')}}" id="author_form_thongke">
-                                                <div class="alert alert-success ntp_hidden" role="alert"></div>
-                                                <div class="alert alert-danger ntp_hidden" role="alert"></div>
-                                                <div class="col-md-6">
-                                                    <label class="small mb-1" for="Ngay_batdau">Ngày bắt đầu báo cáo</label>
-                                                    <input class="form-control" id="Ngay_batdau" type="date" name="Ngay_batdau" placeholder="Chọn ngày bạn muốn bắt đầu báo cáo">
+                                                <form method="POST" class="row col-md-10" action="{{route('Report.thongke_nap')}}" id="admin_form_thongke_nap">
+                                                    <div class="alert alert-success ntp_hidden" role="alert"></div>
+                                                    <div class="alert alert-danger ntp_hidden" role="alert"></div>
+                                                    <div class="col-md-6">
+                                                        <label class="small mb-1" for="Ngay_batdau">Ngày bắt đầu báo cáo</label>
+                                                        <input class="form-control" id="Ngay_batdau" type="date" name="Ngay_batdau" placeholder="Chọn ngày bạn muốn bắt đầu báo cáo">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="small mb-1" for="Ngay_ketthuc">Ngày kết thúc báo cáo</label>
+                                                        <input class="form-control" id="Ngay_ketthuc" type="date" name="Ngay_ketthuc" placeholder="Chọn ngày bạn muốn kết thúc báo cáo">
+                                                    </div>
+                                                </form>
+                                                <div class="col-md-2 d-lg-flex align-content-end flex-wrap">
+                                                    <button class="btn btn-outline-success w-100 mt-3 btn_get_thongke" data-form="#admin_form_thongke_nap"  target=".ntp_admin_thongke_nap">Lập báo cáo</button>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <label class="small mb-1" for="Ngay_ketthuc">Ngày kết thúc báo cáo</label>
-                                                    <input class="form-control" id="Ngay_ketthuc" type="date" name="Ngay_ketthuc" placeholder="Chọn ngày bạn muốn kết thúc báo cáo">
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header fw-bold">Nội dung báo cáo</div>
+                                                <div class="card-body ntp_admin_thongke_nap text-center">
+                                                    {{-- @include('author.thongke_baocao') --}}
                                                 </div>
-                                            </form>
-                                            <div class="col-md-2 d-lg-flex align-content-end flex-wrap">
-                                                <button class="btn btn-outline-success w-100 mt-3 btn_get_thongke" target=".ntp_admin_thongke_nap">Lập báo cáo</button>
                                             </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header fw-bold">Nội dung báo cáo</div>
-                                            <div class="card-body ntp_admin_thongke_nap text-center">
-                                                {{-- @include('author.thongke_baocao') --}}
-                                            </div>
-                                        </div>
                                         </div>
                                         <div class="tab-pane fade" id="bao_cao_thong_ke_author" role="tabpanel" 
                                             aria-labelledby="bao_cao_thong_ke_author-tab"> 
-                                            Báo cáo riêng tác giả
+                                            <form method="POST" class="row" action="{{route('Report.thongke_tacgia')}}" id="admin_form_thongke_tacgia">
+                                                <div class="alert alert-success ntp_hidden" role="alert"></div>
+                                                <div class="alert alert-danger ntp_hidden" role="alert"></div>
+                                                <div class="col-md-12 timkiem_tacgia_wrap">
+                                                    <label class="small mb-1" for="Tim_kiemtacgia">TÌm kiếm tác giả</label>
+                                                    <input class="form-control admin_search_tacgia" id="Tim_kiemtacgia" data-link="{{route('Author.Tim_kiem_tacgia','')}}" type="text" name="tac_gia" placeholder="Tìm kiếm tác giả bạn buốn lập báo cáo (bút danh)">
+                                                    <div class="card ntp_drop_down_search_author">
+                                                        <div class="card-header">
+                                                          Kết quả tìm kiếm
+                                                        </div>
+                                                        <div class="card-body">
+                                                          
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <label class="small mb-1" for="Ngay_batdau">Ngày bắt đầu báo cáo</label>
+                                                    <input class="form-control" id="Ngay_batdau" type="date" name="Ngay_batdau" placeholder="Chọn ngày bạn muốn bắt đầu báo cáo">
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <label class="small mb-1" for="Ngay_ketthuc">Ngày kết thúc báo cáo</label>
+                                                    <input class="form-control" id="Ngay_ketthuc" type="date" name="Ngay_ketthuc" placeholder="Chọn ngày bạn muốn kết thúc báo cáo">
+                                                </div>
+                                                <div class="col-md-2 d-lg-flex align-content-end flex-wrap">
+                                                    <a class="btn btn-outline-success w-100 mt-3 btn_get_thongke" data-form="#admin_form_thongke_tacgia" target=".ntp_admin_thongke_tacgia">Lập báo cáo</button>
+                                                    </a>
+                                                </div>
+                                            </form>
+
+                                               
+                                            <div class="card mt-3">
+                                                <div class="card-header fw-bold">Nội dung báo cáo</div>
+                                                <div class="card-body ntp_admin_thongke_tacgia text-center">
+                                                    {{-- @include('author.thongke_baocao') --}}
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="tab-pane fade" id="bao_cao_thong_ke_web" role="tabpanel" 
                                             aria-labelledby="bao_cao_thong_ke_web-tab"> 
-                                            Báo cáo tổng thể tất cả tác phẩm
+                                            <div class="row gx-3 mb-3">
+                                                <form method="POST" class="row col-md-10" action="{{route('Report.thongke_tacpham')}}" id="admin_form_thongke_tacpham">
+                                                    <div class="alert alert-success ntp_hidden" role="alert"></div>
+                                                    <div class="alert alert-danger ntp_hidden" role="alert"></div>
+                                                    <div class="col-md-6">
+                                                        <label class="small mb-1" for="Ngay_batdau">Ngày bắt đầu báo cáo</label>
+                                                        <input class="form-control" id="Ngay_batdau" type="date" name="Ngay_batdau" placeholder="Chọn ngày bạn muốn bắt đầu báo cáo">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="small mb-1" for="Ngay_ketthuc">Ngày kết thúc báo cáo</label>
+                                                        <input class="form-control" id="Ngay_ketthuc" type="date" name="Ngay_ketthuc" placeholder="Chọn ngày bạn muốn kết thúc báo cáo">
+                                                    </div>
+                                                </form>
+                                                <div class="col-md-2 d-lg-flex align-content-end flex-wrap">
+                                                    <button class="btn btn-outline-success w-100 mt-3 btn_get_thongke" data-form="#admin_form_thongke_tacpham"  target=".ntp_admin_thongke_tacpham">Lập báo cáo</button>
+                                                </div>
+                                            </div>
+                                            <div class="card mt-3">
+                                                <div class="card-header fw-bold">Nội dung báo cáo</div>
+                                                <div class="card-body ntp_admin_thongke_tacpham text-center">
+                                                    {{-- @include('author.thongke_baocao') --}}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- Modal -->

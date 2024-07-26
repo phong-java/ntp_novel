@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Report;
+use App\Models\Author;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -283,4 +284,90 @@ class ReportController extends Controller
             ]);
         }
     }
+
+    public function thongke_tacgia(Request $request) {
+        $data = $request->validate(
+            [
+                'Ngay_batdau' => ['date','nullable'],
+                'Ngay_ketthuc' => ['date','nullable'],
+            ],
+            [
+                'Ngay_batdau.datetime' => 'Ngày bắt đầu lọc phải có định dạng là date',
+                'Ngay_ketthuc.datetime' => 'Ngày kết thúc lọc phải có định dạng là date',
+            ]
+        );
+
+        if (Auth::check()) {
+            if (Auth::user()->sRole != 'admin') {
+                return response()->json([
+                    'errors' => ['Nguoidung' => 'Bạn Không có quyền xem những báo cáo này'],
+                    'status' => 0
+                ]);
+            }
+
+            $author = Author::select('sNickName', 'idUser')
+                    ->where('sNickName', '=',  $request['tac_gia'])
+                    ->first();
+
+            if (!$author) {
+                return response()->json([
+                    'errors' => ['Nguoidung' => 'Không tìm thấy tác giả bạn cần'],
+                    'status' => 0
+                ]);
+            }
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Tạo báo cáo thành công',
+                'html' => view('author.thongke_baocao', [
+                    'author_id' => $author->idUser,
+                    'nguoilapbaocao' => Auth::user()->name,
+                    'day_start_filter' =>$data['Ngay_batdau'],
+                    'day_end_filter' =>$data['Ngay_ketthuc'],
+                ])->render()
+            ]);
+
+        } else {
+            return response()->json([
+                'errors' => ['Nguoidung' => 'Bạn chưa đăng nhập'],
+                'status' => 0
+            ]);
+        }
+    }
+
+    public function thongke_tacpham(Request $request) {
+        
+        $data = $request->validate(
+            [
+                'Ngay_batdau' => ['date','nullable'],
+                'Ngay_ketthuc' => ['date','nullable'],
+            ],
+            [
+                'Ngay_batdau.datetime' => 'Ngày bắt đầu lọc phải có định dạng là date',
+                'Ngay_ketthuc.datetime' => 'Ngày kết thúc lọc phải có định dạng là date',
+            ]
+        );
+
+        if (Auth::check()) {
+            $id = Auth::user()->id;
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Tạo báo cáo thành công',
+                'html' => view('admincp.admin_page.baocao_thongke.thongke_tacpham', [
+                    'author_id' => $id,
+                    'nguoilapbaocao' => Auth::user()->name,
+                    'day_start_filter' =>$data['Ngay_batdau'],
+                    'day_end_filter' =>$data['Ngay_ketthuc'],
+                ])->render()
+            ]);
+
+        } else {
+            return response()->json([
+                'errors' => ['Nguoidung' => 'Bạn chưa đăng nhập'],
+                'status' => 0
+            ]);
+        }
+    }
+
 }

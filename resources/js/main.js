@@ -497,10 +497,11 @@ $(document).ready(function () {
 
   // Tạo báo cáo thống kê
   $('body').on('click','.btn_get_thongke',function() {
-    var formdata = $('#author_form_thongke')[0];
-    var _data = new FormData(formdata);
-    var _form = $('#author_form_thongke');
     var _this = $(this);
+    var formdata = $($(_this).attr('data-form'))[0];
+    var _data = new FormData(formdata);
+    var _form = $($(_this).attr('data-form'));
+   
     $(_this).append(load);
     var target = $(_this).attr('target');
 
@@ -1877,6 +1878,32 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
     setTimeout(function () {
       $('.alert:not(.ntp_alert_static)').fadeOut(200);
     }, 4000);
+  });
+
+  $('body').on('input','.admin_search_tacgia',function() {
+    var text = $(this).val();
+    var drop = $('.ntp_drop_down_search_author');
+    if (text.length >= 3) {
+      var url = $(this).attr('data-link')+'/'+text;
+
+      $.ajax({
+        method: "POST",
+        url: url,
+        success: function (data) {
+          $(drop).find('.card-body').html(data.html);
+        },
+        error: function (error) {
+  
+        }
+      });
+    } else {
+      $(drop).find('.card-body').html('');
+    }
+  });
+
+  $('body').on('click','.ntp_item_tacgia',function () {
+      $('.admin_search_tacgia').attr('data-iduser',$(this).attr('data-iduser'));
+      $('.admin_search_tacgia').val($(this).text());
   });
 
 

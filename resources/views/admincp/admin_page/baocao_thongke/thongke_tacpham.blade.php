@@ -11,17 +11,14 @@
     use App\Models\Comment;
     use Carbon\Carbon;
 
-    // if (!isset($author_id) && Auth::check()) {
-    //     $author_id = Auth::user()->id;
-    // }
+    if (!isset($author_id) && Auth::check()) {
+        $author_id = Auth::user()->id;
+    }
 
     $day_start = $day_start_filter != '' ? \Carbon\Carbon::createFromFormat('Y-m-d', $day_start_filter)->format('d-m-Y') :'';
     $day_end = $day_end_filter != '' ? \Carbon\Carbon::createFromFormat('Y-m-d', $day_end_filter)->format('d-m-Y'):'';
 
-    $novels = Novel::where('idUser', $author_id)->where('iLicense_Status', 1)->get();
-
-    $user = User::find($author_id);
-    $author_infor = Author::where('idUser', $author_id)->first();
+    $novels = Novel::where('iLicense_Status', 1)->get();
 
     $currentDate = Carbon::now();
     $day = $currentDate->day;
@@ -40,25 +37,11 @@
 <div class="container-xl p-0 mb-3 text-start">
     <div class="row gx-3 mb-2">
         <div class="col-md-4">
-            <label class="small mb-1 fw-bolder" for="inputUsername">Báo cáo thu nhập của: </label><span>{{ ' '.$user->name }}</span>
+            <label class="small mb-1 fw-bolder" for="inputUsername">Người lập báo cáo: </label><span>{{ ' '.Auth::user()->name }}</span>
         </div>
         <div class="col-md-4">
-            <label class="small mb-1 fw-bolder" for="inputLocation">Bút danh tác giả: </label><span>{{  ' '.$author_infor->sNickName }}</span>
+            <label class="small mb-1 fw-bolder" for="inputEmailAddress">Email:  </label><span>{{ ' '.Auth::user()->email }}</span>
         </div>
-    </div>
-    <div class="mb-2">
-        <label class="small mb-1 fw-bolder" for="inputEmailAddress">Email:  </label><span>{{ ' '.$user->email }}</span>
-    </div>
-    <div class="row gx-3 mb-2">
-        <div class="col-md-4">
-            <label class="small mb-1 fw-bolder" for="inputBirthday">Ngày sinh: </label><span>{{ ' '.$user->dBirthday }}</span>
-        </div>
-        <div class="col-md-6">
-            <label class="small mb-1 fw-bolder" for="inputLocation">Giới tính: </label> <span> {{ ' '.($user->sGender == 'nam' ? 'Nam' : 'Nữ') }}</span>
-        </div>
-    </div>
-    <div class="mb-2">
-        <label class="small mb-1 fw-bolder" for="inputLocation">Địa chỉ: </label><span>{{ ' '.$user->sAdress }}</span>
     </div>
 </div>
 <table class="table table-hover mb-5">
@@ -67,6 +50,7 @@
             <th scope="col">STT</th>
             <th scope="col">Tên truyện</th>
             <th scope="col">Số chương</th>
+            <th scope="col">Tác giả</th>
             <th scope="col">Trạng thái</th>
             <th scope="col">Tiến độ</th>
             <th scope="col">Đánh giá</th>
@@ -104,6 +88,12 @@
                 <td scope="col">{{ $novel->sNovel }}</td>
                 <td scope="col">{{ $chapter_count }}</td>
                 <td scope="col">
+                    @php
+                        $author_infor = Author::where('idUser', $novel->idUser)->first();
+                        echo($author_infor->sNickName);
+                    @endphp
+                </td>
+                <td scope="col">
                     @if ($novel->iStatus == 1)
                         <span class="text text-success">Đăng tải</span>
                     @else
@@ -137,7 +127,7 @@
     <div class="mb-4">
         <span class="text text-center fw-bolder">{!!$formattedDate!!}</span>
         <h4 class="text text-center mt-2 fw-bolder">Người lập báo cáo</h4>
-        <span class="text text-center fw-bolder">{{$nguoilapbaocao}}</span>
+        <span class="text text-center fw-bolder">{{Auth::user()->name}}</span>
     </div>
 </div>
 

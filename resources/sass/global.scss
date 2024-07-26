@@ -83,6 +83,41 @@ margin-top: 2px;
     }
 }
 
+.timkiem_tacgia_wrap {
+    position: relative;
+
+    .ntp_drop_down_search_author {
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        left: 50%;
+        width: 90%;
+        z-index: 999;
+        gap: 3px;
+        bottom: 0;
+        transform: translate(-50%,90%);
+        transition: all 300ms ease;
+
+        .card-body {
+            max-height: 200px;
+            overflow: auto;   
+        }
+        
+        a {
+            width: 100%;
+
+        }
+    }
+
+    &:hover {
+        .ntp_drop_down_search_author {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%,110%);
+        }
+    }
+}
+
 .ntp_av_wrap_thongke {
     img {
         max-width: 100%;

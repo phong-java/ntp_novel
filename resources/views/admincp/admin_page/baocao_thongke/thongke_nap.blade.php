@@ -19,9 +19,12 @@
     $day_end = $day_end_filter != '' ? \Carbon\Carbon::createFromFormat('Y-m-d', $day_end_filter)->format('d-m-Y'):'';
 
     $results_charges = DB::table('tblbill')
-        ->join('users', 'tblbill.idUser', '=', 'users.id')
-        ->whereBetween('tblbill.dCreateDay', [$day_start_filter, $day_end_filter])
-        ->where('tblbill.iStatus', 1)
+        ->join('users', 'tblbill.idUser', '=', 'users.id');
+
+    $results_charges = $day_start_filter != ''? $results_charges->whereDate('tblbill.dCreateDay', '>=', $day_start_filter) : $results_charges ;
+    $results_charges = $day_end_filter != ''? $results_charges->whereDate('tblbill.dCreateDay', '<=', $day_end_filter) : $results_charges;
+
+    $results_charges = $results_charges->where('tblbill.iStatus', 1)
         ->groupBy('users.id', 'users.name', 'users.email', 'users.email_verified_at', 'users.password', 'users.sRole', 'users.remember_token', 'users.created_at', 'users.updated_at', 'users.sAdress', 'users.dBirthday', 'users.sGender', 'users.sAvatar', 'users.sSetup', 'users.iCoint', 'users.iCoint_receive', 'users.iStatus', 'users.iComment')
         ->select('users.id', 'users.name', 'users.email', 'users.email_verified_at', 'users.password', 'users.sRole', 'users.remember_token', 'users.created_at', 'users.updated_at', 'users.sAdress', 'users.dBirthday', 'users.sGender', 'users.sAvatar', 'users.sSetup', 'users.iCoint as user_coint', 'users.iCoint_receive', 'users.iStatus as user_status', 'users.iComment', DB::raw('SUM(tblbill.iCoint) as total_coint, SUM(tblbill.iMoney) as total_money'))
         ->get();

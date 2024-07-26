@@ -109,7 +109,7 @@
                                                             </div>
                                                         </form>
                                                         <div class="col-md-2 d-lg-flex align-content-end flex-wrap">
-                                                            <button class="btn btn-outline-success w-100 mt-3 btn_get_thongke" target=".ntp_author_thongke">Lập báo cáo</button>
+                                                            <button class="btn btn-outline-success w-100 mt-3 btn_get_thongke" data-form="#author_form_thongke" target=".ntp_author_thongke">Lập báo cáo</button>
                                                         </div>
                                                     </div>
                                                     
