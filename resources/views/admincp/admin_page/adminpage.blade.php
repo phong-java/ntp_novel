@@ -191,7 +191,7 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-header fw-bold">Nội dung báo cáo</div>
+                                                <div class="card-header fw-bold d-flex justify-content-between">Nội dung báo cáo <a href="javascript:void(0);" class="ntp_hidden downloadReport"><i class="fa-solid fa-download"></i> Tải báo cáo</a></div>
                                                 <div class="card-body ntp_admin_thongke_nap text-center">
                                                     {{-- @include('author.thongke_baocao') --}}
                                                 </div>
@@ -216,7 +216,7 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-header fw-bold">Nội dung báo cáo</div>
+                                                <div class="card-header fw-bold d-flex justify-content-between">Nội dung báo cáo <a href="javascript:void(0);" class="ntp_hidden downloadReport"><i class="fa-solid fa-download"></i> Tải báo cáo</a></div>
                                                 <div class="card-body ntp_admin_thongke_rut_tien text-center">
                                                     {{-- @include('author.thongke_baocao') --}}
                                                 </div>
@@ -258,7 +258,7 @@
 
                                                
                                             <div class="card mt-3">
-                                                <div class="card-header fw-bold">Nội dung báo cáo</div>
+                                                <div class="card-header fw-bold d-flex justify-content-between">Nội dung báo cáo <a href="javascript:void(0);" class="ntp_hidden downloadReport"><i class="fa-solid fa-download"></i> Tải báo cáo</a></div>
                                                 <div class="card-body ntp_admin_thongke_tacgia text-center">
                                                     {{-- @include('author.thongke_baocao') --}}
                                                 </div>
@@ -287,7 +287,7 @@
                                                 </div>
                                             </div>
                                             <div class="card mt-3">
-                                                <div class="card-header fw-bold">Nội dung báo cáo</div>
+                                                <div class="card-header fw-bold d-flex justify-content-between">Nội dung báo cáo <a href="javascript:void(0);"  class="ntp_hidden downloadReport"><i class="fa-solid fa-download"></i> Tải báo cáo</a></div>
                                                 <div class="card-body ntp_admin_thongke_tacpham text-center">
                                                     {{-- @include('author.thongke_baocao') --}}
                                                 </div>

@@ -584,16 +584,34 @@ $(document).ready(function () {
     });
   });
 
+  //Tải báo cáo thông kê
+  $('body').on('click','.downloadReport', function() {
+    if (window.pdfBase64 && window.pdfFileName) {
+        var binary = atob(window.pdfBase64);
+        var array = [];
+        for (var i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+        var blob = new Blob([new Uint8Array(array)], { type: 'application/pdf' });
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = window.pdfFileName;
+        link.click();
+    } else {
+        alert('Chưa có báo cáo để tải xuống.');
+    }
+});
+
   // Tạo báo cáo thống kê
   $('body').on('click','.btn_get_thongke',function() {
     var _this = $(this);
     var formdata = $($(_this).attr('data-form'))[0];
     var _data = new FormData(formdata);
     var _form = $($(_this).attr('data-form'));
-   
     $(_this).append(load);
     var target = $(_this).attr('target');
-
+    $(target).find('.downloadReport').addClass('ntp_hidden');
+    
     $.ajax({
       method: "POST",
       url: $(_form).attr('action'),
@@ -607,6 +625,12 @@ $(document).ready(function () {
           $(_form).find('.alert-danger').fadeOut(200);
           $(_form).find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
           $(target).html(data.html);
+
+          window.pdfBase64 = data.pdfBase64;
+          window.pdfFileName = data.pdfFileName;
+
+          $('.downloadReport').removeClass('ntp_hidden');
+
         } else if (data.status == 0) {
           $(_form).find('.alert-success').fadeOut(200);
 

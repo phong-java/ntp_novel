@@ -119,7 +119,7 @@
                                                     
                                                     <div class="container-xl p-0 mb-3" id="author_static">
                                                         <div class="row">
-                                                            <div class="col-xl-4">
+                                                            <div class="col-md-4">
                                                                 <div class="card mb-4 mb-xl-0">
                                                                     <div class="card-header fw-bold">Ảnh đại diện</div>
                                                                     <div class="card-body ntp_av_wrap_thongke text-center">
@@ -130,7 +130,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-xl-8">
+                                                            <div class="col-md  -8">
                                                                 <!-- Account details card-->
                                                                 <div class="card mb-4">
                                                                     <div class="card-header fw-bold">Thông tin chi tiết tác giả</div>
@@ -163,7 +163,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="card">
-                                                            <div class="card-header fw-bold">Nội dung báo cáo</div>
+                                                            <div class="card-header fw-bold d-flex justify-content-between">Nội dung báo cáo <a href="javascript:void(0);" class="ntp_hidden downloadReport"><i class="fa-solid fa-download"></i> Tải báo cáo</a></div>
                                                             <div class="card-body ntp_author_thongke text-center">
                                                                 {{-- @include('author.thongke_baocao') --}}
                                                             </div>

@@ -9,6 +9,9 @@ use App\Models\Author;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Withdraw;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 class AuthorController extends Controller
 {
     /**
@@ -312,15 +315,36 @@ class AuthorController extends Controller
         if (Auth::check()) {
             $id = Auth::user()->id;
 
+            $pdf = Pdf::loadView('author.thongke_baocao', [
+                'author_id' => $id,
+                'nguoilapbaocao' => Auth::user()->name,
+                'day_start_filter' =>$data['Ngay_batdau'],
+                'day_end_filter' =>$data['Ngay_ketthuc'],
+                'is_pdf' => true
+            ]);
+
+            // Mail::send('emails.mail_baocao', $data, function($message)use($data, $pdf) {
+
+            //     $message->to(Auth::user()->email, Auth::user()->email)
+            //             ->subject('Báo cáo thống kê của '.Auth::user()->name)
+            //             ->attachData($pdf->output(), Str::slug('Báo cáo thống kê của '.Auth::user()->name).'.pdf');
+            // });
+
+            $pdfContent = $pdf->output();
+            $pdfBase64 = base64_encode($pdfContent);
+            $pdfFileName = Str::slug('Báo cáo thống kê của ' . Auth::user()->name) . '.pdf';
+
             return response()->json([
                 'status' => 1,
-                'message' => 'Tạo báo cáo thành công',
+                'message' => 'Tạo báo cáo thành công TNP đã gửi báo cáo về mail của bạn',
                 'html' => view('author.thongke_baocao', [
                     'author_id' => $id,
                     'nguoilapbaocao' => Auth::user()->name,
                     'day_start_filter' =>$data['Ngay_batdau'],
                     'day_end_filter' =>$data['Ngay_ketthuc'],
-                ])->render()
+                ])->render(),
+                'pdfBase64' => $pdfBase64,
+                'pdfFileName' => $pdfFileName,
             ]);
 
         } else {

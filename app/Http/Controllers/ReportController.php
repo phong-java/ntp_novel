@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use App\Models\Withdraw;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Str;
 
 class ReportController extends Controller
 {
@@ -269,13 +271,32 @@ class ReportController extends Controller
 
             $id = Auth::user()->id;
 
+            $pdf = Pdf::loadView('admincp.admin_page.baocao_thongke.thongke_nap', [
+                    'day_start_filter' =>$data['Ngay_batdau'],
+                    'day_end_filter' =>$data['Ngay_ketthuc'],
+                    'is_pdf' => true
+                ]);
+
+            // Mail::send('emails.mail_baocao', $data, function($message)use($data, $pdf) {
+
+            //     $message->to(Auth::user()->email, Auth::user()->email)
+            //             ->subject('Báo cáo thống kê của '.Auth::user()->name)
+            //             ->attachData($pdf->output(), Str::slug('Báo cáo thống kê nạp tháng '.Auth::user()->name).'.pdf');
+            // });
+
+            $pdfContent = $pdf->output();
+            $pdfBase64 = base64_encode($pdfContent);
+            $pdfFileName = Str::slug('Báo cáo thống kê của ' . Auth::user()->name) . '.pdf';
+
             return response()->json([
                 'status' => 1,
-                'message' => 'Tạo báo cáo thành công',
+                'message' => 'Tạo báo cáo thành công TNP đã gửi báo cáo về mail của bạn',
                 'html' => view('admincp.admin_page.baocao_thongke.thongke_nap', [
                     'day_start_filter' =>$data['Ngay_batdau'],
                     'day_end_filter' =>$data['Ngay_ketthuc'],
-                ])->render()
+                ])->render(),
+                'pdfBase64' => $pdfBase64,
+                'pdfFileName' => $pdfFileName,
             ]);
 
         } else {
@@ -317,15 +338,36 @@ class ReportController extends Controller
                 ]);
             }
 
+            $pdf = Pdf::loadView('author.thongke_baocao', [
+                    'author_id' => $author->idUser,
+                    'nguoilapbaocao' => Auth::user()->name,
+                    'day_start_filter' =>$data['Ngay_batdau'],
+                    'day_end_filter' =>$data['Ngay_ketthuc'],
+                    'is_pdf' => true
+                ]);
+
+            // Mail::send('emails.mail_baocao', $data, function($message)use($data, $pdf) {
+
+            //     $message->to(Auth::user()->email, Auth::user()->email)
+            //             ->subject('Báo cáo thống kê của '.Auth::user()->name)
+            //             ->attachData($pdf->output(), Str::slug('Báo cáo thống kê tác giả '.Auth::user()->name).'.pdf');
+            // });
+
+            $pdfContent = $pdf->output();
+            $pdfBase64 = base64_encode($pdfContent);
+            $pdfFileName = Str::slug('Báo cáo thống kê của ' . Auth::user()->name) . '.pdf';
+
             return response()->json([
                 'status' => 1,
-                'message' => 'Tạo báo cáo thành công',
+                'message' => 'Tạo báo cáo thành công TNP đã gửi báo cáo về mail của bạn',
                 'html' => view('author.thongke_baocao', [
                     'author_id' => $author->idUser,
                     'nguoilapbaocao' => Auth::user()->name,
                     'day_start_filter' =>$data['Ngay_batdau'],
                     'day_end_filter' =>$data['Ngay_ketthuc'],
-                ])->render()
+                ])->render(),
+                'pdfBase64' => $pdfBase64,
+                'pdfFileName' => $pdfFileName,
             ]);
 
         } else {
@@ -352,15 +394,37 @@ class ReportController extends Controller
         if (Auth::check()) {
             $id = Auth::user()->id;
 
+
+            $pdf = Pdf::loadView('admincp.admin_page.baocao_thongke.thongke_tacpham', [
+                    'author_id' => $id,
+                    'nguoilapbaocao' => Auth::user()->name,
+                    'day_start_filter' =>$data['Ngay_batdau'],
+                    'day_end_filter' =>$data['Ngay_ketthuc'],
+                    'is_pdf' => true
+                ]);
+
+            // Mail::send('emails.mail_baocao', $data, function($message)use($data, $pdf) {
+
+            //     $message->to(Auth::user()->email, Auth::user()->email)
+            //             ->subject('Báo cáo thống kê của '.Auth::user()->name)
+            //             ->attachData($pdf->output(), Str::slug('Báo cáo thống kê tác phẩm '.Auth::user()->name).'.pdf');
+            // });
+
+            $pdfContent = $pdf->output();
+            $pdfBase64 = base64_encode($pdfContent);
+            $pdfFileName = Str::slug('Báo cáo thống kê của ' . Auth::user()->name) . '.pdf';
+
             return response()->json([
                 'status' => 1,
-                'message' => 'Tạo báo cáo thành công',
+                'message' => 'Tạo báo cáo thành công TNP đã gửi báo cáo về mail của bạn',
                 'html' => view('admincp.admin_page.baocao_thongke.thongke_tacpham', [
                     'author_id' => $id,
                     'nguoilapbaocao' => Auth::user()->name,
                     'day_start_filter' =>$data['Ngay_batdau'],
                     'day_end_filter' =>$data['Ngay_ketthuc'],
-                ])->render()
+                ])->render(),
+                'pdfBase64' => $pdfBase64,
+                'pdfFileName' => $pdfFileName,
             ]);
 
         } else {
@@ -409,15 +473,36 @@ class ReportController extends Controller
             ->whereYear('dCreateDay', $year)
             ->get();
 
+
+        $pdf = Pdf::loadView('admincp.admin_page.baocao_thongke.thongke_rut_tien', [
+                'nguoilapbaocao' => Auth::user()->name,
+                'month' => $month,
+                'year' => $year,
+                'withdraws' => $withdraws,
+                'is_pdf' => true
+            ]);
+
+        // Mail::send('emails.mail_baocao', $data, function($message)use($data, $pdf) {
+        //     $message->to(Auth::user()->email, Auth::user()->email)
+        //             ->subject('Báo cáo thống kê của '.Auth::user()->name)
+        //             ->attachData($pdf->output(), Str::slug('Báo cáo thống kê rút tiền '.Auth::user()->name).'.pdf');
+        // });
+
+        $pdfContent = $pdf->output();
+        $pdfBase64 = base64_encode($pdfContent);
+        $pdfFileName = Str::slug('Báo cáo thống kê của ' . Auth::user()->name) . '.pdf';
+
         return response()->json([
             'status' => 1,
-            'message' => 'Tạo báo cáo thành công',
+            'message' => 'Tạo báo cáo thành công TNP đã gửi báo cáo về mail của bạn',
             'html' => view('admincp.admin_page.baocao_thongke.thongke_rut_tien', [
                 'nguoilapbaocao' => Auth::user()->name,
                 'month' => $month,
                 'year' => $year,
                 'withdraws' => $withdraws
-            ])->render()
+            ])->render(),
+            'pdfBase64' => $pdfBase64,
+            'pdfFileName' => $pdfFileName,
         ]);
 
     }

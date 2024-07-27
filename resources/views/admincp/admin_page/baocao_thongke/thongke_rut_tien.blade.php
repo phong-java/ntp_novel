@@ -12,6 +12,54 @@
 
     $tong_tien = 0;
 @endphp
+@if (isset($is_pdf) && $is_pdf == true )
+    <style>
+        * {
+            font-family: DejaVu Sans;
+            font-size: 14px !important;
+        }
+        .p-0 {
+            padding: 0 !important;
+        }
+        .mb-3 {
+            margin-bottom: 1rem !important;
+        }
+        .justify-content-center {
+            justify-content: center !important;
+        }
+        .flex-column {
+            flex-direction: column !important;
+        }
+        .d-flex {
+            display: flex !important;
+        }
+        .text-center {
+            text-align: center !important;
+        }
+        .fw-bolder {
+            font-weight: bolder !important;
+        }
+        .text-start {
+            text-align: left !important;
+        }
+        .p-0 {
+            padding: 0 !important;
+        }
+        .mb-5 {
+            margin-bottom: 3rem !important;
+        }
+        .table > :not(caption) > * > * {
+            padding: 0.5rem 0.5rem;
+        }
+        thead, tbody, tfoot, tr, td, th {
+            border-color: #000;
+            border-style: solid;
+            border-width: 1px;
+            text-align: center !important;
+        }
+    </style>
+
+@endif
 <div class="container-xl p-0 mb-3 d-flex justify-content-center flex-column align-content-center">
     <h3 class="text text-center fw-bolder">BÁO CÁO THỐNG KÊ</h3>
     <span class="text text-center fw-bolder">Thống kê rút tiền trong tháng {{$month}} năm {{$year}}</span>
@@ -61,7 +109,7 @@
         @endforeach
         <tr>
             <th colspan="4">Tổng tiền rút về là : </th>
-            <th>{{number_format($tong_tien *1000, 0, ',', '.')}} VNĐ</th>
+            <th colspan="4">{{number_format($tong_tien *1000, 0, ',', '.')}} VNĐ</th>
         </tr>
     </tbody>
 </table>
