@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Author;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Withdraw;
 class AuthorController extends Controller
 {
     /**
@@ -344,5 +345,111 @@ class AuthorController extends Controller
             'html' =>  $html,
             'status' => 1
         ]);
+    }
+
+    public function author_withdraw(Request $request) {
+        $data = $request->validate(
+            [
+                'coint' => ['integer','min:100','required'],
+            ],[
+                'coint.integer' => 'Số xu phải là một con số',
+                'coint.min' => 'Số xu phải bé nhất phải là 100 xu',
+                'coint.required' => 'Số xu không được bỏ trống',
+            ]
+        );
+
+        if (Auth::check()) {
+            $id = Auth::user()->id;
+            $user = User::find($id);
+            $author = Author::where('idUser',$id)->first();
+            $startOfMonth = Carbon::now()->startOfMonth()->toDateTimeString();
+            $endOfMonth = Carbon::now()->endOfMonth()->toDateTimeString();
+
+            $hasRecordsThisMonth = Withdraw::where('idUser', $id)
+                        ->whereBetween('dCreateDay', [$startOfMonth, $endOfMonth])
+                        ->exists();
+
+            if ($hasRecordsThisMonth) {
+                return response()->json([
+                    'errors' => ['Thongbao' => 'Tháng này bạn đã tạo yêu cầu rút tiền rồi'],
+                    'status' => 0
+                ]);
+            }
+
+            if(! $author) {
+                return response()->json([
+                    'errors' => ['Quyen' => 'Bạn chưa là tác giả bạn không thể rút số dư từ tài khoản thu nhập'],
+                    'status' => 0
+                ]);
+            }
+
+            if(Auth::user()->iCoint_receive <  $data['coint']) {
+                return response()->json([
+                    'errors' => ['Sodu' => 'Số dư của bạn không đủ'],
+                    'status' => 0
+                ]);
+            }
+
+            $withdraw = new Withdraw();
+            $withdraw->iCoint =  $data['coint'];
+            $withdraw->idUser =  $id;
+            $withdraw->sBank = $author->sBank;
+            $withdraw->sBankAccountNumber =  $author->sBankAccountNumber;
+            $withdraw->save();
+
+            $user->iCoint_receive = $user->iCoint_receive - $data['coint'];
+            $user->save();
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Tạo yêu cầu rút tiền thành công'
+            ]);
+            
+
+        } else {
+            return response()->json([
+                'errors' => ['Nguoidung' => 'Bạn chưa đăng nhập'],
+                'status' => 0
+            ]);
+        }
+    }
+
+    public function author_withdraw_cancel($id_withdraw) {
+        if (Auth::check()) {
+            $id = Auth::user()->id;
+            $user = User::find($id);
+            $withdraw = Withdraw::find($id_withdraw);
+
+            if (!$withdraw) {
+                return response()->json([
+                    'errors' => ['Thongbao' => 'Không tồn tại yêu cầu bạn muốn hủy'],
+                    'status' => 0
+                ]);
+            }
+
+            if(Auth::user()->id != $withdraw->idUser) {
+                return response()->json([
+                    'errors' => ['Thongbao' => 'Bạn không có quyền hủy yêu cầu rút tiền này'],
+                    'status' => 0
+                ]);
+            }
+
+            
+            $user->iCoint_receive += $withdraw->iCoint;
+            $user->save();
+
+            $withdraw->delete();
+            return response()->json([
+                'status' => 1,
+                'message' => 'Hủy yêu cầu rút tiền thành công'
+            ]);
+            
+
+        } else {
+            return response()->json([
+                'errors' => ['Nguoidung' => 'Bạn chưa đăng nhập'],
+                'status' => 0
+            ]);
+        }
     }
 }

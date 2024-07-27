@@ -495,6 +495,95 @@ $(document).ready(function () {
     });
   });
 
+  //Hủy yêu cầu rút tiền
+  $('body').on('click', '.btn_cancel_withdraw', function () {
+    var url = $(this).attr('data-link');
+
+    var text = 'Bạn có chắc muốn hủy yêu cầu này?';
+
+    var confirmAction = confirm(text);
+
+    if (confirmAction) {
+      $.ajax({
+        method: "POST",
+        url: url,
+        dataType: "json",
+        contentType: 'application/json', 
+
+        success: function (data) {
+          if (data.status == 1) {
+            $('.alert-danger.ntp_alert_public').fadeOut(200);
+            $('.alert-success.ntp_alert_public').fadeIn(200).html(data.message + btn_close_success);
+
+            setTimeout(function () {
+              location.reload();
+            }, 1000);
+          } else if (data.status == 0) {
+            $('.alert-success.ntp_alert_public').fadeOut(200);
+
+            var errors = data.errors;
+            var errorMessages = '';
+            for (var key in errors) {
+              errorMessages += errors[key] + '</br>';
+            }
+            $('.alert-danger.ntp_alert_public').fadeIn(200).html(errorMessages + btn_close_danger);
+          }
+
+          
+          $('body').trigger('ntp-alert-out');
+        },
+        error: function (error) {
+        }
+      });
+    }
+
+  });
+  // tạo yêu cầu rút tiền
+ $('body').on('click','.ntp_btn_author_withdraw',function() {
+    var _this = $(this);
+    var formdata = $('#author_withdraw_form')[0];
+    var _data = new FormData(formdata);
+    var _form = $('#author_withdraw_form');
+   
+    $(_this).append(load);
+    var target = $(_this).attr('target');
+
+    $.ajax({
+      method: "POST",
+      url: $(_form).attr('action'),
+      contentType: false,
+      processData: false,
+      data: _data,
+      dataType: "json",
+
+      success: function (data) {
+        if (data.status == 1) {
+          $(_form).find('.alert-danger').fadeOut(200);
+          $(_form).find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
+        } else if (data.status == 0) {
+          $(_form).find('.alert-success').fadeOut(200);
+
+          var errors = data.errors;
+          var errorMessages = '';
+          for (var key in errors) {
+            errorMessages += errors[key] + '</br>';
+          }
+          $(_form).find('.alert-danger').fadeIn(200).html(errorMessages + btn_close_danger);
+        }
+
+        $(_this).find('.spinner-border').remove();
+        
+        $('body').trigger('ntp-alert-out');
+      },
+      error: function (error) {
+        $(_this).find('.spinner-border').remove();
+      }
+    });
+  });
+
   // Tạo báo cáo thống kê
   $('body').on('click','.btn_get_thongke',function() {
     var _this = $(this);
@@ -1906,7 +1995,9 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
       $('.admin_search_tacgia').val($(this).text());
   });
 
-
+  $('body').on('click','.ntp_home_cat_search_item',function () {
+      $('.ntp_home_cat_search_form .ntp_home_cat_search_form_submit').trigger('click');
+  });
   
 });
 

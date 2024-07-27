@@ -40,10 +40,10 @@
                                                     </li>
                                                     @if ($author_found == 1 && $author->iStatus == 1)
                                                         <li>
-                                                            <a href="#" class="dropdown-item" id="rut_tien-tab"
+                                                            <button class="dropdown-item" id="rut_tien-tab"
                                                                 data-bs-toggle="pill" data-bs-target="#rut_tien" type="button"
                                                                 role="tab" aria-controls="rut_tien" aria-selected="false">Rút
-                                                                tiền</a>
+                                                                tiền</button>
                                                         </li>
                                                     @endif
                                                 </ul>
@@ -99,6 +99,9 @@
                                                         <form method="POST" class="row col-md-10" action="{{route('Author.baocao_thongke')}}" id="author_form_thongke">
                                                             <div class="alert alert-success ntp_hidden" role="alert"></div>
                                                             <div class="alert alert-danger ntp_hidden" role="alert"></div>
+                                                            <div class="col-md-12">
+                                                                <label class="small mb-1 text-danger">Nếu bạn không chọn ngày thì hệ thống sẽ thống kê tất cả dữ liệu từ trước đến nay</label>
+                                                            </div>
                                                             <div class="col-md-6">
                                                                 <label class="small mb-1" for="Ngay_batdau">Ngày bắt đầu báo cáo</label>
                                                                 <input class="form-control" id="Ngay_batdau" type="date" name="Ngay_batdau" placeholder="Chọn ngày bạn muốn bắt đầu báo cáo">
@@ -169,7 +172,7 @@
                                                 </div>
                                                 <div class="tab-pane fade" id="rut_tien" role="tabpanel"
                                                     aria-labelledby="rut_tien-tab">
-                                                    {{-- @include('user.rut_tien') --}}
+                                                    @include('author.withdraw.author_withdraw')
                                                 </div>
                                                 <div class="tab-pane fade" id="danhsach_truyen" role="tabpanel"
                                                     aria-labelledby="danhsach_truyen-tab">

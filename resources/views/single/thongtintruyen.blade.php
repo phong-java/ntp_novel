@@ -128,10 +128,14 @@
                         </div>
                         <div class="col-sm-9">
                             <div class="row w-100">
-                                <a href="{{route('Chapter.show', [$firtschapter->id])}}" class=" w-50">
-                                    <p class="text-muted mb-0"><i class="fa-solid fa-book-open me-2"></i>Đọc luôn
-                                    </p>
-                                </a>
+
+                                @if ($firtschapter)
+                                    <a href="{{route('Chapter.show', [$firtschapter->id])}}" class=" w-50">
+                                        <p class="text-muted mb-0"><i class="fa-solid fa-book-open me-2"></i>Đọc luôn
+                                        </p>
+                                    </a>
+                                @endif
+
                                 <?php
                                     $text = 'Đánh dấu';
                                     $class = 'text-success';

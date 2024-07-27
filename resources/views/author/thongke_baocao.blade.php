@@ -40,25 +40,25 @@
 <div class="container-xl p-0 mb-3 text-start">
     <div class="row gx-3 mb-2">
         <div class="col-md-4">
-            <label class="small mb-1 fw-bolder" for="inputUsername">Báo cáo thu nhập của: </label><span>{{ ' '.$user->name }}</span>
+            <label class="small mb-1 fw-bolder"  >Báo cáo thu nhập của: </label><span>{{ ' '.$user->name }}</span>
         </div>
         <div class="col-md-4">
-            <label class="small mb-1 fw-bolder" for="inputLocation">Bút danh tác giả: </label><span>{{  ' '.$author_infor->sNickName }}</span>
+            <label class="small mb-1 fw-bolder" >Bút danh tác giả: </label><span>{{  ' '.$author_infor->sNickName }}</span>
         </div>
     </div>
     <div class="mb-2">
-        <label class="small mb-1 fw-bolder" for="inputEmailAddress">Email:  </label><span>{{ ' '.$user->email }}</span>
+        <label class="small mb-1 fw-bolder" >Email:  </label><span>{{ ' '.$user->email }}</span>
     </div>
     <div class="row gx-3 mb-2">
         <div class="col-md-4">
-            <label class="small mb-1 fw-bolder" for="inputBirthday">Ngày sinh: </label><span>{{ ' '.$user->dBirthday }}</span>
+            <label class="small mb-1 fw-bolder" >Ngày sinh: </label><span>{{ ' '.$user->dBirthday }}</span>
         </div>
         <div class="col-md-6">
-            <label class="small mb-1 fw-bolder" for="inputLocation">Giới tính: </label> <span> {{ ' '.($user->sGender == 'nam' ? 'Nam' : 'Nữ') }}</span>
+            <label class="small mb-1 fw-bolder" >Giới tính: </label> <span> {{ ' '.($user->sGender == 'nam' ? 'Nam' : 'Nữ') }}</span>
         </div>
     </div>
     <div class="mb-2">
-        <label class="small mb-1 fw-bolder" for="inputLocation">Địa chỉ: </label><span>{{ ' '.$user->sAdress }}</span>
+        <label class="small mb-1 fw-bolder" >Địa chỉ: </label><span>{{ ' '.$user->sAdress }}</span>
     </div>
 </div>
 <table class="table table-hover mb-5">

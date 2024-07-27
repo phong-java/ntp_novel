@@ -112,6 +112,13 @@
                                                     data-link=""><i class="fa-solid fa-file-invoice-dollar"></i> Báo cáo việc nạp tiền</button>
                                             </li>
                                             <li>
+                                                <button class="dropdown-item bao_cao_thong_ke_rut_tien-tab" id="bao_cao_thong_ke_rut_tien-tab"      
+                                                    data-bs-toggle="pill"
+                                                    data-bs-target="#bao_cao_thong_ke_rut_tien" type="button" role="tab"
+                                                    aria-controls="bao_cao_thong_ke_rut_tien" aria-selected="false"
+                                                    data-link=""><i class="fa-solid fa-file-invoice-dollar"></i> Báo cáo việc rút tiền</button>
+                                            </li>
+                                            <li>
                                                 <button class="dropdown-item bao_cao_thong_ke_author" id="bao_cao_thong_ke_author-tab" data-bs-toggle="pill"
                                                     data-bs-target="#bao_cao_thong_ke_author" type="button" role="tab"
                                                     aria-controls="bao_cao_thong_ke_author" aria-selected="false"
@@ -167,6 +174,9 @@
                                                 <form method="POST" class="row col-md-10" action="{{route('Report.thongke_nap')}}" id="admin_form_thongke_nap">
                                                     <div class="alert alert-success ntp_hidden" role="alert"></div>
                                                     <div class="alert alert-danger ntp_hidden" role="alert"></div>
+                                                    <div class="col-md-12">
+                                                        <label class="small mb-1 text-danger">Nếu bạn không chọn ngày thì hệ thống sẽ thống kê tất cả dữ liệu từ trước đến nay</label>
+                                                    </div>
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="Ngay_batdau">Ngày bắt đầu báo cáo</label>
                                                         <input class="form-control" id="Ngay_batdau" type="date" name="Ngay_batdau" placeholder="Chọn ngày bạn muốn bắt đầu báo cáo">
@@ -187,11 +197,39 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="tab-pane fade" id="bao_cao_thong_ke_rut_tien" role="tabpanel"
+                                        aria-labelledby="bao_cao_thong_ke_rut_tien-tab">
+                                            <div class="row gx-3 mb-3">
+                                                <form method="POST" class="col-md-10" action="{{route('Report.thongke_ruttien')}}" id="admin_form_thongke_rut_tien">
+                                                    <div class="alert alert-success ntp_hidden" role="alert"></div>
+                                                    <div class="alert alert-danger ntp_hidden" role="alert"></div>
+                                                    <div class="col-md-12">
+                                                        <label class="small mb-1 text-danger">Nếu bạn không chọn tháng bạn muốn báo cáo thì hệ thống sẽ lấy tháng hiện tại làm mặc định</label>
+                                                    </div>
+                                                    <div class="">
+                                                        <label class="small mb-1" for="Thang_bao_cao">Tháng bạn muốn báo cáo</label>
+                                                        <input class="form-control" id="Thang_bao_cao" type="date" name="Thang_bao_cao" placeholder="Chọn ngày bạn muốn bắt đầu báo cáo">
+                                                    </div>
+                                                </form>
+                                                <div class="col-md-2 d-lg-flex align-content-end flex-wrap">
+                                                    <button class="btn btn-outline-success w-100 mt-3 btn_get_thongke" data-form="#admin_form_thongke_rut_tien"  target=".ntp_admin_thongke_rut_tien">Lập báo cáo</button>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header fw-bold">Nội dung báo cáo</div>
+                                                <div class="card-body ntp_admin_thongke_rut_tien text-center">
+                                                    {{-- @include('author.thongke_baocao') --}}
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="tab-pane fade" id="bao_cao_thong_ke_author" role="tabpanel" 
                                             aria-labelledby="bao_cao_thong_ke_author-tab"> 
                                             <form method="POST" class="row" action="{{route('Report.thongke_tacgia')}}" id="admin_form_thongke_tacgia">
                                                 <div class="alert alert-success ntp_hidden" role="alert"></div>
                                                 <div class="alert alert-danger ntp_hidden" role="alert"></div>
+                                                <div class="col-md-12">
+                                                    <label class="small mb-1 text-danger">Nếu bạn không chọn ngày thì hệ thống sẽ thống kê tất cả dữ liệu từ trước đến nay</label>
+                                                </div>
                                                 <div class="col-md-12 timkiem_tacgia_wrap">
                                                     <label class="small mb-1" for="Tim_kiemtacgia">TÌm kiếm tác giả</label>
                                                     <input class="form-control admin_search_tacgia" id="Tim_kiemtacgia" data-link="{{route('Author.Tim_kiem_tacgia','')}}" type="text" name="tac_gia" placeholder="Tìm kiếm tác giả bạn buốn lập báo cáo (bút danh)">
@@ -232,6 +270,9 @@
                                                 <form method="POST" class="row col-md-10" action="{{route('Report.thongke_tacpham')}}" id="admin_form_thongke_tacpham">
                                                     <div class="alert alert-success ntp_hidden" role="alert"></div>
                                                     <div class="alert alert-danger ntp_hidden" role="alert"></div>
+                                                    <div class="col-md-12">
+                                                        <label class="small mb-1 text-danger">Nếu bạn không chọn ngày thì hệ thống sẽ thống kê tất cả dữ liệu từ trước đến nay</label>
+                                                    </div>
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="Ngay_batdau">Ngày bắt đầu báo cáo</label>
                                                         <input class="form-control" id="Ngay_batdau" type="date" name="Ngay_batdau" placeholder="Chọn ngày bạn muốn bắt đầu báo cáo">

@@ -15,8 +15,8 @@
     // $day_start_filter ='2024-06-06';
     // $day_end_filter = '2024-06-06';
 
-    $day_start = $day_start_filter != '' ? \Carbon\Carbon::createFromFormat('Y-m-d', $day_start_filter)->format('d-m-Y') :'';
-    $day_end = $day_end_filter != '' ? \Carbon\Carbon::createFromFormat('Y-m-d', $day_end_filter)->format('d-m-Y'):'';
+    $day_start = $day_start_filter != '' ? \Carbon\Carbon::createFromFormat('Y-m-d', $day_start_filter)->format('d-m-Y') :'...........';
+    $day_end = $day_end_filter != '' ? \Carbon\Carbon::createFromFormat('Y-m-d', $day_end_filter)->format('d-m-Y'):'..............';
 
     $results_charges = DB::table('tblbill')
         ->join('users', 'tblbill.idUser', '=', 'users.id');

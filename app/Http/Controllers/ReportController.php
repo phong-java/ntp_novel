@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
+use App\Models\Withdraw;
 
 class ReportController extends Controller
 {
@@ -368,6 +369,57 @@ class ReportController extends Controller
                 'status' => 0
             ]);
         }
+    }
+
+    public function thongke_ruttien(Request $request) {
+        
+        $data = $request->validate(
+            [
+                'Thang_bao_cao' => ['date','nullable'],
+            ],
+            [
+                'Thang_bao_cao.datetime' => 'Tháng báo cáo phải có định dạng là date',
+            ]
+        );
+
+        if (!Auth::check()) { 
+            return response()->json([
+                'errors' => ['Nguoidung' => 'Bạn chưa đăng nhập'],
+                'status' => 0
+            ]);
+        }
+
+        if (!Auth::user()->sRole == 'admin') { 
+            return response()->json([
+                'errors' => ['Nguoidung' => 'Bạn Không có quyền xem báo cáo này'],
+                'status' => 0
+            ]);
+        }
+
+        $date = $data['Thang_bao_cao'];
+
+        if($data['Thang_bao_cao'] == '') {
+            $date = Carbon::now();
+        }
+
+        $month = $date->month;
+        $year = $date->year;
+
+        $withdraws = Withdraw::whereMonth('dCreateDay', $month)
+            ->whereYear('dCreateDay', $year)
+            ->get();
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Tạo báo cáo thành công',
+            'html' => view('admincp.admin_page.baocao_thongke.thongke_rut_tien', [
+                'nguoilapbaocao' => Auth::user()->name,
+                'month' => $month,
+                'year' => $year,
+                'withdraws' => $withdraws
+            ])->render()
+        ]);
+
     }
 
 }
