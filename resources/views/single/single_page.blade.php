@@ -26,9 +26,9 @@
                                 <div class="row d-flex justify-content-center">
                                     <div class="d-flex flex-start w-100 gap-3">
                                         <?php  
-                                            $avatar = (Auth::check() && Auth::user()->sAvatar != '')? Auth::user()->sAvatar:'time_1719592364_file_default-avatar-photo-placeholder-icon-grey-vector-38594401.jpg';
+                                            $avatar = (Auth::check() && Auth::user()->sAvatar != '')? Auth::user()->sAvatar:'default-avatar-photo.jpg';
                                         ?>
-                                        <img class="ntp_av_review rounded-circle shadow-1-strong" width="65" height="65"src="{{ asset('uploads/user_av/'.$avatar) }}" alt="">
+                                        <img class="ntp_av_review rounded-circle shadow-1-strong ntp_av" width="65" height="65"src="{{ asset('uploads/user_av/'.$avatar) }}" alt="{{$avatar}}">
                                         <div class="w-100">
                                             <ul class="ntp_novel_rating mb-3 list-inline d-flex gap-2" data-mdb-toggle="rating">
                                                 <li><i class="far fa-star fa-sm text-warning rating-start" data-point="1" title="Bad"></i></li>

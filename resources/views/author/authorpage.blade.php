@@ -51,8 +51,7 @@
                                             @if (($author_found == 1 && $author->iStatus == 1) || ($user->sRole = 'admin' && $author_found == 1))
                                                 <div class="btn-group ntp_dropdown">
                                                     <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        Quản lý truyện
+                                                        aria-expanded="false"> Quản lý truyện
                                                     </button>
 
                                                     <ul class="dropdown-menu dropdown-menu-lg-end">
@@ -61,15 +60,14 @@
                                                                 data-bs-toggle="pill" data-bs-target="#danhsach_truyen"
                                                                 type="button" role="tab" aria-controls="danhsach_truyen"
                                                                 aria-selected="false"
-                                                                data-link="{{ route('Novel.Danh_sachtruyen_tacgia') }}">Tuyện của
+                                                                data-link="{{ route('Novel.Danh_sachtruyen_tacgia') }}">Truyện của
                                                                 tôi</button>
                                                         </li>
                                                         <li>
                                                             <button class="dropdown-item" id="thongke_baocao-tab"
                                                                 data-bs-toggle="pill" data-bs-target="#thongke_baocao"
                                                                 type="button" role="tab" aria-controls="thongke_baocao"
-                                                                aria-selected="false">Thống kê báo
-                                                                cáo</button>
+                                                                aria-selected="false">Thống kê báo cáo</button>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -124,9 +122,9 @@
                                                                     <div class="card-header fw-bold">Ảnh đại diện</div>
                                                                     <div class="card-body ntp_av_wrap_thongke text-center">
                                                                         <?php
-                                                                        $avatar = Auth::user()->sAvatar != '' ? Auth::user()->sAvatar : 'time_1719592364_file_default-avatar-photo-placeholder-icon-grey-vector-38594401.jpg';
+                                                                        $avatar = Auth::user()->sAvatar != '' ? Auth::user()->sAvatar : 'default-avatar-photo.jpg';
                                                                         ?>
-                                                                        <img class="ntp_av rounded-circle mb-2" src="{{ asset('uploads/user_av/' . $avatar) }}" alt="">
+                                                                        <img class="ntp_av rounded-circle mb-2" src="{{ asset('uploads/user_av/' . $avatar) }}" alt="{{$avatar}}">
                                                                     </div>
                                                                 </div>
                                                             </div>

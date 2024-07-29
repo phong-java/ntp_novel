@@ -25,9 +25,9 @@
 
                             <div class="ntp_av_nav overflow-hidden rounded-circle">
                                 <?php  
-                                    $avatar = Auth::user()->sAvatar != ''? Auth::user()->sAvatar:'time_1719592364_file_default-avatar-photo-placeholder-icon-grey-vector-38594401.jpg';
+                                    $avatar = Auth::user()->sAvatar != ''? Auth::user()->sAvatar:'default-avatar-photo.jpg';
                                 ?>
-                                <img class="ntp_av_nav ntp_av" src="{{ asset('uploads/user_av/'.$avatar) }}" alt="">
+                                <img class="ntp_av_nav ntp_av" src="{{ asset('uploads/user_av/'.$avatar) }}" alt="{{$avatar}}">
                             </div>
                             {{ Auth::user()->name }}
                         </a>

@@ -16,10 +16,10 @@ $comments_pa = Comment::whereNull('id_Comment_parent')->where('idNovel',$novel->
                         $user = User::find($comment_pa->idUser);
                         $avt =
                             $user->sAvatar == null
-                                ? 'time_1719592364_file_default-avatar-photo-placeholder-icon-grey-vector-38594401.jpg'
+                                ? 'default-avatar-photo.jpg'
                                 : $user->sAvatar;
                     @endphp
-                    <img class="ntp_av_review rounded-circle shadow-1-strong" src="{{ asset('uploads/user_av/' . $avt) }}"
+                    <img class="ntp_av_review ntp_av rounded-circle shadow-1-strong" src="{{ asset('uploads/user_av/' . $avt) }}"
                         alt="{{ $avt }}">
                     <div class="card comment_item w-100">
                         <div class="p-2">
@@ -98,10 +98,10 @@ $comments_pa = Comment::whereNull('id_Comment_parent')->where('idNovel',$novel->
                         <div class="d-flex  ntp_review_item ntp_review_item_child flex-start mb-4 gap-3">
                             @php
                                 $user_child = User::find($comment_child->idUser);
-                                $avtc =  $user_child->sAvatar == null ? 'time_1719592364_file_default-avatar-photo-placeholder-icon-grey-vector-38594401.jpg'
+                                $avtc =  $user_child->sAvatar == null ? 'default-avatar-photo.jpg'
                                         : $user_child->sAvatar;
                             @endphp
-                            <img class="ntp_av_review rounded-circle shadow-1-strong" src="{{ asset('uploads/user_av/'.$avtc) }}" alt="{{$avtc}}">
+                            <img class="ntp_av_review rounded-circle ntp_av shadow-1-strong" src="{{ asset('uploads/user_av/'.$avtc) }}" alt="{{$avtc}}">
                             <div class="card comment_item w-100">
                                 <div class="p-2">
                                     <p class="mb-2"> <strong>{{ $user_child->name }}</strong> phản hồi lúc {{ $comment_child->dCreateDay }}</p>

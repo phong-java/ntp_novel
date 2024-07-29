@@ -11,6 +11,10 @@
     <div class="alert alert-success ntp_alert_public ntp_hidden" role="alert"></div>
     <div class="alert alert-danger ntp_alert_public ntp_hidden" role="alert"></div>
 </div>
+<div class="ntp_default_img" 
+    data_img_novel_df="{{ asset('uploads/images/bookcover256.jpg') }}"
+    data_img_av_df="{{ asset('uploads/user_av/default-avatar-photo.jpg') }}"    
+></div>
 
 <!-- Modal trigger button -->
 <div class="ntp_popup_btn position-fixed bottom-0 end-0 translate-middle">
@@ -124,13 +128,13 @@
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 @if (Route::has('login'))
-                                    @include('auth.login')
+                                    @include('auth.login_popup')
                                 @endif
                             </div>
                             <div class="carousel-item">
 
                                 @if (Route::has('register'))
-                                    @include('auth.register')
+                                    @include('auth.register_popup')
                                 @endif
                             </div>
                         </div>

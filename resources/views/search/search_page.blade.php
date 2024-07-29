@@ -75,8 +75,8 @@ if (!isset($novels)) {
                         <div class="col-lg-3 col-md-4 col-sm-6 py-2">
                             <div class="card h-100 novel_item ntp_novel text-center ">
                                 <a class="md-2 mb-auto" href="{{ route('Novel.show', [$novel->novelId]) }}">
-                                    <img class="w-100" src="{{ asset('uploads/images/' . $novel->sCover) }}"
-                                        class="img-fluid" alt="bookcover256">
+                                    <img class="w-100 ntp_anh_bia" src="{{ asset('uploads/images/' . $novel->sCover) }}"
+                                        class="img-fluid" alt="{{$novel->sCover}}">
                                 </a>
                                 <a href="{{ route('Novel.show', [1]) }}">
                                     <p class="card-title ntp_novel_title m-0 fw-bold"> {{ $novel->sNovel }} </p>

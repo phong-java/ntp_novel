@@ -47,7 +47,7 @@
                                         </div>
                                         <button class="dropdown-item px-3 py-2 w-auto" id="user_report-tab" data-bs-toggle="pill"
                                             data-bs-target="#user_report" type="button" role="tab" aria-controls="user_report"
-                                            aria-selected="false"><i class="fa-solid fa-headset"></i> tố cáo</button>
+                                            aria-selected="false"><i class="fa-solid fa-flag"></i> Tố cáo</button>
                                         <button class="dropdown-item px-3 py-2 w-auto" id="user_bill-tab" data-bs-toggle="pill"
                                             data-bs-target="#user_bill" type="button" role="tab" aria-controls="user_bill"
                                             aria-selected="false"><i class="fa-solid fa-coins"></i> Ví tiền và hóa đơn</button>

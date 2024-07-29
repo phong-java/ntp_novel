@@ -229,7 +229,7 @@ class UserController extends Controller
     }
 
     public function danh_sach_user() {
-        $users = User::orderBy('id', 'DESC')->get();
+        $users = User::orderBy('id', 'DESC')->where('id','!=',Auth::user()->id)->get();
         return view('admincp.admin_page.admin_danhsach_nguoidung', [
             'isadmin' => true,
             'users' => $users,

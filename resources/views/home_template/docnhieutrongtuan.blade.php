@@ -25,7 +25,7 @@ $novels = Novel::select('tblnovel.id', 'tblnovel.sNovel', 'tblnovel.sCover', 'tb
             <div class="card ntp_novel text-center ">
                 <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
                     <a href="{{route('Novel.show',[$novel->id])}}">
-                        <img class="w-100" src="{{ asset('uploads/images/'.$novel->sCover) }}" class="img-fluid"
+                        <img class="w-100 ntp_anh_bia" src="{{ asset('uploads/images/'.$novel->sCover) }}" class="img-fluid"
                             alt="{{$novel->sCover}}">
                     </a>
                 </div>

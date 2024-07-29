@@ -611,7 +611,7 @@ $(document).ready(function () {
     $(_this).append(load);
     var target = $(_this).attr('target');
     $(target).find('.downloadReport').addClass('ntp_hidden');
-    
+
     $.ajax({
       method: "POST",
       url: $(_form).attr('action'),
@@ -2022,7 +2022,7 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
   $('body').on('click','.ntp_home_cat_search_item',function () {
       $('.ntp_home_cat_search_form .ntp_home_cat_search_form_submit').trigger('click');
   });
-  
+
 });
 
 $(window).on('load', function() {
@@ -2045,7 +2045,31 @@ $(window).on('load', function() {
   if($('#user_report_list-tab').length) {
     $('#user_report_list-tab').trigger('click');
   }
+
+  checkAndReplaceImages();
 });
+
+function checkAndReplaceImages() {
+  $('img').each(function() {
+      var imgElement = $(this);
+      var imageUrl = imgElement.attr('src');
+      
+      var image = new Image();
+      image.onload = function() {
+      };
+      image.onerror = function() {
+        if ($(imgElement).hasClass('ntp_anh_bia')) {
+          $(imgElement).attr('src', $('.ntp_default_img').attr('data_img_novel_df')); 
+        }
+
+        if ($(imgElement).hasClass('ntp_av')) {
+          $(imgElement).attr('src', $('.ntp_default_img').attr('data_img_av_df')); 
+        }
+        
+      };
+      image.src = imageUrl;
+  });
+}
 
 function getUrlParameter($) {
     var currentURL = window.location.href;
