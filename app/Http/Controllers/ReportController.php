@@ -44,7 +44,6 @@ class ReportController extends Controller
 
             return response()->json([
                 'status' => 1,
-                'ádasd' =>  $status,
                 'html' => view('user.report.report_list_user', [
                     'reports' => $reports
                 ])->render()
@@ -290,7 +289,7 @@ class ReportController extends Controller
 
             return response()->json([
                 'status' => 1,
-                'message' => 'Tạo báo cáo thành công TNP đã gửi báo cáo về mail của bạn',
+                'message' => 'Tạo báo cáo thành công',
                 'html' => view('admincp.admin_page.baocao_thongke.thongke_nap', [
                     'day_start_filter' =>$data['Ngay_batdau'],
                     'day_end_filter' =>$data['Ngay_ketthuc'],
@@ -359,7 +358,7 @@ class ReportController extends Controller
 
             return response()->json([
                 'status' => 1,
-                'message' => 'Tạo báo cáo thành công TNP đã gửi báo cáo về mail của bạn',
+                'message' => 'Tạo báo cáo thành công',
                 'html' => view('author.thongke_baocao', [
                     'author_id' => $author->idUser,
                     'nguoilapbaocao' => Auth::user()->name,
@@ -416,7 +415,7 @@ class ReportController extends Controller
 
             return response()->json([
                 'status' => 1,
-                'message' => 'Tạo báo cáo thành công TNP đã gửi báo cáo về mail của bạn',
+                'message' => 'Tạo báo cáo thành công',
                 'html' => view('admincp.admin_page.baocao_thongke.thongke_tacpham', [
                     'author_id' => $id,
                     'nguoilapbaocao' => Auth::user()->name,
@@ -464,6 +463,8 @@ class ReportController extends Controller
 
         if($data['Thang_bao_cao'] == '') {
             $date = Carbon::now();
+        } else {
+            $date = Carbon::parse($date);
         }
 
         $month = $date->month;
@@ -494,7 +495,7 @@ class ReportController extends Controller
 
         return response()->json([
             'status' => 1,
-            'message' => 'Tạo báo cáo thành công TNP đã gửi báo cáo về mail của bạn',
+            'message' => 'Tạo báo cáo thành công',
             'html' => view('admincp.admin_page.baocao_thongke.thongke_rut_tien', [
                 'nguoilapbaocao' => Auth::user()->name,
                 'month' => $month,

@@ -336,7 +336,7 @@ class AuthorController extends Controller
 
             return response()->json([
                 'status' => 1,
-                'message' => 'Tạo báo cáo thành công TNP đã gửi báo cáo về mail của bạn',
+                'message' => 'Tạo báo cáo thành công',
                 'html' => view('author.thongke_baocao', [
                     'author_id' => $id,
                     'nguoilapbaocao' => Auth::user()->name,

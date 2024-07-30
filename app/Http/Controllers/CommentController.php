@@ -70,6 +70,13 @@ class CommentController extends Controller
 
     public function danhgia_list($id_novel) {
         $novel = Novel::find($id_novel);
+
+        if(!$novel) {
+            return response()->json([
+                'html' => '<h1>Không tìm thấy truyện</h1>'
+            ]);
+        }
+
         return response()->json([
             'html' => view('single.single_review',[
                 'novel' =>$novel
