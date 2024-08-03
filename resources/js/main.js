@@ -1670,7 +1670,9 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
           bookmarks.splice(index_bm, 1);
         }
 
-        localStorage.setItem('ntp_bookmarks', JSON.stringify(bookmarks));
+        if (getcookiepermission() == 'yes') {
+          localStorage.setItem('ntp_bookmarks', JSON.stringify(bookmarks));
+        }
 
         $('body').trigger('ntp_bookmark_load_locall');
       }
@@ -1710,7 +1712,9 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
 
           if (indexh != null) {
             historys.splice(indexh, 1);
-            localStorage.setItem('ntp_historys', JSON.stringify(historys));
+            if (getcookiepermission() == 'yes') {
+              localStorage.setItem('ntp_historys', JSON.stringify(historys));
+            }
             $('body').trigger('ntp_history_load_locall');
           }
         }
@@ -1761,10 +1765,6 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
       }
     }
     
-
-
-
-
   }).trigger('load_user_setting');
 
   $('body').on('click', '.ntp_user_seting_save', function () {
@@ -1777,13 +1777,16 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
     var _data = {
       ntp_font: ntp_font,
       ntp_mode: ntp_mode
-    };
-
-    console.log(_data);
-    
+    };    
 
     if ($(_form).hasClass('ntp_locall_store')) {
-      localStorage.setItem('ntp_settings', JSON.stringify(_data));
+
+      if (getcookiepermission() == 'yes') {
+        localStorage.setItem('ntp_settings', JSON.stringify(_data));
+      } else {
+        askcookiepermission($,'yes');
+      }
+      
       $('body').trigger('load_user_setting');
       $(_form).find('.alert-success').fadeIn(200).html('Cài đặt của bạn đã được lưu trên trình duyệt bạn nên đăng nhập để lưu trữ tốt hơn' + btn_close_success);
 
@@ -1886,8 +1889,10 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
           link_novel: link_novel
         });
       }
-      localStorage.setItem('ntp_historys', JSON.stringify(historys));
 
+      if (getcookiepermission() == 'yes') {
+        localStorage.setItem('ntp_historys', JSON.stringify(historys));
+      }
     }
   }
 
@@ -1917,36 +1922,42 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
           $(_p).removeClass('text-success').addClass('text-danger');
         } else if (data.status == 3) {
           var bookmarks = localStorage.getItem('ntp_bookmarks');
-          if (bookmarks) {
-            bookmarks = JSON.parse(bookmarks);
+
+          if (getcookiepermission() == 'yes') {
+            if (bookmarks) {
+              bookmarks = JSON.parse(bookmarks);
+            } else {
+              bookmarks = [];
+            }
+  
+            var bookmarlExist = false;
+            var index_bookmar = null;
+  
+            if (bookmarks.length !== 0) {
+              $.each(bookmarks, function (index, value) {
+                if (value.id == id) {
+                  bookmarlExist = true;
+                  index_bookmar = index;
+                }
+              });
+            }
+  
+            if (bookmarlExist) {
+              bookmarks.splice(index_bookmar, 1);
+              $(_p).removeClass('text-danger').addClass('text-success').html('<i class="fa-solid fa-bookmark me-2" aria-hidden="true"></i>Đánh dấu');
+            } else {
+              bookmarks.push({
+                id: id,
+                title: name,
+                link: novel_url
+              });
+              $(_p).removeClass('text-success').addClass('text-danger').html('<i class="fa-solid fa-bookmark me-2" aria-hidden="true"></i>Hủy đánh dấu');
+            }
+  
+              localStorage.setItem('ntp_bookmarks', JSON.stringify(bookmarks));   
           } else {
-            bookmarks = [];
-          }
-
-          var bookmarlExist = false;
-          var index_bookmar = null;
-
-          if (bookmarks.length !== 0) {
-            $.each(bookmarks, function (index, value) {
-              if (value.id == id) {
-                bookmarlExist = true;
-                index_bookmar = index;
-              }
-            });
-          }
-
-          if (bookmarlExist) {
-            bookmarks.splice(index_bookmar, 1);
-            $(_p).removeClass('text-danger').addClass('text-success').html('<i class="fa-solid fa-bookmark me-2" aria-hidden="true"></i>Đánh dấu');
-          } else {
-            bookmarks.push({
-              id: id,
-              title: name,
-              link: novel_url
-            });
-            $(_p).removeClass('text-success').addClass('text-danger').html('<i class="fa-solid fa-bookmark me-2" aria-hidden="true"></i>Hủy đánh dấu');
-          }
-          localStorage.setItem('ntp_bookmarks', JSON.stringify(bookmarks));
+            askcookiepermission($,'yes');
+          }  
 
         }
       },
@@ -2023,6 +2034,18 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
       $('.ntp_home_cat_search_form .ntp_home_cat_search_form_submit').trigger('click');
   });
 
+  $('body').on('click','#ntp-cookie-ask .modal-footer .btn',function () {
+    var ask = '';
+      if($(this).attr('data-ask') == 'no') {
+         ask = 'no';
+      } else if ($(this).attr('data-ask') == 'yes') {
+         ask = 'yes';
+      }
+      localStorage.setItem('ntp_cookie_permission',ask);
+  });
+
+  askcookiepermission($,'');
+  
 });
 
 $(window).on('load', function() {
@@ -2094,4 +2117,19 @@ function setUrlParameter(paramName, paramValue) {
   var urlObj = new URL(window.location.href);
   urlObj.searchParams.set(paramName, paramValue);
   window.history.pushState({ path: urlObj.toString() }, '', urlObj.toString());
+}
+
+function getcookiepermission() {
+  var _per = localStorage.getItem('ntp_cookie_permission');
+  if (!_per) {
+    _per = 'no';
+  }
+  return _per;
+}
+
+function askcookiepermission($,show) {
+  var _per = localStorage.getItem('ntp_cookie_permission');
+  if (!_per || show == 'yes') {
+    $('.ntp-cookie-ask-btn').trigger('click');
+  }
 }

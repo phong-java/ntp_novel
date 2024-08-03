@@ -22,23 +22,39 @@ class BillController extends Controller
      * */ 
     public function Naptien(Request $request)
     {
+
+        $data = $request->validate(
+            [
+                'menh_gia' => ['required','integer'],
+                'bankcode' => ['required','string']
+            ],
+            [
+                'menh_gia.required' => 'Bạn chưa chọn mệnh giá nạp',
+                'menh_gia.integer' => 'Mệnh giá nạp phải là một giá trị số',
+
+                'bankcode.required' => 'Bạn chưa chọn cách thanh toán',
+                'bankcode.string' => 'Cách thanh toán phải là một chuỗi ký tự',
+            ]
+        );
+
+        $menh_gia = [
+            '1' => 20000,
+            '2' => 50000,
+            '3' => 100000,
+            '4' => 200000,
+            '5' => 300000,
+            '6' => 400000,
+            '7' => 500000
+        ];
+
+        if (isset($data['menh_gia']) && array_key_exists($data['menh_gia'], $menh_gia)) {
+           $amount = $menh_gia[$data['menh_gia']];
+        } else {
+            $amount = 20000;
+        }
+
         if (Auth::check()) {
             $id = Auth::user()->id;
-            $menh_gia = [
-                '1' => 20000,
-                '2' => 50000,
-                '3' => 100000,
-                '4' => 200000,
-                '5' => 300000,
-                '6' => 400000,
-                '7' => 500000
-            ];
-    
-            if (isset($request['menh_gia']) && array_key_exists($request['menh_gia'], $menh_gia)) {
-               $amount = $menh_gia[$request['menh_gia']];
-            } else {
-                $amount = 20000;
-            }
     
             $user = User::find($id);
             $bill = new Bill();
@@ -54,7 +70,7 @@ class BillController extends Controller
                 $vnp_OrderType = "NTP_Novel";
                 $vnp_Amount = $amount * 100;
                 $vnp_Locale = "vn";
-                $vnp_BankCode = $request['bankcode'];
+                $vnp_BankCode = $data['bankcode'];
                 $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
               
                 $inputData = array(
@@ -107,11 +123,34 @@ class BillController extends Controller
                 header('Location: ' . $vnp_Url);
                 die();
             }
+        } else {
+            return response()->json([
+                'errors' => ['Nguoidung' => 'Bạn chưa đăng nhập'],
+                'status' => 0
+            ]);
         }
         
     }
 
     public function Naptienthanhcong(Request $request, $id) {
+
+        $data = $request->validate(
+            [
+                'vnp_TxnRef' => ['required','string'],
+                'vnp_ResponseCode' => ['required','string'],
+                'vnp_TransactionStatus' => ['required','string'],
+            ],
+            [
+                'vnp_TxnRef.required' => 'TNP Không nhận được mã hóa đơn',
+                'vnp_TxnRef.string' => 'Mã hóa đơn phải là một chuỗi ký tự',
+
+                'vnp_ResponseCode.required' => 'TNP Không nhận được mã phản hồi từ VNpay',
+                'vnp_ResponseCode.string' => 'Mã phản hồi từ VNpay phải là một chuỗi ký tự',
+
+                'vnp_TransactionStatus.required' => 'TNP Không nhận được tình trạng của giao dịch này từ VNpay',
+                'vnp_TransactionStatus.string' => 'Tình trạng của giao dịch này từ VNpay phải là một chuỗi ký tự',
+            ]
+        );
 
         // dd($request);
         $user = User::find($id);

@@ -154,7 +154,7 @@ class NovelController extends Controller
                 ]);
             }
 
-            dd($data['theloai']);
+            // dd($data['theloai']);
         } else {
             return response()->json([
                 'errors' => ['Nguoidung' => 'Không tìm thấy người dùng'],

@@ -76,6 +76,15 @@ class ChapterController extends Controller
                 ]
             );
 
+            $novel = Novel::find($data['idNovel']);
+
+            if(Auth::user()->id == $novel->idUser) {
+                return response()->json([
+                    'errors' => ['errors' => 'Bạn không phải chủ sở hữu của truyện này'],
+                    'status' =>0
+                ]);
+            }
+
             $maxChapter = Chapter::where('idNovel', $data['idNovel'])
                                     ->orderBy('iChapterNumber', 'DESC')
                                     ->first();
