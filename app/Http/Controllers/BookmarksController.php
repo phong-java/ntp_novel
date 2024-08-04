@@ -128,12 +128,16 @@ class BookmarksController extends Controller
                 $message = 'Xóa dấu trang thành công';
                 $status = 1;
             } else {
-                $message = 'không tìm thấy dấu trang';
-                $status = 0;
+                return response()->json([
+                    'errors' => ['Nguoidung' => 'không tìm thấy dấu trang'],
+                    'status' => 0,
+                ]);
             }
         } else {
-            $message = 'Bạn cần phải đăng nhập và tải lại trang';
-            $status = 3;
+            return response()->json([
+                'errors' => ['Nguoidung' => 'Bạn chưa đăng nhập'],
+                'status' => 0,
+            ]);
         }
 
         return response()->json([

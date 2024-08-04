@@ -106,6 +106,13 @@ class UserController extends Controller
             ]
         );
 
+        if (!Auth::check()) {
+            return response()->json([
+                'status' => 0,
+                'errors' => ['Nguoidung' => 'Bạn chưa đăng nhập'],
+            ]);
+        }
+
         // dd($data);
         $user = User::find($id);
         $user->name = $data['tennguoidung'];
@@ -133,6 +140,13 @@ class UserController extends Controller
                 'anhdaidien.max' => 'File ảnh bạn upload phải < 4mb',
             ]
         );
+
+        if (!Auth::check()) {
+            return response()->json([
+                'status' => 0,
+                'errors' => ['Nguoidung' => 'Bạn chưa đăng nhập'],
+            ]);
+        }
 
         $send = [
             'avatar_change_status' => ''
@@ -172,7 +186,7 @@ class UserController extends Controller
         if (!Auth::check()) {
             return response()->json([
                 'status' => 0,
-                'errors' => 'Bạn chưa đăng nhập',
+                'errors' => ['Nguoidung' => 'Bạn chưa đăng nhập'],
             ]);
         }
 
@@ -180,7 +194,7 @@ class UserController extends Controller
         if (!$user) {
             return response()->json([
                 'status' => 0,
-                'errors' => 'Không tìm thấy người dùng',
+                'errors' => ['Nguoidung' => 'Không tìm thấy người dùng'],
             ]);
         }
 
@@ -203,7 +217,7 @@ class UserController extends Controller
         } else {
             return response()->json([
                 'status' => 0,
-                'errors' => 'Bạn không có quyền thay đổi cho nguòi dùng này',
+                'errors' => ['Nguoidung' => 'Bạn không có quyền thay đổi cho nguòi dùng này'],
             ]);
         }
     }
@@ -254,7 +268,7 @@ class UserController extends Controller
         if (Auth::check() && Auth::user()->sRole != 'admin') {
             return response()->json([
                 'status' => 0,
-                'errors' => 'Bạn không có quyền thay đổi quyền của người dùng',
+                'errors' => ['Nguoidung' => 'Bạn không có quyền thay đổi cho nguòi dùng này'],
             ]);
         } 
 
@@ -268,7 +282,7 @@ class UserController extends Controller
         } else {
             return response()->json([
                 'status' => 0,
-                'errors' => 'Không tìm thấy người dùng này',
+                'errors' => ['Nguoidung' => 'Không tìm thấy người dùng này'],
             ]);
         }
     }
@@ -288,7 +302,7 @@ class UserController extends Controller
         if (Auth::check() && Auth::user()->sRole != 'admin') {
             return response()->json([
                 'status' => 0,
-                'errors' => 'Bạn không có quyền khóa tài khoản của người dùng',
+                'errors' => ['Nguoidung' => 'Bạn không có quyền khóa tài khoản của người dùng'],
             ]);
         } 
 
@@ -309,7 +323,8 @@ class UserController extends Controller
         } else {
             return response()->json([
                 'status' => 0,
-                'errors' => 'Không tìm thấy người dùng này',
+                'errors' => ['Nguoidung' => 'Không tìm thấy người dùng này'],
+                
             ]);
         }
     }
@@ -328,7 +343,7 @@ class UserController extends Controller
         if (Auth::check() && Auth::user()->sRole != 'admin') {
             return response()->json([
                 'status' => 0,
-                'errors' => 'Bạn không có quyền khóa tính năng bình luận của người dùng',
+                'errors' => ['Nguoidung' => 'Bạn không có quyền khóa tính năng bình luận của người dùn'],
             ]);
         } 
 
@@ -349,7 +364,7 @@ class UserController extends Controller
         } else {
             return response()->json([
                 'status' => 0,
-                'errors' => 'Không tìm thấy người dùng này',
+                'errors' => ['Nguoidung' => 'Không tìm thấy người dùng này'],
             ]);
         }
     }

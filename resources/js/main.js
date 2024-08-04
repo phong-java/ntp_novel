@@ -1523,31 +1523,34 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
     var _ntp_content = $('.ntp_chapter_page .ntp_content');
     var url = $(_this).attr('data-link');
 
-    $.ajax({
-      method: "Get",
-      url: url,
-      success: function (data) {
-        if (data.status == 1) {
-          $(_this).parents('.card').find('.alert-danger.ntp_alert_content').fadeOut(200);
-          $(_this).parents('.card').find('.alert-success.ntp_alert_content').fadeIn(200).html(data.message + btn_close_success);
-          $(_ntp_content).html(data.content);
-        } else if (data.status == 0) {
-          $(_this).parents('.card').find('.alert-success.ntp_alert_content').fadeOut(200);
-
-          var errors = data.errors;
-          var errorMessages = '';
-          for (var key in errors) {
-            errorMessages += errors[key] + '</br>';
+    var confirmAction = confirm('Bạn có chắc chắn muốn mua chương này');
+    if (confirmAction) { 
+      $.ajax({
+        method: "Get",
+        url: url,
+        success: function (data) {
+          if (data.status == 1) {
+            $(_this).parents('.card').find('.alert-danger.ntp_alert_content').fadeOut(200);
+            $(_this).parents('.card').find('.alert-success.ntp_alert_content').fadeIn(200).html(data.message + btn_close_success);
+            $(_ntp_content).html(data.content);
+          } else if (data.status == 0) {
+            $(_this).parents('.card').find('.alert-success.ntp_alert_content').fadeOut(200);
+  
+            var errors = data.errors;
+            var errorMessages = '';
+            for (var key in errors) {
+              errorMessages += errors[key] + '</br>';
+            }
+            $(_this).parents('.card').find('.alert-danger.ntp_alert_content').fadeIn(200).html(errorMessages + btn_close_danger);
           }
-          $(_this).parents('.card').find('.alert-danger.ntp_alert_content').fadeIn(200).html(errorMessages + btn_close_danger);
+  
+          $('body').trigger('ntp-alert-out');
+        },
+        error: function (error) {
+  
         }
-
-        $('body').trigger('ntp-alert-out');
-      },
-      error: function (error) {
-
-      }
-    });
+      });
+    }
   });
 
   $('body').on('click', '.ntp_chapter_detail_admin_check', function () {
@@ -1652,89 +1655,123 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
 
   $('body').on('click', '.ntp_bookmark_remove', function (e) {
     var _this = $(this);
-    if ($(_this).hasClass('ntp_locall')) {
+    var confirmAction = confirm('Bạn có chắc chắn muốn xoá đánh dấu này');
+    if (confirmAction) { 
+      if ($(_this).hasClass('ntp_locall')) {
 
-      var bookmarks = localStorage.getItem('ntp_bookmarks');
-      // console.log($(_this).attr('data-id-novel'));
-      if (bookmarks) {
+        var bookmarks = localStorage.getItem('ntp_bookmarks');
+        // console.log($(_this).attr('data-id-novel'));
+        if (bookmarks) {
 
-        bookmarks = JSON.parse(bookmarks);
-        if (bookmarks.length !== 0) {
-          var index_bm = null;
-          $.each(bookmarks, function (index, value) {
-            if (value.id == parseInt($(_this).attr('data-id-novel'))) {
-              index_bm = index;
+          bookmarks = JSON.parse(bookmarks);
+          if (bookmarks.length !== 0) {
+            var index_bm = null;
+            $.each(bookmarks, function (index, value) {
+              if (value.id == parseInt($(_this).attr('data-id-novel'))) {
+                index_bm = index;
+              }
+            });
+
+            bookmarks.splice(index_bm, 1);
+          }
+
+          if (getcookiepermission() == 'yes') {
+            localStorage.setItem('ntp_bookmarks', JSON.stringify(bookmarks));
+          }
+
+          $('body').trigger('ntp_bookmark_load_locall');
+        }
+
+      } else {
+        var url = $(_this).attr('data-link');
+
+        $.ajax({
+          method: "Get",
+          url: url,
+          success: function (data) {
+
+            if (data.status == 1) {
+              $('.alert-danger.ntp_alert_public').fadeOut(200);
+              $('.alert-success.ntp_alert_public').fadeIn(200).html(data.message + btn_close_success);
+
+              $(_this).parents('.ntp_bookmarks_card').replaceWith(data.bookmarks);
+
+            } else if (data.status == 0) {
+              var errors = data.errors;
+              var errorMessages = '';
+              for (var key in errors) {
+                errorMessages += errors[key] + '</br>';
+              }
+              $('.alert-danger.ntp_alert_public').fadeIn(200).html(errorMessages + btn_close_danger);
             }
-          });
+          },
+          error: function (error) {
 
-          bookmarks.splice(index_bm, 1);
-        }
-
-        if (getcookiepermission() == 'yes') {
-          localStorage.setItem('ntp_bookmarks', JSON.stringify(bookmarks));
-        }
-
-        $('body').trigger('ntp_bookmark_load_locall');
+          }
+        });
       }
-
-    } else {
-      var url = $(_this).attr('data-link');
-
-      $.ajax({
-        method: "Get",
-        url: url,
-        success: function (data) {
-          $(_this).parents('.ntp_bookmarks_card').replaceWith(data.bookmarks);
-        },
-        error: function (error) {
-
-        }
-      });
-    }
+    } 
 
     e.preventDefault();
   });
 
   $('body').on('click', '.ntp_remove_readding_history', function (e) {
     var _this = $(this);
-    if ($(_this).parents('.ntp_read_history').hasClass('ntp_read_history_locall')) {
-      var id_novel = $(this).attr('data-id-novel');
-      var historys = localStorage.getItem('ntp_historys');
-      var indexh = null;
-      if (historys) {
-        historys = JSON.parse(historys);
-        if (historys.length !== 0) {
-          $.each(historys, function (index, value) {
-            if (value.id_novel == id_novel) {
-              indexh = index;
-            }
-          });
 
-          if (indexh != null) {
-            historys.splice(indexh, 1);
-            if (getcookiepermission() == 'yes') {
-              localStorage.setItem('ntp_historys', JSON.stringify(historys));
+    var confirmAction = confirm('Bạn có chắc chắn muốn xóa lịch sử đọc này');
+    if (confirmAction) { 
+      if ($(_this).parents('.ntp_read_history').hasClass('ntp_read_history_locall')) {
+        var id_novel = $(this).attr('data-id-novel');
+        var historys = localStorage.getItem('ntp_historys');
+        var indexh = null;
+        if (historys) {
+          historys = JSON.parse(historys);
+          if (historys.length !== 0) {
+            $.each(historys, function (index, value) {
+              if (value.id_novel == id_novel) {
+                indexh = index;
+              }
+            });
+
+            if (indexh != null) {
+              historys.splice(indexh, 1);
+              if (getcookiepermission() == 'yes') {
+                localStorage.setItem('ntp_historys', JSON.stringify(historys));
+              }
+              $('body').trigger('ntp_history_load_locall');
             }
-            $('body').trigger('ntp_history_load_locall');
           }
+
         }
 
+      } else {
+        var url = $(_this).attr('data-link');
+        $.ajax({
+          method: "get",
+          url: url,
+          success: function (data) {
+            
+            if (data.status == 1) {
+              $('.alert-danger.ntp_alert_public').fadeOut(200);
+              $('.alert-success.ntp_alert_public').fadeIn(200).html(data.message + btn_close_success);
+
+              $(_this).parents('.ntp_read_history_card').replaceWith(data.history);
+
+            } else if (data.status == 0) {
+              var errors = data.errors;
+              var errorMessages = '';
+              for (var key in errors) {
+                errorMessages += errors[key] + '</br>';
+              }
+              $('.alert-danger.ntp_alert_public').fadeIn(200).html(errorMessages + btn_close_danger);
+            }
+          },
+          error: function (error) {
+
+          }
+        });
       }
-
-    } else {
-      var url = $(_this).attr('data-link');
-      $.ajax({
-        method: "get",
-        url: url,
-        success: function (data) {
-          $(_this).parents('.ntp_read_history_card').replaceWith(data.history);
-        },
-        error: function (error) {
-
-        }
-      });
     }
-
     e.preventDefault();
   });
 

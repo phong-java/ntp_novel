@@ -330,7 +330,7 @@ class ChapterController extends Controller
             
         } else {
             return response()->json([
-                'message' => 'Bạn phải đăng nhập đã',
+                'errors' => ['Nguoidung' => 'Bạn phải đăng nhập đã'],
                 'status' =>0,
                 'history'=>view('user.user_read_history')->render()
             ]);
