@@ -37,7 +37,7 @@ use App\Models\Chapter;
                                     <tr>
                                         <th scope="row">{{ $key + 1 }}</th>
                                         {{-- <td>{{ $cat->id }}</td> --}}
-                                        <td> <img class="ntp_anh_bia mb-2 w-100" src="{{ asset('uploads/images/'.$novel->sCover) }}" alt=""></td>
+                                        <td> <img class="ntp_anh_bia mb-2 w-100" src="{{ asset('uploads/images/'.$novel->sCover) }}" alt="{{$novel->sCover}}"></td>
                                         <td class="name">{{ $novel->sNovel }}</td>
                                         <td>{{Chapter::orderBy('iChapterNumber', 'ASC')->where('idNovel',$novel->id)->get()->count();}} Chương</td>
                                         <td>

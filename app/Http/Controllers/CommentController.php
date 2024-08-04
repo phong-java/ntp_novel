@@ -21,7 +21,7 @@ class CommentController extends Controller
             [
                 'ntp_comment.required' => 'Nội dung bình luận không được để trống',
                 'ntp_comment.string' => 'Nội dung bình luận phải là các ký tự',
-                'ntp_comment.max' => 'Nội dung bình luận không được nhiều hơn 255 ký tự',
+                'ntp_comment.max' => 'Nội dung bình luận không được nhiều hơn 500 ký tự',
 
                 'ntp_point.max' => 'Số sao lớn nhất là 5 sao',
                 'ntp_point.required' => 'Bạn chưa cho đánh giá sao',
@@ -70,6 +70,13 @@ class CommentController extends Controller
 
     public function danhgia_list($id_novel) {
         $novel = Novel::find($id_novel);
+
+        if(!$novel) {
+            return response()->json([
+                'html' => '<h1>Không tìm thấy truyện</h1>'
+            ]);
+        }
+
         return response()->json([
             'html' => view('single.single_review',[
                 'novel' =>$novel

@@ -2,7 +2,7 @@
 
 @php
 use Carbon\Carbon;
-use App\Models\withdraw;
+use App\Models\Withdraw;
     $withdraws = withdraw::where('idUser',Auth::user()->id)->get();
 @endphp
 @if (Auth::check())
@@ -22,7 +22,7 @@ use App\Models\withdraw;
                 <div class="card-body">
                     <div class="alert ntp_default ntp_alert_static alert-success" role="alert">
                         <h4 class="alert-heading">TNP Xin chào {{Auth::user()->name}}!</h4>
-                        <p>Mỗi tháng bạn chỉ có thể tạo 1 yêu cầu rút tiền (TNP khuyên bạn nên để cuối tháng để có thể tối đa hóa thu nhập) và các yêu cầu này sẽ được xử lý trong khoảng thời gian ngày 1-5 tháng kế tiếp. </p>
+                        <p>Mỗi tháng bạn chỉ có thể tạo 1 yêu cầu rút tiền (TNP khuyên bạn nên để cuối tháng để có thể tối đa hóa thu nhập) và các yêu cầu này sẽ được xử lý trong khoảng thời gian từ ngày mùng 1 đến mùng 5 tháng kế tiếp. </p>
                         <hr>
                         <p class="mb-0">Nếu có vấn đề trong chuyển khoản hay rút tiền bạn vui lòng báo cáo với đội quản trị để được giải quyết</p>
                     </div>
@@ -70,7 +70,7 @@ use App\Models\withdraw;
                 <div class="card-header fw-bold">Số xu bạn muốn rút là (1 xu = 1.000 VNĐ)</div>
                 <div class="card-body">
                     <div class="alert ntp_default ntp_alert_static alert-danger" role="alert">
-                        <p>Vì để tránh nhầm lẫn trong chuyển khoản bạn cần kiểm tra chính xác các thông tin chuyển khoản mà bạn cung cấp cho chúng tôi (các thông này này bạn đã cung cáp khi đăng ký tác giả)</p>
+                        <p>Vì để tránh nhầm lẫn trong chuyển khoản bạn cần kiểm tra chính xác các thông tin chuyển khoản mà bạn cung cấp cho chúng tôi (các thông này này bạn đã cung cấp khi đăng ký tác giả)</p>
                     </div>
                     <form method="POST" id="author_withdraw_form" action="{{ route('Author.Author_withdraw') }}">
                         <div class="alert alert-success ntp_hidden" role="alert"></div>

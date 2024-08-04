@@ -38,12 +38,12 @@ use App\Models\Chapter;
                                         @foreach ($users as $key => $user)
                                             @if ($user->id !== Auth::user()->id)
                                                 <?php
-                                                $avtar = $user->sAvatar != '' ? $user->sAvatar : 'time_1719592364_file_default-avatar-photo-placeholder-icon-grey-vector-38594401.jpg';
+                                                $avtar = $user->sAvatar != '' ? $user->sAvatar : 'default-avatar-photo.jpg';
                                                 ?>
                                                 <tr class="ntp_user_wrap">
                                                     <th scope="row">{{ $key + 1 }}</th>
                                                     <td class="avrtar"> <img class="ntp_av shadow-lg rounded-5"
-                                                            src="{{ asset('uploads/user_av/' . $avtar) }}" alt=""></td>
+                                                            src="{{ asset('uploads/user_av/' . $avtar) }}" alt="{{$avtar}}"></td>
                                                     <td>{{ $user->name }}</td>
                                                     <td>{{ $user->email }}</td>
                                                     <td>

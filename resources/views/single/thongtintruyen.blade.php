@@ -28,8 +28,8 @@
                 {{-- Ảnh bìa --}}
                 <div class="bg-image hover-overlay rounded  overflow-hidden ripple" data-mdb-ripple-color="light">
                     <a href="{{ route('Novel.show', [$novel->id]) }}">
-                        <img src="{{ asset('uploads/images/'.$novel->sCover) }}" class=" w-100 img-fluid"
-                            alt="bookcover256">
+                        <img src="{{ asset('uploads/images/'.$novel->sCover) }}" class=" w-100 img-fluid ntp_anh_bia"
+                            alt="{{$novel->sCover}}">
                     </a>
                 </div>
             </div>

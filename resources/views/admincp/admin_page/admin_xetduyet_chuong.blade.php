@@ -41,7 +41,7 @@ foreach ($theloai as $loai) {
                                 <div class="card-body ntp_anh_bia_wrap text-center">
                                     <!-- Profile picture image-->
                                     <img class="ntp_anh_bia ntp_detail_novel mb-2 w-100"
-                                        src="{{ asset('uploads/images/' . $novel->sCover) }}" alt="">
+                                        src="{{ asset('uploads/images/' . $novel->sCover) }}" alt="{{$novel->sCover}}">
                                 </div>
                             </div>
                         </div>

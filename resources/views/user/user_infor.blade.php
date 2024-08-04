@@ -8,9 +8,9 @@
                 <div class="card-body ntp_av_wrap text-center">
                     <!-- Profile picture image-->
                     <?php  
-                    $avatar = Auth::user()->sAvatar != ''? Auth::user()->sAvatar:'time_1719592364_file_default-avatar-photo-placeholder-icon-grey-vector-38594401.jpg';
+                    $avatar = Auth::user()->sAvatar != ''? Auth::user()->sAvatar:'default-avatar-photo.jpg';
                     ?>
-                    <img class="ntp_av rounded-circle mb-2" src="{{ asset('uploads/user_av/'.$avatar) }}" alt="">
+                    <img class="ntp_av rounded-circle mb-2" src="{{ asset('uploads/user_av/'.$avatar) }}" alt="{{$avatar}}">
                     <!-- Profile picture help block-->
                     <div class="my-3">
                         <form method="POST" id="ntp_form_update_av_user">

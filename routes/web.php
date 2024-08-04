@@ -110,7 +110,6 @@ Route::post('/Danh-gia-truyen/{id_novel}', [CommentController::class, 'danhgia_n
 Route::get('/Danh-gia-list/{id_novel}', [CommentController::class, 'danhgia_list'])->name('Comment.danhgia_list');
 Route::post('/Danh-gia-phanhoi/{id_comment}', [CommentController::class, 'danhgia_reply'])->name('Comment.danhgia_reply');
 Route::post('/Danh-gia-Phan-hoi-capnhat/{id_comment}', [CommentController::class, 'danhgia_phanhoi_update'])->name('Comment.danhgia_phanhoi_update');
-
 Route::post('/Danh-gia-Phan-hoi-an', [CommentController::class, 'danhgia_phanhoi_hide'])->name('Comment.danhgia_phanhoi_hide');
 Route::post('/Danh-gia-Phan-hoi-go', [CommentController::class, 'danhgia_phanhoi_delete'])->name('Comment.danhgia_phanhoi_delete');
 

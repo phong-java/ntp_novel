@@ -11,6 +11,10 @@
     <div class="alert alert-success ntp_alert_public ntp_hidden" role="alert"></div>
     <div class="alert alert-danger ntp_alert_public ntp_hidden" role="alert"></div>
 </div>
+<div class="ntp_default_img" 
+    data_img_novel_df="{{ asset('uploads/images/bookcover256.jpg') }}"
+    data_img_av_df="{{ asset('uploads/user_av/default-avatar-photo.jpg') }}"    
+></div>
 
 <!-- Modal trigger button -->
 <div class="ntp_popup_btn position-fixed bottom-0 end-0 translate-middle">
@@ -124,13 +128,13 @@
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 @if (Route::has('login'))
-                                    @include('auth.login')
+                                    @include('auth.login_popup')
                                 @endif
                             </div>
                             <div class="carousel-item">
 
                                 @if (Route::has('register'))
-                                    @include('auth.register')
+                                    @include('auth.register_popup')
                                 @endif
                             </div>
                         </div>
@@ -139,4 +143,25 @@
             </div>
         </div>
     </div>
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary ntp_hidden ntp-cookie-ask-btn" data-bs-toggle="modal" data-bs-target="#ntp-cookie-ask"></button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="ntp-cookie-ask" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ntp-cookie-ask-Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ntp-cookie-ask-Label">Quyền sử dung Cookie</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+           <p>Trang web này sử dụng cookie với mục đích lưu trữ thông tin lịch sử đọc, đánh đấu, cài đặt cá nhân để cung cấp cho bạn trải nghiệm phù hợp. <br> Để có trải nghiệm web tốt hơn hãy đông ý việc website sử dụng cookie.</p> 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-ask="no" data-bs-dismiss="modal">Không đồng ý</button>
+          <button type="button" class="btn btn-primary" data-ask="yes" data-bs-dismiss="modal">Đồng ý</button>
+        </div>
+      </div>
+    </div>
+  </div>
 @endguest

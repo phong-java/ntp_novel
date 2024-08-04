@@ -242,7 +242,11 @@ a {
     }
 
     .ntp_novel_title {
-        padding: 0 5px;
+        padding: 0 10px;
+        white-space: nowrap;
+        width: 100%;
+        text-overflow: ellipsis; 
+        overflow: hidden;
     }
 }
 
@@ -328,7 +332,10 @@ body {
         max-width: 900px;
         padding: 0 10px 0 0;
         overflow: hidden;
-        .bg-image {}
+
+        .bg-image {
+            
+        }
 
         .ntl_tomtat {
             max-height: 150px;

@@ -1,6 +1,7 @@
 
 @php
     use App\Models\Novel;
+    use App\Models\Author;
 use Illuminate\Support\Facades\DB;
 
 $novels = Novel::select(
@@ -58,7 +59,7 @@ $novels = Novel::select(
                         {{-- Ảnh bìa --}}
                         <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
                             <a href="{{route('Novel.show',[$novel->id])}}">
-                                <img class="w-100" src="{{ asset('uploads/images/'.$novel->sCover) }}" class="img-fluid"
+                                <img class="w-100 ntp_anh_bia" src="{{ asset('uploads/images/'.$novel->sCover) }}" class="img-fluid"
                                     alt="{{$novel->sCover}}">
                             </a>
                         </div>
@@ -98,9 +99,11 @@ $novels = Novel::select(
                                     <p class="mb-0">Tác giả</p>
                                 </div>
                                 <div class="col-sm-9">
-
+                                    @php
+                                        $author_info = Author::where('idUser',$novel->idUser)->first();
+                                    @endphp
                                     <a href="#!" class=" w-50">
-                                        <p class="mb-0 text-success"><i class="fa-solid fa-user me-2"></i>Bút danh tác giả
+                                        <p class="mb-0 text-success"><i class="fa-solid fa-user me-2"></i> {{$author_info->sNickName}}
                                         </p>
                                     </a>
                                 </div>

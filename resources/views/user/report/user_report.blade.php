@@ -5,7 +5,7 @@
         <div id="pills-tab" role="tablist" class="d-flex flex-wrap">
             <button class="border-0 ntp_view_child active px-3 py-2 w-auto bg-transparent" id="user_report_list-tab"
                 data-bs-toggle="pill" data-bs-target="#user_report_list" type="button" role="tab"
-                aria-controls="user_report_list" aria-selected="true"  data-link="{{route('Report.bao_cao_list_user')}}"><i class="fa-solid fa-list"></i> Danh sách  tố cáo của tôi</button>
+                aria-controls="user_report_list" aria-selected="true"  data-link="{{route('Report.bao_cao_list_user')}}"><i class="fa-solid fa-list"></i> Danh sách tố cáo của tôi</button>
         </div>
 
     </div>

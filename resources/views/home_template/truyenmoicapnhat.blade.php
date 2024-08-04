@@ -27,7 +27,7 @@
             @foreach ($new_updates as $key => $new_update)
                 <div class="d-flex ntp_history_item p-1">
                     <div class="flex-shrink-0" style="width: 50px;">
-                        <img class="w-100" src="{{ asset('uploads/images/'.$new_update->sCover) }}" alt="bookcover256">
+                        <img class="w-100 ntp_anh_bia" src="{{ asset('uploads/images/'.$new_update->sCover) }}" alt="{{$new_update->sCover}}">
                     </div>
                     <div class="flex-grow-1 ms-3">
                         <a href="{{route('Novel.show',[$new_update->id])}}" class="title text-decoration-none text-reset fw-bold">{{$new_update->sNovel}}</a>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\Categories;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
 
 class CategoriesController extends Controller
 {
@@ -53,11 +54,25 @@ class CategoriesController extends Controller
                     'motatheloai.required' => 'Mô tả thể loại không được để trống',
                     'motatheloai.string' => 'Mô tả thể loại phải là các ký tự',
                     'motatheloai.max' => 'Mô tả thể loại không được nhiều hơn 5000 ký tự',
+                    'trangthai.required' => 'trạng thái thể loại không được để trống'
                 ]
             );
 
-            // $data = $request-> all();
-            // dd($data);
+            if (!Auth::check()) { 
+                return response()->json([
+                    'errors' => ['Nguoidung' => 'Bạn chưa đăng nhập'],
+                    'status' => 0
+                ]);
+            }
+
+            if (Auth::user()->sRole != 'admin') { 
+                return response()->json([
+                    'errors' => ['Nguoidung' => 'Bạn không có quyền thêm mới thể loại'],
+                    'status' => 0
+                ]);
+            }
+
+
             $cat = new Categories();
             $cat->sCategories = $data['tentheloai'];
             $cat->sDes = $data['motatheloai'];

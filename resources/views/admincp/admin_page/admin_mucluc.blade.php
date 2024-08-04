@@ -17,7 +17,7 @@ use Carbon\Carbon;
         @foreach ($chapters as $key => $chapter)
             <tr>
                 <td>
-                    <a href="{{ route('Chapter.show', [1]) }}"
+                    <a href="{{ route('Chapter.show', [$chapter->id]) }}"
                         class="title text-decoration-none text-reset fw-bold"> Chương
                         <?php echo $chapter->iChapterNumber; ?>:
                         {{ $chapter->sChapter }}.

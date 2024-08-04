@@ -35,7 +35,7 @@ foreach ($theloai as $loai) {
                                 <div class="card-body ntp_anh_bia_wrap text-center">
                                     <!-- Profile picture image-->
                                     <img class="ntp_anh_bia ntp_detail_novel mb-2 w-100" src="{{ asset('uploads/images/' . $novel->sCover) }}"
-                                        alt="">
+                                        alt="{{$novel->sCover}}">
                                     <!-- Profile picture help block-->
                                     <div class="my-3">
                                         <div class="alert alert-success ntp_hidden update_anhdaidien" role="alert"></div>
