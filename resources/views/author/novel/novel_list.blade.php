@@ -66,7 +66,7 @@ use App\Models\Chapter;
                                                 <span class="text text-danger">Không thông qua</span>
                                             @endif
                                         </td>
-                                        <td>{{ $novel->dCreateDay }}</td>
+                                        <td>{{ ($novel->dCreateDay)->format('d-m-Y') }}</td>
                                         <td>
                                             <a class="btn btn-primary" href="{{route('Novel.quan_ly_truyen',[$novel->id])}}">Quản lý truyện</a>
                                         </td>

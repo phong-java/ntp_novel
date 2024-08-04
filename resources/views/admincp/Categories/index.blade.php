@@ -38,8 +38,8 @@
                                                 <span class="text text-danger">Không kích hoạt</span>
                                             @endif
                                         </td>
-                                        <td>{{ $cat->dCreateDay }}</td>
-                                        <td>{{ $cat->dUpdateDay }}</td>
+                                        <td>{{ ($cat->dCreateDay)->format('d-m-Y')}}</td>
+                                        <td>{{ ($cat->dUpdateDay)->format('d-m-Y') }}</td>
                                         <td>
                                             <a href="#" class="btn btn-primary ntp_cat_edit" data-bs-toggle="modal" data-link="{{route('Categories.show',[$cat -> id])}}" data-bs-target="#ntp_edit_cat_ppoup"> Chi tiết</a>    
                                         </td>

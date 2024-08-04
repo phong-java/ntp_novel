@@ -20,8 +20,8 @@
                                     <div class="alert alert-danger ntp_hidden" role="alert"></div>
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" value="{{old('tentheloai')}}" name="tentheloai" id="floatingInput"
-                                            placeholder="Tên danh mục">
-                                        <label for="floatingInput">Tên danh mục</label>
+                                            placeholder="Tên thể loại">
+                                        <label for="floatingInput">Tên thể loại</label>
                                     </div>
 
                                     <div class="form-floating mb-3">

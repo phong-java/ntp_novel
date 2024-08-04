@@ -46,7 +46,7 @@ $title = 'Danh sách truyện';
                                                 <td>
                                                     <?php
                                                     $author = Author::where('idUser', $novel->idUser)->first();
-                                                    echo $author->sNickName;
+                                                    echo $author? $author->sNickName : null;
                                                     ?>
                                                 </td>
                                                 <td>{{ $novel->dCreateDay }}</td>
