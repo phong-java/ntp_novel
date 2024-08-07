@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 <div class="card ntp_bookmarks_card">
     <div class="card-header fw-bold">Đánh dấu của bạn</div>
     <div class="card-body">
+        <div class="badge bg-warning text-dark w-100 text-truncate mb-2" style="height: 20px; line-height: 17px;">Nếu bạn không đăng nhập các đánh dấu sẽ lưu trong bộ nhớ trình duyệt </div>
         @if (Auth::check())
             <?php
                 $iduser = Auth::user()->id;

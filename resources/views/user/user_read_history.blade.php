@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Auth;
 <div class="card ntp_read_history_card">
     <div class="card-header fw-bold ">Lịch sử đọc của bạn</div>
     <div class="card-body">
-        <div class="badge bg-warning text-dark w-100 text-truncate mb-2">Lưu truyện trong này dễ mất dấu hãy dùng đánh
-            dấu
-        </div>
+        <div class="badge bg-warning text-dark w-100 text-truncate mb-2" style="height: 20px; line-height: 17px;">Lưu truyện trong này dễ mất dấu hãy dùng đánh dấu </div>
         @if (Auth::check())
             <?php
             

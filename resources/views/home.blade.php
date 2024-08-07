@@ -9,7 +9,7 @@
                 @include('home_template.danhgiacao')
             </div>
             <div class="col-md-12 mb-5">
-                <div class=" row">
+                <div class="row">
                     <div class="col-md-6 mb-4 mb-md-0">
                         {{-- Lịch sử đọc --}}
                         @include('user.user_read_history')
