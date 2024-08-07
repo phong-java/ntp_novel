@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use App\Models\Purchase_history;
 
+
     $p_link = $previousChapterId != '0' ? route('Chapter.show', [$previousChapterId]) : route('Novel.show',[$novel->id]);
     $n_link = $nextChapterId != '0' ? route('Chapter.show', [$nextChapterId]) : route('Novel.show',[$novel->id]);
 
@@ -41,7 +42,15 @@ use App\Models\Purchase_history;
                     @if($is_paied)
                         {!!htmlspecialchars_decode($chapter->sContent)!!}
                     @else
-                        <div class="alert alert-danger ntp_default w-100 text-center ntp_alert_static" role="alert">Bạn cần trả phí để xem chương này <?php echo($btn_pay); ?></div>
+                        @if(Auth::check())
+                            @if(Auth::user()->id == $novel->idUser)
+                                {!!htmlspecialchars_decode($chapter->sContent)!!}
+                            @else
+                                <div class="alert alert-danger ntp_default w-100 text-center ntp_alert_static" role="alert">Bạn cần trả phí để xem chương này <?php echo($btn_pay); ?></div>
+                            @endif
+                        @else
+                            <div class="alert alert-danger ntp_default w-100 text-center ntp_alert_static" role="alert">Bạn cần trả phí để xem chương này <?php echo($btn_pay); ?></div>
+                        @endif
                     @endif
                 @else
                     {!!htmlspecialchars_decode($chapter->sContent)!!}

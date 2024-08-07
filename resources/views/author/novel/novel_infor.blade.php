@@ -68,8 +68,10 @@ $cats = Categories::orderBy('id', 'DESC')->where('iStatus',1)->get();
                         </div>
                     
                         <div class="gx-3 mb-3">
-                            <label for="upload_banquyen" class="form-label">Minh chứng quyền tác giả hoặc quyền sở hữu với tác phẩm</label>
+                            <label for="upload_banquyen" class="form-label">Minh chứng quyền tác giả hoặc cam kết chịu trách nhiệm với bản quyền tác phẩm .</label>
+                           
                             <input class="form-control mb-3" type="file" name="banquyen" id="upload_banquyen">
+                            <p class="alert ntp_default ntp_alert_static alert-success">Nếu bạn muốn đăng tải truyện gốc của mình nhưng không có bản quyền bạn cần upload bản cam kết chính phẩm bản và bạn cần bổ sung bản quyền sớm nhất có thể để tránh các vấn đề pháp lý sau này TNP sẽ không chịu trách nhiệm về dăng ký bản quyền hay quyền sở hữu đối với tác phẩm. TNP_Novel Thân ái! <br> <a class="text-decoration-underline" href="{{ asset('uploads/banquyen/mau/ban-cam-ket-chiu-trach-nhiem.pdf') }}" download> Tải bản cam kết mẫu </a></p>
                         </div>
 
                         <!-- Save changes button-->

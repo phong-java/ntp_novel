@@ -1862,8 +1862,8 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
       });
     }
     setTimeout(function () {
-      $('.alert-success').fadeOut(200);
-      $('.alert-danger').fadeOut(200);
+      $('.alert-success:not(.ntp_alert_static)').fadeOut(200);
+      $('.alert-danger:not(.ntp_alert_static)').fadeOut(200);
     }, 1000);
     
   });

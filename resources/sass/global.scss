@@ -360,6 +360,17 @@ body {
     }
 }
 
+.ntp_chapter_page {
+    .ntp_content {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+    }
+}
+
 @media (min-width: 576px) {
     .ntp_recommend {
         .ntp_item {

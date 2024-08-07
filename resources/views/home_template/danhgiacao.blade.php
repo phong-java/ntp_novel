@@ -77,12 +77,7 @@ $novels = Novel::select(
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Số chương</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0"> {{$novel->chapter_count}} </p>
-                                </div>
+                                <p class="mb-0">Số chương {{$novel->chapter_count}}</p>
                             </div>
                             <hr>
                             <div class="row">
@@ -132,8 +127,8 @@ $novels = Novel::select(
                                 </div>
                                 <div class="col-sm-9">
                                     <div class="row w-100">
-                                        <p class="text-muted mb-0 w-50">{{$novel->read_count}} lượt đọc</p>
-                                        <p class="text-muted mb-0 w-50">{{$novel->bookmark_count}} đánh dấu</p>
+                                        <p class="text-muted mb-0 col-sm-12 col-md-6">{{$novel->read_count}} lượt đọc</p>
+                                        <p class="text-muted mb-0 col-sm-12 col-md-6">{{$novel->bookmark_count}} đánh dấu</p>
                                     </div>
                                     <hr>
                                     <div class="row w-100">
@@ -146,7 +141,7 @@ $novels = Novel::select(
                                 <div class="col-sm-3">
                                 </div>
                                 <div class="col-sm-9 d-flex">
-                                    <a href="{{route('Novel.show',[$novel->id])}}" class=" w-50">
+                                    <a href="{{route('Novel.show',[$novel->id])}}" class=" w-100">
                                         <p class="text-muted mb-0"><i class="fa-solid fa-book-open me-2"></i>Đọc luôn
                                         </p>
                                     </a>
