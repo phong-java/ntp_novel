@@ -332,6 +332,7 @@ body {
         max-width: 900px;
         padding: 0 10px 0 0;
         overflow: hidden;
+        display: flex !important;
 
         .bg-image {
             
@@ -375,6 +376,21 @@ body {
     .ntp_recommend {
         .ntp_item {
             max-height: 300px;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .ntp_recommend {
+        .ntp_item {
+            .ntp_img {
+                width: 25% !important;
+            }
+
+            .ntp_infor {
+                width: 75% !important;
+            }
+
         }
     }
 }

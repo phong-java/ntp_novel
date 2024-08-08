@@ -45,9 +45,12 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <button class="dropdown-item px-3 py-2 w-auto" id="user_report-tab" data-bs-toggle="pill"
-                                            data-bs-target="#user_report" type="button" role="tab" aria-controls="user_report"
-                                            aria-selected="false"><i class="fa-solid fa-flag"></i> Tố cáo</button>
+                                       
+                                        @if (Auth::user()->email_verified_at !== null)
+                                            <button class="dropdown-item px-3 py-2 w-auto" id="user_report-tab" data-bs-toggle="pill"
+                                        data-bs-target="#user_report" type="button" role="tab" aria-controls="user_report"
+                                        aria-selected="false"><i class="fa-solid fa-flag"></i> Tố cáo</button>
+                                        @endif
                                         <button class="dropdown-item px-3 py-2 w-auto" id="user_bill-tab" data-bs-toggle="pill"
                                             data-bs-target="#user_bill" type="button" role="tab" aria-controls="user_bill"
                                             aria-selected="false"><i class="fa-solid fa-coins"></i> Ví tiền và hóa đơn</button>
@@ -57,25 +60,24 @@
                                 <div class="card-body">
                                     @include('user.user_infor')
                                     <div class="tab-content" id="pills-tabContent">
-                                        <div class="tab-pane fade" id="user_purchase_history" role="tabpanel"
-                                            aria-labelledby="user_purchase_history-tab">
+                                        <div class="tab-pane fade" id="user_purchase_history" role="tabpanel" aria-labelledby="user_purchase_history-tab">
                                             @include('user.user_purchase_history')
                                         </div>
-                                        <div class="tab-pane fade" id="user_read_history" role="tabpanel"
-                                            aria-labelledby="user_read_history-tab">
+                                        <div class="tab-pane fade" id="user_read_history" role="tabpanel" aria-labelledby="user_read_history-tab">
                                             @include('user.user_read_history')
                                         </div>
                                         <div class="tab-pane fade" id="user_bill" role="tabpanel" aria-labelledby="user_bill-tab">
                                             @include('user.user_bill')
                                         </div>
-                                        <div class="tab-pane fade" id="user_bookmark" role="tabpanel"
-                                            aria-labelledby="user_bookmark-tab">
+                                        <div class="tab-pane fade" id="user_bookmark" role="tabpanel" aria-labelledby="user_bookmark-tab">
                                             @include('user.user_bookmark')
                                         </div>
-                                        <div class="tab-pane fade" id="user_report" role="tabpanel"
-                                            aria-labelledby="user_report-tab">
-                                            @include('user.report.user_report')
-                                        </div>
+                                        @if (Auth::user()->email_verified_at !== null)
+                                            <div class="tab-pane fade" id="user_report" role="tabpanel" aria-labelledby="user_report-tab">
+                                                @include('user.report.user_report')
+                                            </div>
+                                        @endif
+
                                     </div>
 
                                 </div>

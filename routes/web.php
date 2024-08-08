@@ -27,6 +27,18 @@ Route::middleware(['checkUserStatus'])->group(function () {
     Route::get('/', function () {
         return view('home');
     });
+
+    Route::get('/Gioi-thieu', function () {
+        return view('Gioi_thieu');
+    });
+
+    Route::get('/Lien-he', function () {
+        return view('Lien_he');
+    });
+
+    Route::get('/Huong-dan', function () {
+        return view('Huong_dan');
+    });
     
     Auth::routes([
         'verify' => true

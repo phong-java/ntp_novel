@@ -2,19 +2,26 @@
     <div class="container col-md-11 justify-content-between">
         <a class="navbar-brand" href="{{ url('/') }}"><img class="ntp_logo me-2"
             src="{{ asset('uploads/logo/Logo.jpg') }}" alt="">TNP Novel 
-            @if (isset($isadmin) && $isadmin)
-            - Admin
-            @endif
-    </a>
+                @if (isset($isadmin) && $isadmin)
+                - Admin
+                @endif
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
-            <ul class="navbar-nav mb-2 mb-lg-0">
-                <li class="navbar-nav ms-auto">
-                    <!-- Authentication Links -->
-                    @guest
+            <ul class="navbar-nav mb-2 mb-lg-0 d-flex align-content-center">
+                <li class="nav-item ms-auto">
+                    <a class="nav-link d-flex align-content-center flex-wrap h-100" href="{{ url('/Gioi-thieu') }}">Giới thiệu</a>
+                </li>
+                <li class="nav-item ms-auto">
+                    <a class="nav-link d-flex align-content-center flex-wrap h-100" href="{{ url('/Lien-he') }}">Liên hệ</a>
+                </li>
+                <li class="nav-item ms-auto">
+                    <a class="nav-link d-flex align-content-center flex-wrap h-100" href="{{ url('/Huong-dan') }}">Tài liệu hướng dẫn</a>
+                </li>
+                @guest
                     <li class="nav-item">
                         <a class="nav-link d-flex gap-2 align-items-center" href="#" data-bs-toggle="modal" data-bs-target="#ntp_login_register_modal"><i class="fa-regular fa-user"></i>Đăng nhập / Đăng ký</a>
                     </li>
@@ -40,27 +47,25 @@
 
                             <a class="dropdown-item" href="{{ route('User.show', [Auth::user()->id]) }}"><i class="fa-solid fa-user"></i> Trang cá nhân</a>
 
-                            <a class="dropdown-item" href="{{route('User.show', [Auth::user()->id,'view=user_report-tab']) }}"><i class="fa-solid fa-flag"></i> Tố cáo</a>
-
                             <a class="dropdown-item" href="{{route('User.show', [Auth::user()->id,'view=user_bill-tab']) }}"><i class="fa-solid fa-coins"></i> Ví tiền và hóa đơn</a>
 
                             @if (Auth::user()->email_verified_at == null)
                                 <a class="dropdown-item" href="{{ route('verification.notice')}}"><i class="fa-solid fa-envelope"></i> Xác thực email</a>
                             @else
+                                <a class="dropdown-item" href="{{route('User.show', [Auth::user()->id,'view=user_report-tab']) }}"><i class="fa-solid fa-flag"></i> Tố cáo</a>
                                 @if (Auth::user()->sRole == 'admin')
                                     <a class="dropdown-item" href="{{ route('User.admin',[Auth::user()->id])}}"><i class="fa-solid fa-user-tie"></i> Trang quản trị</a>
                                 @endif
 
                                 <a class="dropdown-item" href="{{ route('Author.show',[Auth::user()->id])}}"><i class="fa-solid fa-pen-nib"></i> Trang tác giả</a>
                             @endif
-                           
+                        
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
                         </div>
                     </li>
                 @endguest
-                </li>
             </ul>
         </div>
     </div>

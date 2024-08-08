@@ -55,7 +55,7 @@ $novels = Novel::select(
             @foreach ($novels as $key => $novel)
             
                 <div class="ntp_item d-flex gap-2">
-                    <div class="w-50 mb-4 mb-md-0">
+                    <div class="w-50 ntp_img mb-4 mb-md-0">
                         {{-- Ảnh bìa --}}
                         <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
                             <a href="{{route('Novel.show',[$novel->id])}}">
@@ -64,36 +64,36 @@ $novels = Novel::select(
                             </a>
                         </div>
                     </div>
-                    <div class="w-50  overflow-Y overflow-Xh  ntp_custom_ver_scrollbar">
+                    <div class="w-50 ntp_infor  overflow-Y overflow-Xh  ntp_custom_ver_scrollbar">
                         {{-- Thông tin --}}
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Tên truyện</p>
+                                <div class="col-sm-12 col-xl-3">
+                                    <p class="mb-0 fw-bold">Tên truyện</p>
                                 </div>
-                                <div class="col-sm-9">
+                                <div class="col-sm-12 col-xl-9">
                                     <p class="text-muted mb-0"> {{$novel->sNovel}} </p>
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
-                                <p class="mb-0">Số chương {{$novel->chapter_count}}</p>
+                                <p class="mb-0 fw-bold">Số chương {{$novel->chapter_count}}</p>
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Giới thiệu</p>
+                                <div class="col-sm-12 col-xl-3">
+                                    <p class="mb-0 fw-bold">Giới thiệu</p>
                                 </div>
-                                <div class="col-sm-9 ntl_tomtat overflow-auto ntp_custom_ver_scrollbar">
+                                <div class="col-sm-12 col-xl-9 ntl_tomtat overflow-auto ntp_custom_ver_scrollbar">
                                     {!! htmlspecialchars_decode($novel->sDes) !!}
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Tác giả</p>
+                                <div class="col-sm-12 col-xl-3">
+                                    <p class="mb-0 fw-bold">Tác giả</p>
                                 </div>
-                                <div class="col-sm-9">
+                                <div class="col-sm-12 col-xl-9">
                                     @php
                                         $author_info = Author::where('idUser',$novel->idUser)->first();
                                     @endphp
@@ -105,10 +105,10 @@ $novels = Novel::select(
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Tiến độ</p>
+                                <div class="col-sm-12 col-xl-3">
+                                    <p class="mb-0 fw-bold">Tiến độ</p>
                                 </div>
-                                <div class="col-sm-9">
+                                <div class="col-sm-12 col-xl-3">
                                     <?php
                                         if ($novel->sProgress == '1') {
                                             echo '<span class="text-success"> Còn tiếp</span>';
@@ -122,27 +122,27 @@ $novels = Novel::select(
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Thông số</p>
+                                <div class="col-sm-12 col-xl-3">
+                                    <p class="mb-0 fw-bold">Thông số</p>
                                 </div>
-                                <div class="col-sm-9">
+                                <div class="col-sm-12 col-xl-9">
                                     <div class="row w-100">
                                         <p class="text-muted mb-0 col-sm-12 col-md-6">{{$novel->read_count}} lượt đọc</p>
                                         <p class="text-muted mb-0 col-sm-12 col-md-6">{{$novel->bookmark_count}} đánh dấu</p>
                                     </div>
                                     <hr>
                                     <div class="row w-100">
-                                        <p class="text-muted mb-0">Đánh giá: {{round($novel->avg_rating, 1)}} <i class="fas fa-star fa-sm text-warning " ></i></p>
+                                        <p class=" mb-0 fw-bold">Đánh giá: {{round($novel->avg_rating, 1)}} <i class="fas fa-star fa-sm text-warning " ></i></p>
                                     </div>
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-sm-3">
+                                <div class="col-sm-12 col-xl-3">
                                 </div>
-                                <div class="col-sm-9 d-flex">
+                                <div class="col-sm-12 col-xl-3 d-flex">
                                     <a href="{{route('Novel.show',[$novel->id])}}" class=" w-100">
-                                        <p class="text-muted mb-0"><i class="fa-solid fa-book-open me-2"></i>Đọc luôn
+                                        <p class=" mb-0 fw-bold"><i class="fa-solid fa-book-open me-2"></i>Đọc luôn
                                         </p>
                                     </a>
                                 </div>
