@@ -11,15 +11,15 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
-            <ul class="navbar-nav mb-2 mb-lg-0 d-flex align-content-center">
+            <ul class="navbar-nav mb-2 mb-lg-0 d-flex align-items-center">
                 <li class="nav-item ms-auto">
-                    <a class="nav-link d-flex align-content-center flex-wrap h-100" href="{{ url('/Gioi-thieu') }}">Giới thiệu</a>
+                    <a class="nav-link d-flex align-items-center gap-2 flex-wrap h-100" href="{{ url('/Gioi-thieu') }}"><i class="fa-solid fa-newspaper"></i> Giới thiệu</a>
                 </li>
                 <li class="nav-item ms-auto">
-                    <a class="nav-link d-flex align-content-center flex-wrap h-100" href="{{ url('/Lien-he') }}">Liên hệ</a>
+                    <a class="nav-link d-flex align-items-center gap-2 flex-wrap h-100" href="{{ url('/Lien-he') }}"><i class="fa-solid fa-address-book"></i> Liên hệ</a>
                 </li>
                 <li class="nav-item ms-auto">
-                    <a class="nav-link d-flex align-content-center flex-wrap h-100" href="{{ url('/Huong-dan') }}">Tài liệu hướng dẫn</a>
+                    <a class="nav-link d-flex align-items-center gap-2 flex-wrap h-100" href="{{ url('/Huong-dan') }}"><i class="fa-brands fa-glide"></i> Tài liệu hướng dẫn</a>
                 </li>
                 @guest
                     <li class="nav-item">
