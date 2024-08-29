@@ -129,6 +129,7 @@ foreach ($theloai as $loai) {
                         <div class="col-md-12 mb-5">
                             <div class="card">
                                 <div class="card-header">Thêm chương mới</div>
+                                
                                 <div class="card-body">
                                     <form method="POST" id="ntp_form_create_chapter" action="{{ route('Chapter.store') }}">
                                         <div class="alert alert-success ntp_hidden" role="alert"></div>
