@@ -19,9 +19,12 @@ $(document).ready(function () {
     dots: true,
     infinite: false,
     speed: 300,
-    slidesToShow: 6,
-    slidesToScroll: 6,
+    slidesToShow: 3,
+    slidesToScroll: 3,
     infinite: true,
+    verticalSwiping: true,
+    vertical: true,
+    adaptiveHeight: true,
     responsive: [
       {
         breakpoint: 1024,
@@ -79,7 +82,7 @@ $(document).ready(function () {
   });
 
   // comment
-  $('body').on('click','.ntp_submit_comment',function() {
+  $('body').on('click', '.ntp_submit_comment', function () {
     var formdata = $('#ntp_rating_form')[0];
     var _data = new FormData(formdata);
     var _form = $('#ntp_rating_form');
@@ -113,7 +116,7 @@ $(document).ready(function () {
         }
 
         $(_this).find('.spinner-border').remove();
-        
+
         $('body').trigger('ntp-alert-out');
       },
       error: function (error) {
@@ -125,17 +128,17 @@ $(document).ready(function () {
   // gán link
   $('body').on('click', '.ntp_comment_reply', function () {
     var _form = $('#ntp_rating_reply_form');
-    $(_form).attr('action',$(this).attr('data-link'));
+    $(_form).attr('action', $(this).attr('data-link'));
   });
 
   $('body').on('click', '.ntp_comment_update', function () {
     var _form = $('#ntp_update_rating_reply_form');
     var content = $(this).parents('.comment_item').find('p.comment_content').text().trim();
-    $(_form).attr('action',$(this).attr('data-link'));
+    $(_form).attr('action', $(this).attr('data-link'));
     $(_form).find('textarea[name="ntp_comment_update"]').text(content);
   });
   // phản hồi đánh giá
-    $('body').on('click','.ntp_comment_reply_submit',function() {
+  $('body').on('click', '.ntp_comment_reply_submit', function () {
     var formdata = $('#ntp_rating_reply_form')[0];
     var _data = new FormData(formdata);
     var _form = $('#ntp_rating_reply_form');
@@ -170,7 +173,7 @@ $(document).ready(function () {
         }
 
         $(_this).find('.spinner-border').remove();
-        
+
         $('body').trigger('ntp-alert-out');
       },
       error: function (error) {
@@ -180,7 +183,7 @@ $(document).ready(function () {
   });
 
   // cập nhật phản hồi đánh giá
-  $('body').on('click','.ntp_update_comment_reply_submit',function() {
+  $('body').on('click', '.ntp_update_comment_reply_submit', function () {
     var formdata = $('#ntp_update_rating_reply_form')[0];
     var _data = new FormData(formdata);
     var _form = $('#ntp_update_rating_reply_form');
@@ -215,7 +218,7 @@ $(document).ready(function () {
         }
 
         $(_this).find('.spinner-border').remove();
-        
+
         $('body').trigger('ntp-alert-out');
       },
       error: function (error) {
@@ -229,12 +232,12 @@ $(document).ready(function () {
     var clickedPoint = $(this).data('point');
     var input = $('.rating_start_input');
 
-    $('.rating-start').each(function() {
-        if ($(this).data('point') <= clickedPoint) {
-            $(this).addClass('fa-solid').removeClass('far');
-        } else {
-            $(this).removeClass('fa-solid').addClass('far');
-        }
+    $('.rating-start').each(function () {
+      if ($(this).data('point') <= clickedPoint) {
+        $(this).addClass('fa-solid').removeClass('far');
+      } else {
+        $(this).removeClass('fa-solid').addClass('far');
+      }
     });
 
     $(input).val($(this).data('point'));
@@ -248,7 +251,7 @@ $(document).ready(function () {
     var id_comment = $(this).attr('data-id-comment');
     var data = {
       value: value,
-      id_comment:id_comment
+      id_comment: id_comment
     };
     var text = 'Bạn có chắc muốn thay đổi trạng thái của bình luận này?';
 
@@ -264,8 +267,8 @@ $(document).ready(function () {
         method: "POST",
         url: url,
         dataType: "json",
-        contentType: 'application/json', 
-        data: JSON.stringify(data), 
+        contentType: 'application/json',
+        data: JSON.stringify(data),
 
         success: function (data) {
           if (data.status == 1) {
@@ -282,7 +285,7 @@ $(document).ready(function () {
             }
             $('.alert-danger.ntp_alert_public').fadeIn(200).html(errorMessages + btn_close_danger);
           }
-          
+
           $('body').trigger('ntp-alert-out');
         },
         error: function (error) {
@@ -300,11 +303,11 @@ $(document).ready(function () {
         method: "Get",
         url: url,
         success: function (data) {
-          
+
           $(ntp_novel_review).replaceWith(data.html);
         },
         error: function (error) {
-  
+
         }
       });
     }
@@ -312,7 +315,7 @@ $(document).ready(function () {
 
   //report 
 
-  $('body').on('click','.ntp_btn_report',function() {
+  $('body').on('click', '.ntp_btn_report', function () {
     var formdata = $('#ntp_form_user_report')[0];
     var _data = new FormData(formdata);
     var _form = $('#ntp_form_user_report');
@@ -344,7 +347,7 @@ $(document).ready(function () {
         }
 
         $(_this).find('.spinner-border').remove();
-        
+
         $('body').trigger('ntp-alert-out');
       },
       error: function (error) {
@@ -353,10 +356,10 @@ $(document).ready(function () {
     });
   });
   //report update
-  $('body').on('click','.ntp_report_detail_update',function() {
+  $('body').on('click', '.ntp_report_detail_update', function () {
     var _form = $('#ntp_form_user_report_update');
 
-    if($(_form).length) {
+    if ($(_form).length) {
       var formdata = $('#ntp_form_user_report_update')[0];
       var _data = new FormData(formdata);
 
@@ -367,15 +370,15 @@ $(document).ready(function () {
         processData: false,
         data: _data,
         dataType: "json",
-  
+
         success: function (data) {
           if (data.status == 1) {
             $(_form).find('.alert-danger').fadeOut(200);
             $(_form).find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
-  
+
           } else if (data.status == 0) {
             $(_form).find('.alert-success').fadeOut(200);
-  
+
             var errors = data.errors;
             var errorMessages = '';
             for (var key in errors) {
@@ -383,18 +386,18 @@ $(document).ready(function () {
             }
             $(_form).find('.alert-danger').fadeIn(200).html(errorMessages + btn_close_danger);
           }
-  
+
           $('body').trigger('ntp-alert-out');
         },
         error: function (error) {
-  
+
         }
       });
     }
   });
 
-// load lai bao cao ca nhan
-  $('body').on('click','#user_report_list-tab',function() {
+  // load lai bao cao ca nhan
+  $('body').on('click', '#user_report_list-tab', function () {
     var _this = $(this)
     var url = $(_this).attr('data-link');
     $.ajax({
@@ -410,8 +413,8 @@ $(document).ready(function () {
     });
   });
 
-// load lai bao cao cao admin
-  $('body').on('click','.xu_ly_bao_cao_tab',function() {
+  // load lai bao cao cao admin
+  $('body').on('click', '.xu_ly_bao_cao_tab', function () {
     var _this = $(this)
     var url = $(_this).attr('data-link');
     $.ajax({
@@ -427,10 +430,10 @@ $(document).ready(function () {
     });
   });
 
-  $('body').on('click','.ntp_report_admin_detail_update',function() {
+  $('body').on('click', '.ntp_report_admin_detail_update', function () {
     var _form = $('#ntp_form_admin_report_update');
 
-    if($(_form).length) {
+    if ($(_form).length) {
       var formdata = $('#ntp_form_admin_report_update')[0];
       var _data = new FormData(formdata);
 
@@ -441,7 +444,7 @@ $(document).ready(function () {
         processData: false,
         data: _data,
         dataType: "json",
-  
+
         success: function (data) {
           if (data.status == 1) {
             $(_form).find('.alert-danger').fadeOut(200);
@@ -449,7 +452,7 @@ $(document).ready(function () {
             $('.xu_ly_bao_cao_tab.active').trigger('click');
           } else if (data.status == 0) {
             $(_form).find('.alert-success').fadeOut(200);
-  
+
             var errors = data.errors;
             var errorMessages = '';
             for (var key in errors) {
@@ -457,16 +460,16 @@ $(document).ready(function () {
             }
             $(_form).find('.alert-danger').fadeIn(200).html(errorMessages + btn_close_danger);
           }
-  
+
           $('body').trigger('ntp-alert-out');
         },
         error: function (error) {
-  
+
         }
       });
     }
   });
-  
+
 
   // load thông tin chi tiết của tố cáo
   $('body').on('click', '.ntp_btn_report_detail_user', function () {
@@ -480,11 +483,11 @@ $(document).ready(function () {
         $(ntp_report_detail).find('.modal-body').html(data.html);
         $(ntp_report_detail).find('.modal-title').html(data.report_title);
 
-        if($('.xu_ly_bao_cao_tab').length <= 0) {
+        if ($('.xu_ly_bao_cao_tab').length <= 0) {
           if (data.report_status != 0) {
             $(ntp_report_detail).find('.modal-footer').hide();
           } else {
-             $(ntp_report_detail).find('.modal-footer').show();
+            $(ntp_report_detail).find('.modal-footer').show();
           }
         }
 
@@ -508,7 +511,7 @@ $(document).ready(function () {
         method: "POST",
         url: url,
         dataType: "json",
-        contentType: 'application/json', 
+        contentType: 'application/json',
 
         success: function (data) {
           if (data.status == 1) {
@@ -529,7 +532,7 @@ $(document).ready(function () {
             $('.alert-danger.ntp_alert_public').fadeIn(200).html(errorMessages + btn_close_danger);
           }
 
-          
+
           $('body').trigger('ntp-alert-out');
         },
         error: function (error) {
@@ -539,12 +542,12 @@ $(document).ready(function () {
 
   });
   // tạo yêu cầu rút tiền
- $('body').on('click','.ntp_btn_author_withdraw',function() {
+  $('body').on('click', '.ntp_btn_author_withdraw', function () {
     var _this = $(this);
     var formdata = $('#author_withdraw_form')[0];
     var _data = new FormData(formdata);
     var _form = $('#author_withdraw_form');
-   
+
     $(_this).append(load);
     var target = $(_this).attr('target');
 
@@ -575,7 +578,7 @@ $(document).ready(function () {
         }
 
         $(_this).find('.spinner-border').remove();
-        
+
         $('body').trigger('ntp-alert-out');
       },
       error: function (error) {
@@ -585,25 +588,25 @@ $(document).ready(function () {
   });
 
   //Tải báo cáo thông kê
-  $('body').on('click','.downloadReport', function() {
+  $('body').on('click', '.downloadReport', function () {
     if (window.pdfBase64 && window.pdfFileName) {
-        var binary = atob(window.pdfBase64);
-        var array = [];
-        for (var i = 0; i < binary.length; i++) {
-            array.push(binary.charCodeAt(i));
-        }
-        var blob = new Blob([new Uint8Array(array)], { type: 'application/pdf' });
-        var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = window.pdfFileName;
-        link.click();
+      var binary = atob(window.pdfBase64);
+      var array = [];
+      for (var i = 0; i < binary.length; i++) {
+        array.push(binary.charCodeAt(i));
+      }
+      var blob = new Blob([new Uint8Array(array)], { type: 'application/pdf' });
+      var link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = window.pdfFileName;
+      link.click();
     } else {
-        alert('Chưa có báo cáo để tải xuống.');
+      alert('Chưa có báo cáo để tải xuống.');
     }
-});
+  });
 
   // Tạo báo cáo thống kê
-  $('body').on('click','.btn_get_thongke',function() {
+  $('body').on('click', '.btn_get_thongke', function () {
     var _this = $(this);
     var formdata = $($(_this).attr('data-form'))[0];
     var _data = new FormData(formdata);
@@ -643,7 +646,7 @@ $(document).ready(function () {
         }
 
         $(_this).find('.spinner-border').remove();
-        
+
         $('body').trigger('ntp-alert-out');
       },
       error: function (error) {
@@ -800,9 +803,9 @@ $(document).ready(function () {
         if (data.status == 1) {
           $(_form).find('.alert-danger').fadeOut(200);
           $(_form).find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
-          setTimeout(function () {
-            location.reload();
-          }, 400);
+          // setTimeout(function () {
+          //   location.reload();
+          // }, 400);
 
         } else if (data.status == 0) {
           $(_form).find('.alert-success').fadeOut(200);
@@ -839,7 +842,7 @@ $(document).ready(function () {
       data: _data,
       contentType: false,
       processData: false,
-      dataType: "json",
+      dataType: "application/json",
       success: function (data) {
         console.log(data);
         if (data.status == 1) {
@@ -856,6 +859,7 @@ $(document).ready(function () {
           for (var key in errors) {
             errorMessages += errors[key] + '</br>';
           }
+          console.log(errorMessages);
           $(_form).find('.alert-danger').fadeIn(200).html(errorMessages + btn_close_danger);
         }
 
@@ -998,7 +1002,7 @@ $(document).ready(function () {
     var _data = new FormData(dataform);
 
     var url = $(_form).attr('action');
-    
+
     $.ajax({
       method: "POST",
       url: url,
@@ -1136,80 +1140,36 @@ $(document).ready(function () {
     });
   });
 
-  $('body').on('click','#danh_sach_nguoi_dung-tab',function(){
+  $('body').on('click', '#danh_sach_nguoi_dung-tab', function () {
     var _this = $(this);
     var url = $(_this).attr('data-link');
     var danh_sach_nguoi_dung = $('#danh_sach_nguoi_dung');
-      $.ajax({
-        method: "Get",
-        url: url,
-        success: function (data) {
-          
-          $(danh_sach_nguoi_dung).html(data);
-        },
-        error: function (error) {
-          $(danh_sach_nguoi_dung).html('<div class="alert alert-danger" role="alert">Có lỗi xảy ra</div>');
-        }
-      });
+    $.ajax({
+      method: "Get",
+      url: url,
+      success: function (data) {
+
+        $(danh_sach_nguoi_dung).html(data);
+      },
+      error: function (error) {
+        $(danh_sach_nguoi_dung).html('<div class="alert alert-danger" role="alert">Có lỗi xảy ra</div>');
+      }
+    });
   });
 
-  $('body').on('change','.admin_user_role_sl',function() {
+  $('body').on('change', '.admin_user_role_sl', function () {
     var selectedValue = $(this).val();
-    var url =$(this).attr('data-link');
+    var url = $(this).attr('data-link');
     var data = {
-        admin_user_role: selectedValue
+      admin_user_role: selectedValue
     };
 
     $.ajax({
-        url: url,
-        type: 'POST',
-        contentType: 'application/json', 
-        data: JSON.stringify(data), 
-        success: function(data) {
-          if (data.status == 1) {
-            $('.alert-danger').fadeOut(200);
-            $('#ntp_admin_user_list_wrap').find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
-
-          } else if (data.status == 0) {
-            var errors = data.errors;
-            var errorMessages = '';
-            for (var key in errors) {
-              errorMessages += errors[key] + '</br>';
-            }
-            $('.alert-success').fadeOut(200);
-            $('#ntp_admin_user_list_wrap').find('.alert-danger').fadeIn(200).html(data.message + btn_close_success);
-          }
-        },
-        error: function(xhr, status, error) {
-            console.log('Error:', error);
-        }
-    });
-
-    setTimeout(function () {
-      $('.alert-success').fadeOut(200);
-      $('.alert-danger ').fadeOut(200);
-    }, 2000);
-});
-
-$('body').on('change','input.admin_user_status, input.admin_user_comment',function() {
-  var trangthai = $(this).is(':checked') ? 1 : 0;
-  var url =$(this).attr('data-link');
-  var data = {
-      admin_user_status: trangthai
-  };
-
-  if ($(this).hasClass('admin_user_comment')) {
-    data = {
-      admin_user_comment: trangthai
-    };
-  }
-
-  $.ajax({
       url: url,
       type: 'POST',
-      contentType: 'application/json', 
-      data: JSON.stringify(data), 
-      success: function(data) {
+      contentType: 'application/json',
+      data: JSON.stringify(data),
+      success: function (data) {
         if (data.status == 1) {
           $('.alert-danger').fadeOut(200);
           $('#ntp_admin_user_list_wrap').find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
@@ -1224,21 +1184,65 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
           $('#ntp_admin_user_list_wrap').find('.alert-danger').fadeIn(200).html(data.message + btn_close_success);
         }
       },
-      error: function(xhr, status, error) {
-          console.log('Error:', error);
+      error: function (xhr, status, error) {
+        console.log('Error:', error);
       }
+    });
+
+    setTimeout(function () {
+      $('.alert-success').fadeOut(200);
+      $('.alert-danger ').fadeOut(200);
+    }, 2000);
   });
 
-  setTimeout(function () {
-    $('.alert-success').fadeOut(200);
-    $('.alert-danger ').fadeOut(200);
-  }, 2000);
-});
+  $('body').on('change', 'input.admin_user_status, input.admin_user_comment', function () {
+    var trangthai = $(this).is(':checked') ? 1 : 0;
+    var url = $(this).attr('data-link');
+    var data = {
+      admin_user_status: trangthai
+    };
+
+    if ($(this).hasClass('admin_user_comment')) {
+      data = {
+        admin_user_comment: trangthai
+      };
+    }
+
+    $.ajax({
+      url: url,
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(data),
+      success: function (data) {
+        if (data.status == 1) {
+          $('.alert-danger').fadeOut(200);
+          $('#ntp_admin_user_list_wrap').find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
+
+        } else if (data.status == 0) {
+          var errors = data.errors;
+          var errorMessages = '';
+          for (var key in errors) {
+            errorMessages += errors[key] + '</br>';
+          }
+          $('.alert-success').fadeOut(200);
+          $('#ntp_admin_user_list_wrap').find('.alert-danger').fadeIn(200).html(data.message + btn_close_success);
+        }
+      },
+      error: function (xhr, status, error) {
+        console.log('Error:', error);
+      }
+    });
+
+    setTimeout(function () {
+      $('.alert-success').fadeOut(200);
+      $('.alert-danger ').fadeOut(200);
+    }, 2000);
+  });
 
 
 
 
-  $('body').on('click','#xet_duyet_tacgia-tab',function(){
+  $('body').on('click', '#xet_duyet_tacgia-tab', function () {
     $('body').trigger('ntp_admin_load_xetduyet_author_list');
   });
 
@@ -1246,14 +1250,14 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
   $('body').on('ntp_admin_load_xetduyet_author_list', function () {
     var btn = $('#xet_duyet_tacgia-tab');
     var xet_duyet_tacgia = $('#xet_duyet_tacgia');
-    
+
     if ($(btn).length) {
       var url = $(btn).attr('data-link');
 
       $.ajax({
         method: "Get",
         url: url,
-        success: function (data) {          
+        success: function (data) {
           $(xet_duyet_tacgia).html(data);
         },
         error: function (error) {
@@ -1524,7 +1528,7 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
     var url = $(_this).attr('data-link');
 
     var confirmAction = confirm('Bạn có chắc chắn muốn mua chương này');
-    if (confirmAction) { 
+    if (confirmAction) {
       $.ajax({
         method: "Get",
         url: url,
@@ -1535,7 +1539,7 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
             $(_ntp_content).html(data.content);
           } else if (data.status == 0) {
             $(_this).parents('.card').find('.alert-success.ntp_alert_content').fadeOut(200);
-  
+
             var errors = data.errors;
             var errorMessages = '';
             for (var key in errors) {
@@ -1543,11 +1547,11 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
             }
             $(_this).parents('.card').find('.alert-danger.ntp_alert_content').fadeIn(200).html(errorMessages + btn_close_danger);
           }
-  
+
           $('body').trigger('ntp-alert-out');
         },
         error: function (error) {
-  
+
         }
       });
     }
@@ -1656,7 +1660,7 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
   $('body').on('click', '.ntp_bookmark_remove', function (e) {
     var _this = $(this);
     var confirmAction = confirm('Bạn có chắc chắn muốn xoá đánh dấu này');
-    if (confirmAction) { 
+    if (confirmAction) {
       if ($(_this).hasClass('ntp_locall')) {
 
         var bookmarks = localStorage.getItem('ntp_bookmarks');
@@ -1710,7 +1714,7 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
           }
         });
       }
-    } 
+    }
 
     e.preventDefault();
   });
@@ -1719,7 +1723,7 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
     var _this = $(this);
 
     var confirmAction = confirm('Bạn có chắc chắn muốn xóa lịch sử đọc này');
-    if (confirmAction) { 
+    if (confirmAction) {
       if ($(_this).parents('.ntp_read_history').hasClass('ntp_read_history_locall')) {
         var id_novel = $(this).attr('data-id-novel');
         var historys = localStorage.getItem('ntp_historys');
@@ -1750,7 +1754,7 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
           method: "get",
           url: url,
           success: function (data) {
-            
+
             if (data.status == 1) {
               $('.alert-danger.ntp_alert_public').fadeOut(200);
               $('.alert-success.ntp_alert_public').fadeIn(200).html(data.message + btn_close_success);
@@ -1775,7 +1779,7 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
     e.preventDefault();
   });
 
-  $('body').on('load_user_setting',function(){
+  $('body').on('load_user_setting', function () {
     var _form = $('#ntp_form_user_seting');
     var settingjson = '';
 
@@ -1785,24 +1789,31 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
       settingjson = $(_form).attr('data-setting');
     }
 
-    if(settingjson) {
+    if (settingjson) {
       var setting = JSON.parse(settingjson);
-    
-      if(setting.length !== 0) {
+
+      if (setting.length !== 0) {
         $("body").css("font-family", setting.ntp_font);
         $(_form).find('#ntp_font_set').val(setting.ntp_font);
-    
+
         if (setting.ntp_mode === 1) {
-            $("html").attr("data-bs-theme", "dark");
-            $(_form).find('#ntp_dark_mode').prop('checked', true);
+          $("html").attr("data-bs-theme", "dark");
+          $(_form).find('#ntp_dark_mode').prop('checked', true);
         } else {
-            $("html").attr("data-bs-theme", "light");
-            $(_form).find('#ntp_dark_mode').prop('checked', false);
+          $("html").attr("data-bs-theme", "light");
+          $(_form).find('#ntp_dark_mode').prop('checked', false);
         }
       }
     }
-    
+
   }).trigger('load_user_setting');
+
+  $('body').on('click', '.ntp_get_content', function () {
+    var tempDiv = $('.ntp_content').html();
+    plainText = $(tempDiv).text();
+    console.log($(tempDiv).text());
+    readAloud(plainText)
+  });
 
   $('body').on('click', '.ntp_user_seting_save', function () {
     var _this = $(this);
@@ -1814,20 +1825,20 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
     var _data = {
       ntp_font: ntp_font,
       ntp_mode: ntp_mode
-    };    
+    };
 
     if ($(_form).hasClass('ntp_locall_store')) {
 
       if (getcookiepermission() == 'yes') {
         localStorage.setItem('ntp_settings', JSON.stringify(_data));
       } else {
-        askcookiepermission($,'yes');
+        askcookiepermission($, 'yes');
       }
-      
+
       $('body').trigger('load_user_setting');
       $(_form).find('.alert-success').fadeIn(200).html('Cài đặt của bạn đã được lưu trên trình duyệt bạn nên đăng nhập để lưu trữ tốt hơn' + btn_close_success);
 
-    } 
+    }
     else {
       $.ajax({
         method: "POST",
@@ -1840,7 +1851,7 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
             $(_form).find('.alert-danger').fadeOut(200);
             $(_form).find('.alert-success').fadeIn(200).html(data.message + btn_close_success);
 
-            $(_form).attr('data-setting',JSON.stringify(_data));
+            $(_form).attr('data-setting', JSON.stringify(_data));
             $('body').trigger('load_user_setting');
 
           } else if (data.status == 0) {
@@ -1865,7 +1876,7 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
       $('.alert-success:not(.ntp_alert_static)').fadeOut(200);
       $('.alert-danger:not(.ntp_alert_static)').fadeOut(200);
     }, 1000);
-    
+
   });
 
 
@@ -1966,10 +1977,10 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
             } else {
               bookmarks = [];
             }
-  
+
             var bookmarlExist = false;
             var index_bookmar = null;
-  
+
             if (bookmarks.length !== 0) {
               $.each(bookmarks, function (index, value) {
                 if (value.id == id) {
@@ -1978,7 +1989,7 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
                 }
               });
             }
-  
+
             if (bookmarlExist) {
               bookmarks.splice(index_bookmar, 1);
               $(_p).removeClass('text-danger').addClass('text-success').html('<i class="fa-solid fa-bookmark me-2" aria-hidden="true"></i>Đánh dấu');
@@ -1990,11 +2001,11 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
               });
               $(_p).removeClass('text-success').addClass('text-danger').html('<i class="fa-solid fa-bookmark me-2" aria-hidden="true"></i>Hủy đánh dấu');
             }
-  
-              localStorage.setItem('ntp_bookmarks', JSON.stringify(bookmarks));   
+
+            localStorage.setItem('ntp_bookmarks', JSON.stringify(bookmarks));
           } else {
-            askcookiepermission($,'yes');
-          }  
+            askcookiepermission($, 'yes');
+          }
 
         }
       },
@@ -2024,9 +2035,9 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
     if ($(this).attr('data-bs-toggle') == 'pill') {
       var id = $(this).attr('id');
       var target = $(this).attr('data-bs-target');
-      setUrlParameter('view',id);
+      setUrlParameter('view', id);
       $('html, body').animate({
-        scrollTop: $(target).offset().top-100
+        scrollTop: $(target).offset().top - 100
       }, 200);
     }
   });
@@ -2041,11 +2052,11 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
     }, 4000);
   });
 
-  $('body').on('input','.admin_search_tacgia',function() {
+  $('body').on('input', '.admin_search_tacgia', function () {
     var text = $(this).val();
     var drop = $('.ntp_drop_down_search_author');
     if (text.length >= 3) {
-      var url = $(this).attr('data-link')+'/'+text;
+      var url = $(this).attr('data-link') + '/' + text;
 
       $.ajax({
         method: "POST",
@@ -2054,7 +2065,7 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
           $(drop).find('.card-body').html(data.html);
         },
         error: function (error) {
-  
+
         }
       });
     } else {
@@ -2062,47 +2073,47 @@ $('body').on('change','input.admin_user_status, input.admin_user_comment',functi
     }
   });
 
-  $('body').on('click','.ntp_item_tacgia',function () {
-      $('.admin_search_tacgia').attr('data-iduser',$(this).attr('data-iduser'));
-      $('.admin_search_tacgia').val($(this).text());
+  $('body').on('click', '.ntp_item_tacgia', function () {
+    $('.admin_search_tacgia').attr('data-iduser', $(this).attr('data-iduser'));
+    $('.admin_search_tacgia').val($(this).text());
   });
 
-  $('body').on('click','.ntp_home_cat_search_item',function () {
-      $('.ntp_home_cat_search_form .ntp_home_cat_search_form_submit').trigger('click');
+  $('body').on('click', '.ntp_home_cat_search_item', function () {
+    $('.ntp_home_cat_search_form .ntp_home_cat_search_form_submit').trigger('click');
   });
 
-  $('body').on('click','#ntp-cookie-ask .modal-footer .btn',function () {
+  $('body').on('click', '#ntp-cookie-ask .modal-footer .btn', function () {
     var ask = '';
-      if($(this).attr('data-ask') == 'no') {
-         ask = 'no';
-      } else if ($(this).attr('data-ask') == 'yes') {
-         ask = 'yes';
-      }
-      localStorage.setItem('ntp_cookie_permission',ask);
+    if ($(this).attr('data-ask') == 'no') {
+      ask = 'no';
+    } else if ($(this).attr('data-ask') == 'yes') {
+      ask = 'yes';
+    }
+    localStorage.setItem('ntp_cookie_permission', ask);
   });
 
-  askcookiepermission($,'');
-  
+  askcookiepermission($, '');
+
 });
 
-$(window).on('load', function() {
+$(window).on('load', function () {
   queryParams = getUrlParameter($);
-  setTimeout(function(){
+  setTimeout(function () {
 
     if (Object.keys(queryParams).length != 0) {
       if ('view' in queryParams && queryParams.view != '') {
-        var target = $('#'+queryParams.view).attr('data-bs-target');
-        $('#'+queryParams.view).trigger('click');
+        var target = $('#' + queryParams.view).attr('data-bs-target');
+        $('#' + queryParams.view).trigger('click');
         if ($(target).length) {
           $('html, body').animate({
-            scrollTop: $(target).offset().top-100
+            scrollTop: $(target).offset().top - 100
           }, 200);
         }
       }
     }
-  },100);
+  }, 100);
 
-  if($('#user_report_list-tab').length) {
+  if ($('#user_report_list-tab').length) {
     $('#user_report_list-tab').trigger('click');
   }
 
@@ -2110,44 +2121,44 @@ $(window).on('load', function() {
 });
 
 function checkAndReplaceImages() {
-  $('img').each(function() {
-      var imgElement = $(this);
-      var imageUrl = imgElement.attr('src');
-      
-      var image = new Image();
-      image.onload = function() {
-      };
-      image.onerror = function() {
-        if ($(imgElement).hasClass('ntp_anh_bia')) {
-          $(imgElement).attr('src', $('.ntp_default_img').attr('data_img_novel_df')); 
-        }
+  $('img').each(function () {
+    var imgElement = $(this);
+    var imageUrl = imgElement.attr('src');
 
-        if ($(imgElement).hasClass('ntp_av')) {
-          $(imgElement).attr('src', $('.ntp_default_img').attr('data_img_av_df')); 
-        }
-        
-      };
-      image.src = imageUrl;
+    var image = new Image();
+    image.onload = function () {
+    };
+    image.onerror = function () {
+      if ($(imgElement).hasClass('ntp_anh_bia')) {
+        $(imgElement).attr('src', $('.ntp_default_img').attr('data_img_novel_df'));
+      }
+
+      if ($(imgElement).hasClass('ntp_av')) {
+        $(imgElement).attr('src', $('.ntp_default_img').attr('data_img_av_df'));
+      }
+
+    };
+    image.src = imageUrl;
   });
 }
 
 function getUrlParameter($) {
-    var currentURL = window.location.href;
-    var queryString = currentURL.split('?')[1];
-    var queryParams = {};
+  var currentURL = window.location.href;
+  var queryString = currentURL.split('?')[1];
+  var queryParams = {};
 
-    if (queryString) {
-        var paramsArray = queryString.split('&');
-        
-        for (var i = 0; i < paramsArray.length; i++) {
-            var pair = paramsArray[i].split('=');
-            var key = decodeURIComponent(pair[0]);
-            var value = decodeURIComponent(pair[1] || '');
-            queryParams[key] = value;
-        }
+  if (queryString) {
+    var paramsArray = queryString.split('&');
+
+    for (var i = 0; i < paramsArray.length; i++) {
+      var pair = paramsArray[i].split('=');
+      var key = decodeURIComponent(pair[0]);
+      var value = decodeURIComponent(pair[1] || '');
+      queryParams[key] = value;
     }
+  }
 
-    return queryParams;
+  return queryParams;
 }
 
 function setUrlParameter(paramName, paramValue) {
@@ -2164,9 +2175,20 @@ function getcookiepermission() {
   return _per;
 }
 
-function askcookiepermission($,show) {
+function askcookiepermission($, show) {
   var _per = localStorage.getItem('ntp_cookie_permission');
   if (!_per || show == 'yes') {
     $('.ntp-cookie-ask-btn').trigger('click');
+  }
+}
+
+function readAloud(content) {
+  // Kiểm tra nếu trình duyệt hỗ trợ SpeechSynthesis
+  if ('speechSynthesis' in window) {
+    const speech = new SpeechSynthesisUtterance(content);
+    speech.lang = 'vi-VN'; // Đặt ngôn ngữ là tiếng Việt
+    window.speechSynthesis.speak(speech);
+  } else {
+    alert("Trình duyệt của bạn không hỗ trợ chức năng đọc thành tiếng!");
   }
 }

@@ -59,9 +59,6 @@
     <script src="{{ asset('js/main.min.js') }}" defer></script>
     <script src="https://kit.fontawesome.com/ea5e6a5537.js" crossorigin="anonymous"></script>
 
-
-
-
 </head>
 
 <body style="font-family: {{$font}};">

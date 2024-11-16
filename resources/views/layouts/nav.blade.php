@@ -1,5 +1,6 @@
 <nav class="ntp_nav navbar navbar-expand-lg  bg-body shadow-sm mb-4">
     <div class="container col-md-11 justify-content-between">
+        <div></div>
         <a class="navbar-brand" href="{{ url('/') }}"><img class="ntp_logo me-2"
             src="{{ asset('uploads/logo/Logo.jpg') }}" alt="">TNP Novel 
                 @if (isset($isadmin) && $isadmin)
@@ -12,7 +13,7 @@
         </button>
         <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0 d-flex align-items-center">
-                <li class="nav-item ms-auto">
+                {{-- <li class="nav-item ms-auto">
                     <a class="nav-link d-flex align-items-center gap-2 flex-wrap h-100" href="{{ url('/Gioi-thieu') }}"><i class="fa-solid fa-newspaper"></i> Giới thiệu</a>
                 </li>
                 <li class="nav-item ms-auto">
@@ -20,7 +21,7 @@
                 </li>
                 <li class="nav-item ms-auto">
                     <a class="nav-link d-flex align-items-center gap-2 flex-wrap h-100" href="{{ url('/Huong-dan') }}"><i class="fa-brands fa-glide"></i> Tài liệu hướng dẫn</a>
-                </li>
+                </li> --}}
                 @guest
                     <li class="nav-item">
                         <a class="nav-link d-flex gap-2 align-items-center" href="#" data-bs-toggle="modal" data-bs-target="#ntp_login_register_modal"><i class="fa-regular fa-user"></i>Đăng nhập / Đăng ký</a>
